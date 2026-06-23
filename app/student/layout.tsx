@@ -16,7 +16,7 @@ export default async function StudentLayout({
   return (
     <div className="flex h-screen">
       <StudentSidebar studentName={studentName ?? "Estudiante"} />
-      <main className="flex-1 overflow-auto p-6">{children}</main>
+      <main className="flex-1 overflow-auto bg-zinc-50 p-6 dark:bg-zinc-950">{children}</main>
     </div>
   )
 }

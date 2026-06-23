@@ -9,6 +9,7 @@ export interface Student {
   id: string
   teacher_id: string
   name: string
+  access_code: string
   avatar_url: string | null
   custom_fields: Record<string, string>
   created_at: string

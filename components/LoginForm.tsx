@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { useActionState } from "react"
-import { loginTeacher, findTeacherByCode } from "@/lib/actions/auth"
+import { loginTeacher, findStudentByCode } from "@/lib/actions/auth"
 import { LogIn, GraduationCap } from "lucide-react"
 
 type Tab = "teacher" | "student"
@@ -16,19 +16,19 @@ export default function LoginForm() {
   )
 
   const [studentState, studentAction, studentPending] = useActionState(
-    async (_prev: unknown, formData: FormData) => findTeacherByCode(formData),
+    async (_prev: unknown, formData: FormData) => findStudentByCode(formData),
     undefined,
   )
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm">
-      <div className="mb-6 flex rounded-lg bg-zinc-100 p-1">
+    <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 shadow-sm">
+      <div className="mb-6 flex rounded-lg bg-zinc-100 dark:bg-zinc-800 p-1">
         <button
           type="button"
           onClick={() => setTab("teacher")}
           className={`flex flex-1 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
             tab === "teacher"
-              ? "bg-white text-indigo-600 shadow-sm"
+              ? "bg-white dark:bg-zinc-900 text-indigo-600 shadow-sm"
               : "text-zinc-500 hover:text-zinc-700"
           }`}
         >
@@ -40,7 +40,7 @@ export default function LoginForm() {
           onClick={() => setTab("student")}
           className={`flex flex-1 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
             tab === "student"
-              ? "bg-white text-indigo-600 shadow-sm"
+              ? "bg-white dark:bg-zinc-900 text-indigo-600 shadow-sm"
               : "text-zinc-500 hover:text-zinc-700"
           }`}
         >
@@ -52,7 +52,7 @@ export default function LoginForm() {
       {tab === "teacher" ? (
         <form action={teacherAction} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-zinc-700">
+            <label htmlFor="email" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
               Email
             </label>
             <input
@@ -60,12 +60,12 @@ export default function LoginForm() {
               name="email"
               type="email"
               required
-              className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
               placeholder="profesor@ejemplo.com"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-zinc-700">
+            <label htmlFor="password" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
               Contraseña
             </label>
             <input
@@ -73,7 +73,7 @@ export default function LoginForm() {
               name="password"
               type="password"
               required
-              className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
               placeholder="••••••••"
             />
           </div>
@@ -91,7 +91,7 @@ export default function LoginForm() {
       ) : (
         <form action={studentAction} className="space-y-4">
           <div>
-            <label htmlFor="code" className="block text-sm font-medium text-zinc-700">
+            <label htmlFor="code" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
               Código de acceso
             </label>
             <input
@@ -99,11 +99,11 @@ export default function LoginForm() {
               name="code"
               type="text"
               required
-              className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-              placeholder="Ej: a1b2c3"
+              className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              placeholder="Tu código personal"
               maxLength={10}
             />
-            <p className="mt-1 text-xs text-zinc-400">
+            <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500">
               Ingresa el código proporcionado por tu profesor
             </p>
           </div>

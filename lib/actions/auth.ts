@@ -38,54 +38,38 @@ export async function signOut() {
   redirect("/login")
 }
 
-export async function findTeacherByCode(formData: FormData) {
+export async function findStudentByCode(formData: FormData) {
   const code = formData.get("code") as string
-  if (!code || code.length < 3) {
+  if (!code || code.trim().length < 3) {
     return { error: "Código inválido" }
   }
 
   const supabase = await createClient()
-  const { data: teachers } = await supabase
-    .from("teachers")
-    .select("id, name")
+  const { data: students } = await supabase
+    .from("students")
+    .select("id, name, teacher_id")
     .eq("access_code", code.trim())
     .limit(1)
 
-  if (!teachers || teachers.length === 0) {
+  if (!students || students.length === 0) {
     return { error: "Código incorrecto" }
   }
 
+  const student = students[0]
   const cookieStore = await cookies()
-  cookieStore.set("access_code", code.trim(), {
+  cookieStore.set("student_id", student.id, {
     path: "/",
     maxAge: 60 * 60 * 24,
     httpOnly: true,
     sameSite: "lax",
   })
-  cookieStore.set("teacher_id", teachers[0].id, {
+  cookieStore.set("student_name", student.name, {
     path: "/",
     maxAge: 60 * 60 * 24,
     httpOnly: true,
     sameSite: "lax",
   })
-
-  redirect("/student/select")
-}
-
-export async function selectStudent(formData: FormData) {
-  const studentId = formData.get("studentId") as string
-  const studentName = formData.get("studentName") as string
-
-  if (!studentId) return { error: "Selecciona un estudiante" }
-
-  const cookieStore = await cookies()
-  cookieStore.set("student_id", studentId, {
-    path: "/",
-    maxAge: 60 * 60 * 24,
-    httpOnly: true,
-    sameSite: "lax",
-  })
-  cookieStore.set("student_name", studentName, {
+  cookieStore.set("teacher_id", student.teacher_id, {
     path: "/",
     maxAge: 60 * 60 * 24,
     httpOnly: true,
@@ -97,9 +81,8 @@ export async function selectStudent(formData: FormData) {
 
 export async function studentSignOut() {
   const cookieStore = await cookies()
-  cookieStore.delete("access_code")
-  cookieStore.delete("teacher_id")
   cookieStore.delete("student_id")
   cookieStore.delete("student_name")
+  cookieStore.delete("teacher_id")
   redirect("/login")
 }

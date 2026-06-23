@@ -67,22 +67,22 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
       <div className="mb-4 flex items-center justify-between">
         <button
           onClick={handlePrevMonth}
-          className="rounded-lg px-3 py-1 text-sm text-zinc-600 hover:bg-zinc-100"
+          className="rounded-lg px-3 py-1 text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100"
         >
           ◀
         </button>
-        <span className="text-sm font-semibold text-zinc-700">
+        <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
           {monthNames[currentMonth]} {currentYear}
         </span>
         <button
           onClick={handleNextMonth}
-          className="rounded-lg px-3 py-1 text-sm text-zinc-600 hover:bg-zinc-100"
+          className="rounded-lg px-3 py-1 text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100"
         >
           ▶
         </button>
       </div>
 
-      <div className="grid grid-cols-7 gap-1 text-center text-xs font-medium text-zinc-500">
+      <div className="grid grid-cols-7 gap-1 text-center text-xs font-medium text-zinc-500 dark:text-zinc-400">
         {dayNames.map((d) => (
           <div key={d} className="py-1">{d}</div>
         ))}
@@ -104,8 +104,8 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
             <button
               key={day}
               onClick={() => handleDayClick(day)}
-              className={`relative rounded-lg p-2 text-sm transition-colors hover:bg-indigo-50 ${
-                isToday ? "bg-indigo-100 font-semibold text-indigo-700" : "text-zinc-700"
+              className={`relative rounded-lg p-2 text-sm transition-colors hover:bg-indigo-50 dark:bg-indigo-950 ${
+                isToday ? "bg-indigo-100 dark:bg-indigo-950 font-semibold text-indigo-700" : "text-zinc-700"
               }`}
             >
               <span>{day}</span>
@@ -119,12 +119,12 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
 
       {showForm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
-          <div className="w-full max-w-sm rounded-xl bg-white p-6 shadow-lg">
+          <div className="w-full max-w-sm rounded-xl bg-white dark:bg-zinc-900 p-6 shadow-lg">
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="font-semibold text-zinc-800">
+              <h3 className="font-semibold text-zinc-800 dark:text-zinc-100">
                 Nuevo evento — {selectedDate}
               </h3>
-              <button onClick={() => setShowForm(false)} className="text-zinc-400 hover:text-zinc-600">
+              <button onClick={() => setShowForm(false)} className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-400">
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -133,20 +133,20 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
               <input type="hidden" name="event_date" value={selectedDate} />
 
               <div>
-                <label className="block text-sm font-medium text-zinc-700">Título</label>
+                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Título</label>
                 <input
                   name="title"
                   required
-                  className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-zinc-700">Descripción</label>
+                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Descripción</label>
                 <textarea
                   name="description"
                   rows={3}
-                  className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                 />
               </div>
 

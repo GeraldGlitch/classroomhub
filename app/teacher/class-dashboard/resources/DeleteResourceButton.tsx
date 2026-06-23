@@ -16,7 +16,7 @@ export default function DeleteResourceButton({ id }: { id: string }) {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-lg p-2 text-zinc-400 transition-colors hover:bg-red-50 hover:text-red-500"
+        className="rounded-lg p-2 text-zinc-400 dark:text-zinc-500 transition-colors hover:bg-red-50 dark:bg-red-950 hover:text-red-500"
       >
         <Trash2 className="h-4 w-4" />
       </button>

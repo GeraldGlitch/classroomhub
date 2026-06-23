@@ -60,24 +60,24 @@ export default function WordsManager({
       </button>
 
       {showForm && (
-        <form action={addAction} className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
+        <form action={addAction} className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 shadow-sm">
           <input type="hidden" name="student_id" value={studentId} />
           <div className="grid gap-3 sm:grid-cols-3">
             <input
               name="word"
               placeholder="Palabra"
               required
-              className="rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
             <input
               name="pronunciation"
               placeholder="Pronunciación"
-              className="rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
             <input
               name="meaning"
               placeholder="Significado"
-              className="rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
           </div>
           {addState?.error && <p className="mt-2 text-sm text-red-500">{addState.error}</p>}
@@ -85,7 +85,7 @@ export default function WordsManager({
             <button type="submit" disabled={addPending} className="rounded-lg bg-indigo-600 px-4 py-2 text-xs font-medium text-white hover:bg-indigo-700 disabled:opacity-50">
               {addPending ? "..." : "Guardar"}
             </button>
-            <button type="button" onClick={resetForm} className="rounded-lg bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-600 hover:bg-zinc-200">
+            <button type="button" onClick={resetForm} className="rounded-lg bg-zinc-100 dark:bg-zinc-800 px-4 py-2 text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200">
               Cancelar
             </button>
           </div>
@@ -93,13 +93,13 @@ export default function WordsManager({
       )}
 
       {words.length === 0 && !showForm ? (
-        <div className="rounded-xl border border-dashed border-zinc-300 bg-white p-8 text-center">
-          <p className="text-sm text-zinc-400">No hay palabras registradas</p>
+        <div className="rounded-xl border border-dashed border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 bg-white dark:bg-zinc-900 p-8 text-center">
+          <p className="text-sm text-zinc-400 dark:text-zinc-500">No hay palabras registradas</p>
         </div>
       ) : (
         <div className="space-y-2">
           {words.map((w) => (
-            <div key={w.id} className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
+            <div key={w.id} className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 shadow-sm">
               {editingId === w.id ? (
                 <form action={updateAction} className="space-y-3">
                   <input type="hidden" name="id" value={w.id} />
@@ -109,19 +109,19 @@ export default function WordsManager({
                       value={word}
                       onChange={(e) => setWord(e.target.value)}
                       required
-                      className="rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      className="rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                     />
                     <input
                       name="pronunciation"
                       value={pronunciation}
                       onChange={(e) => setPronunciation(e.target.value)}
-                      className="rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      className="rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                     />
                     <input
                       name="meaning"
                       value={meaning}
                       onChange={(e) => setMeaning(e.target.value)}
-                      className="rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                      className="rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                     />
                   </div>
                   {updateState?.error && <p className="text-sm text-red-500">{updateState.error}</p>}
@@ -129,7 +129,7 @@ export default function WordsManager({
                     <button type="submit" disabled={updatePending} className="rounded-lg bg-indigo-600 px-3 py-1 text-xs font-medium text-white hover:bg-indigo-700 disabled:opacity-50">
                       <Check className="h-4 w-4" />
                     </button>
-                    <button type="button" onClick={resetForm} className="rounded-lg bg-zinc-100 px-3 py-1 text-xs text-zinc-600 hover:bg-zinc-200">
+                    <button type="button" onClick={resetForm} className="rounded-lg bg-zinc-100 dark:bg-zinc-800 px-3 py-1 text-xs text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200">
                       <X className="h-4 w-4" />
                     </button>
                   </div>
@@ -138,20 +138,20 @@ export default function WordsManager({
                 <div className="flex items-start justify-between">
                   <div className="grid gap-1 sm:grid-cols-3 sm:gap-4">
                     <div>
-                      <span className="text-xs text-zinc-400 sm:hidden">Palabra</span>
-                      <p className="font-medium text-zinc-800">{w.word}</p>
+                      <span className="text-xs text-zinc-400 dark:text-zinc-500 sm:hidden">Palabra</span>
+                      <p className="font-medium text-zinc-800 dark:text-zinc-100">{w.word}</p>
                     </div>
                     <div>
-                      <span className="text-xs text-zinc-400 sm:hidden">Pronunciación</span>
-                      <p className="text-sm text-zinc-600">{w.pronunciation ?? "—"}</p>
+                      <span className="text-xs text-zinc-400 dark:text-zinc-500 sm:hidden">Pronunciación</span>
+                      <p className="text-sm text-zinc-600 dark:text-zinc-400">{w.pronunciation ?? "—"}</p>
                     </div>
                     <div>
-                      <span className="text-xs text-zinc-400 sm:hidden">Significado</span>
-                      <p className="text-sm text-zinc-600">{w.meaning ?? "—"}</p>
+                      <span className="text-xs text-zinc-400 dark:text-zinc-500 sm:hidden">Significado</span>
+                      <p className="text-sm text-zinc-600 dark:text-zinc-400">{w.meaning ?? "—"}</p>
                     </div>
                   </div>
                   <div className="flex gap-1">
-                    <button onClick={() => startEdit(w)} className="rounded-lg p-2 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600">
+                    <button onClick={() => startEdit(w)} className="rounded-lg p-2 text-zinc-400 dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 dark:bg-zinc-800 hover:text-zinc-600 dark:hover:text-zinc-400">
                       <Pencil className="h-4 w-4" />
                     </button>
                     <DeleteWordButton id={w.id} />
@@ -175,7 +175,7 @@ function DeleteWordButton({ id }: { id: string }) {
   return (
     <form action={action}>
       <input type="hidden" name="id" value={id} />
-      <button type="submit" disabled={pending} className="rounded-lg p-2 text-zinc-400 hover:bg-red-50 hover:text-red-500">
+      <button type="submit" disabled={pending} className="rounded-lg p-2 text-zinc-400 dark:text-zinc-500 hover:bg-red-50 dark:bg-red-950 hover:text-red-500">
         <Trash2 className="h-4 w-4" />
       </button>
     </form>

@@ -1,8 +1,7 @@
 "use client"
 
-import { useActionState, useState } from "react"
+import { useActionState } from "react"
 import { createResource, updateResource } from "./actions"
-import { Plus, X } from "lucide-react"
 
 interface Resource {
   id: string
@@ -12,6 +11,12 @@ interface Resource {
   external_links: { label: string; url: string }[]
 }
 
+function firstLink(resource?: Resource): string {
+  const links = resource?.external_links
+  if (!links || links.length === 0) return ""
+  return links[0].url
+}
+
 export default function ResourceForm({ resource }: { resource?: Resource }) {
   const action = resource ? updateResource : createResource
   const [state, formAction, pending] = useActionState(
@@ -19,29 +24,17 @@ export default function ResourceForm({ resource }: { resource?: Resource }) {
     undefined,
   )
 
-  const [links, setLinks] = useState<{ label: string; url: string }[]>(
-    resource?.external_links ?? [],
-  )
-  const [linkLabel, setLinkLabel] = useState("")
-  const [linkUrl, setLinkUrl] = useState("")
-
-  function addLink() {
-    if (!linkUrl) return
-    setLinks([...links, { label: linkLabel || linkUrl, url: linkUrl }])
-    setLinkLabel("")
-    setLinkUrl("")
-  }
-
-  function removeLink(i: number) {
-    setLinks(links.filter((_, idx) => idx !== i))
-  }
-
   return (
     <form action={formAction} className="space-y-4">
+      {state?.error && (
+        <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-400">
+          {state.error}
+        </div>
+      )}
       {resource && <input type="hidden" name="id" value={resource.id} />}
 
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="title" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
           Título
         </label>
         <input
@@ -49,12 +42,12 @@ export default function ResourceForm({ resource }: { resource?: Resource }) {
           name="title"
           required
           defaultValue={resource?.title}
-          className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         />
       </div>
 
       <div>
-        <label htmlFor="description" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="description" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
           Descripción
         </label>
         <textarea
@@ -62,12 +55,12 @@ export default function ResourceForm({ resource }: { resource?: Resource }) {
           name="description"
           rows={3}
           defaultValue={resource?.description ?? ""}
-          className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         />
       </div>
 
       <div>
-        <label htmlFor="topic_group" className="block text-sm font-medium text-zinc-700">
+        <label htmlFor="topic_group" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
           Grupo / Tema
         </label>
         <input
@@ -75,48 +68,23 @@ export default function ResourceForm({ resource }: { resource?: Resource }) {
           name="topic_group"
           defaultValue={resource?.topic_group ?? ""}
           placeholder="Ej: Gramática, Vocabulario..."
-          className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
         />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-zinc-700">Enlaces externos</label>
-        <div className="mt-1 space-y-2">
-          {links.map((link, i) => (
-            <div key={i} className="flex items-center gap-2 rounded-lg bg-zinc-50 px-3 py-2 text-sm">
-              <span className="flex-1 text-zinc-700">{link.label}</span>
-              <span className="text-xs text-zinc-400">{link.url}</span>
-              <button type="button" onClick={() => removeLink(i)} className="text-zinc-400 hover:text-red-500">
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-          ))}
-          <div className="flex gap-2">
-            <input
-              placeholder="Nombre (opcional)"
-              value={linkLabel}
-              onChange={(e) => setLinkLabel(e.target.value)}
-              className="block w-1/3 rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-            />
-            <input
-              placeholder="https://..."
-              value={linkUrl}
-              onChange={(e) => setLinkUrl(e.target.value)}
-              className="block flex-1 rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-            />
-            <button
-              type="button"
-              onClick={addLink}
-              className="rounded-lg bg-zinc-100 px-3 text-zinc-600 hover:bg-zinc-200"
-            >
-              <Plus className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-        <input type="hidden" name="external_links" value={JSON.stringify(links)} />
+        <label htmlFor="external_url" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+          Enlace externo
+        </label>
+        <input
+          id="external_url"
+          name="external_url"
+          type="url"
+          defaultValue={firstLink(resource)}
+          placeholder="https://..."
+          className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+        />
       </div>
-
-      {state?.error && <p className="text-sm text-red-500">{state.error}</p>}
 
       <div className="flex gap-3">
         <button

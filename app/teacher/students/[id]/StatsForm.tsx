@@ -30,40 +30,40 @@ export default function StatsForm({
       <input type="hidden" name="student_id" value={studentId} />
 
       {stats && (
-        <div className="rounded-lg bg-indigo-50 p-3 text-sm text-indigo-700">
+        <div className="rounded-lg bg-indigo-50 dark:bg-indigo-950 p-3 text-sm text-indigo-700">
           {correct} respuestas correctas de {total} preguntas en {completed} cuestionarios.
         </div>
       )}
 
       <div className="grid grid-cols-3 gap-3">
         <div>
-          <label className="block text-xs font-medium text-zinc-600">Correctas</label>
+          <label className="block text-xs font-medium text-zinc-600 dark:text-zinc-400">Correctas</label>
           <input
             name="correct_answers"
             type="number"
             defaultValue={correct}
             min={0}
-            className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-zinc-600">Totales</label>
+          <label className="block text-xs font-medium text-zinc-600 dark:text-zinc-400">Totales</label>
           <input
             name="total_answers"
             type="number"
             defaultValue={total}
             min={0}
-            className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
           />
         </div>
         <div>
-          <label className="block text-xs font-medium text-zinc-600">Cuestionarios</label>
+          <label className="block text-xs font-medium text-zinc-600 dark:text-zinc-400">Cuestionarios</label>
           <input
             name="completed_questionnaires"
             type="number"
             defaultValue={completed}
             min={0}
-            className="mt-1 block w-full rounded-lg border border-zinc-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
           />
         </div>
       </div>
