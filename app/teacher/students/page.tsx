@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import Link from "next/link"
-import { Plus, User } from "lucide-react"
+import { Plus, User, Smile } from "lucide-react"
 import DeleteStudentButton from "./DeleteStudentButton"
 import CopyCodeButton from "./CopyCodeButton"
 
@@ -40,8 +40,8 @@ export default async function StudentsPage() {
               key={student.id}
               className="flex items-center gap-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 shadow-sm"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-600 font-semibold text-sm">
-                {student.name.charAt(0).toUpperCase()}
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-950">
+                <Smile className="h-5 w-5 text-indigo-600" />
               </div>
               <div className="flex-1 min-w-0">
                 <Link

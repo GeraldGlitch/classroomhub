@@ -3,12 +3,12 @@
 import { useState } from "react"
 import { ChevronLeft, ChevronRight, ExternalLink, Video, Globe } from "lucide-react"
 
-interface ResourceLink {
+export interface ResourceLink {
   label: string
   url: string
 }
 
-interface Resource {
+export interface Resource {
   id: string
   title: string
   description: string | null

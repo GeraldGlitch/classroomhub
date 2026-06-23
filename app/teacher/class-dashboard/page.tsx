@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import Link from "next/link"
 import { BookOpen, Calendar, ArrowRight } from "lucide-react"
+import { parseLocalDate } from "@/lib/date"
 
 export default async function ClassDashboardPage() {
   const supabase = await createClient()
@@ -68,7 +69,7 @@ export default async function ClassDashboardPage() {
             {upcoming.map((event) => (
               <div key={event.id} className="flex items-center gap-3 text-sm">
                 <span className="rounded-md bg-indigo-100 dark:bg-indigo-950 px-2 py-1 text-xs font-medium text-indigo-700 dark:text-indigo-300 dark:bg-indigo-950 dark:text-indigo-300">
-                  {new Date(event.event_date).toLocaleDateString("es-ES", {
+                  {parseLocalDate(event.event_date).toLocaleDateString("es-ES", {
                     day: "numeric",
                     month: "short",
                   })}

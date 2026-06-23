@@ -3,6 +3,7 @@
 import { useActionState } from "react"
 import { deleteEvent } from "./actions"
 import { Trash2, Calendar } from "lucide-react"
+import { parseLocalDate } from "@/lib/date"
 
 interface AgendaEvent {
   id: string
@@ -57,12 +58,19 @@ export default function AgendaEventList({ events }: { events: AgendaEvent[] }) {
                 className="flex items-start gap-3 rounded-lg border border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-3"
               >
                 <div className="flex-shrink-0 text-center">
-                  <div className="text-xs font-semibold text-indigo-600">
-                    {new Date(event.event_date).toLocaleDateString("es-ES", { weekday: "short" })}
-                  </div>
-                  <div className="text-lg font-bold text-zinc-700 dark:text-zinc-300">
-                    {new Date(event.event_date).getDate()}
-                  </div>
+                  {(() => {
+                    const eventDate = parseLocalDate(event.event_date)
+                    return (
+                      <>
+                        <div className="text-xs font-semibold text-indigo-600">
+                          {eventDate.toLocaleDateString("es-ES", { weekday: "short" })}
+                        </div>
+                        <div className="text-lg font-bold text-zinc-700 dark:text-zinc-300">
+                          {eventDate.getDate()}
+                        </div>
+                      </>
+                    )
+                  })()}
                 </div>
                 <div className="flex-1">
                   <p className="font-medium text-zinc-800 dark:text-zinc-100">{event.title}</p>
@@ -87,7 +95,7 @@ export default function AgendaEventList({ events }: { events: AgendaEvent[] }) {
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-zinc-400 dark:text-zinc-500"
               >
                 <Calendar className="h-3 w-3" />
-                <span>{new Date(event.event_date).toLocaleDateString("es-ES")}</span>
+                <span>{parseLocalDate(event.event_date).toLocaleDateString("es-ES")}</span>
                 <span>{event.title}</span>
               </div>
             ))}

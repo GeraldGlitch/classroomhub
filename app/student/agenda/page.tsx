@@ -2,6 +2,7 @@ import { cookies } from "next/headers"
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import { Calendar } from "lucide-react"
+import { parseLocalDate } from "@/lib/date"
 
 export default async function StudentAgendaPage() {
   const cookieStore = await cookies()
@@ -52,10 +53,19 @@ export default async function StudentAgendaPage() {
                   >
                     <div className="flex-shrink-0 rounded-lg bg-indigo-100 px-3 py-2 text-center dark:bg-indigo-950">
                       <div className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">
-                        {new Date(event.event_date).toLocaleDateString("es-ES", { month: "short" })}
-                      </div>
-                      <div className="text-xl font-bold text-indigo-700 dark:text-indigo-300">
-                        {new Date(event.event_date).getDate()}
+                        {(() => {
+                          const eventDate = parseLocalDate(event.event_date)
+                          return (
+                            <>
+                              <div className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">
+                                {eventDate.toLocaleDateString("es-ES", { month: "short" })}
+                              </div>
+                              <div className="text-xl font-bold text-indigo-700 dark:text-indigo-300">
+                                {eventDate.getDate()}
+                              </div>
+                            </>
+                          )
+                        })()}
                       </div>
                     </div>
                     <div>
@@ -77,7 +87,7 @@ export default async function StudentAgendaPage() {
                 {past.map((event) => (
                   <div key={event.id} className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-zinc-400 dark:text-zinc-500">
                     <span className="text-xs">
-                      {new Date(event.event_date).toLocaleDateString("es-ES")}
+                      {parseLocalDate(event.event_date).toLocaleDateString("es-ES")}
                     </span>
                     <span>{event.title}</span>
                   </div>

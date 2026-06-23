@@ -1,6 +1,7 @@
 import { cookies } from "next/headers"
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
+import { Smile } from "lucide-react"
 
 export default async function StudentProfilePage() {
   const cookieStore = await cookies()
@@ -24,8 +25,8 @@ export default async function StudentProfilePage() {
 
       <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
         <div className="flex items-center gap-4">
-          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100 text-xl font-bold text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400">
-            {student.name.charAt(0).toUpperCase()}
+          <div className="flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-950">
+            <Smile className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
           </div>
           <div>
             <h2 className="text-xl font-semibold text-zinc-800 dark:text-zinc-100">{student.name}</h2>

@@ -8,7 +8,7 @@ import { LogIn, GraduationCap } from "lucide-react"
 type Tab = "teacher" | "student"
 
 export default function LoginForm() {
-  const [tab, setTab] = useState<Tab>("teacher")
+  const [tab, setTab] = useState<Tab>("student")
 
   const [teacherState, teacherAction, teacherPending] = useActionState(
     async (_prev: unknown, formData: FormData) => loginTeacher(formData),

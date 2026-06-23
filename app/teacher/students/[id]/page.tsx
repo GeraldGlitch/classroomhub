@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { BookMarked, ArrowLeft } from "lucide-react"
+import { BookMarked, ArrowLeft, Smile } from "lucide-react"
 import StudentProfileForm from "./StudentProfileForm"
 import StatsForm from "./StatsForm"
 
@@ -43,8 +43,8 @@ export default async function StudentProfilePage({
       </Link>
 
       <div className="flex items-start gap-6">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-950 text-xl font-bold text-indigo-600">
-          {student.name.charAt(0).toUpperCase()}
+        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-950">
+          <Smile className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
         </div>
         <div className="flex-1">
           <h1 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">{student.name}</h1>
