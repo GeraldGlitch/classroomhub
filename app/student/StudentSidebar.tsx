@@ -96,6 +96,19 @@ export default function StudentSidebar({ studentName }: { studentName: string })
         })}
       </nav>
 
+      <div className="border-t border-zinc-100 p-1 dark:border-zinc-800">
+        <button
+          onClick={() => setCollapsed((c) => !c)}
+          className="flex w-full items-center justify-center rounded-lg p-2 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
+        >
+          {collapsed ? (
+            <PanelLeftOpen className="h-4 w-4" />
+          ) : (
+            <PanelLeftClose className="h-4 w-4" />
+          )}
+        </button>
+      </div>
+
       <div className={`border-t border-zinc-100 px-1.5 py-2 dark:border-zinc-800 ${collapsed ? "flex justify-center" : "px-3"}`}>
         <ThemeToggle />
       </div>
@@ -113,19 +126,6 @@ export default function StudentSidebar({ studentName }: { studentName: string })
             {!collapsed && "Salir"}
           </button>
         </form>
-      </div>
-
-      <div className="border-t border-zinc-100 p-1 dark:border-zinc-800">
-        <button
-          onClick={() => setCollapsed((c) => !c)}
-          className="flex w-full items-center justify-center rounded-lg p-2 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
-        >
-          {collapsed ? (
-            <PanelLeftOpen className="h-4 w-4" />
-          ) : (
-            <PanelLeftClose className="h-4 w-4" />
-          )}
-        </button>
       </div>
     </aside>
   )
