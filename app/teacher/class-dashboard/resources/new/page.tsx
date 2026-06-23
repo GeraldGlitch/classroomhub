@@ -1,0 +1,10 @@
+import ResourceForm from "../ResourceForm"
+
+export default function NewResourcePage() {
+  return (
+    <div className="mx-auto max-w-lg">
+      <h1 className="mb-6 text-2xl font-bold text-zinc-800">Nuevo recurso</h1>
+      <ResourceForm />
+    </div>
+  )
+}
