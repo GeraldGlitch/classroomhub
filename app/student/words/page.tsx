@@ -14,7 +14,7 @@ export default async function StudentWordsPage() {
     .from("difficult_words")
     .select("*")
     .eq("student_id", studentId)
-    .order("word")
+    .order("fail_count", { ascending: false })
 
   const { data: wordStats } = await supabase
     .from("word_stats")
@@ -29,7 +29,9 @@ export default async function StudentWordsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">Palabras difíciles</h1>
+      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">
+        Palabras difíciles ({words?.length ?? 0} palabras)
+      </h1>
 
       {wordStats && totales > 0 && (
         <div className="animate-fade-in-up space-y-4 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">

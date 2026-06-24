@@ -41,6 +41,7 @@ export interface DifficultWord {
   word: string
   pronunciation: string | null
   meaning: string | null
+  fail_count: number
   created_at: string
 }
 

@@ -10,6 +10,7 @@ interface Word {
   word: string
   pronunciation: string | null
   meaning: string | null
+  fail_count: number
 }
 
 export default function WordsManager({
@@ -24,6 +25,7 @@ export default function WordsManager({
   const [word, setWord] = useState("")
   const [pronunciation, setPronunciation] = useState("")
   const [meaning, setMeaning] = useState("")
+  const [failCount, setFailCount] = useState(1)
 
   const [addState, addAction, addPending] = useActionState(
     async (_prev: unknown, formData: FormData) => addWord(formData),
@@ -65,6 +67,7 @@ export default function WordsManager({
     setWord("")
     setPronunciation("")
     setMeaning("")
+    setFailCount(1)
     setShowForm(false)
     setEditingId(null)
   }
@@ -74,6 +77,7 @@ export default function WordsManager({
     setWord(w.word)
     setPronunciation(w.pronunciation ?? "")
     setMeaning(w.meaning ?? "")
+    setFailCount(w.fail_count ?? 0)
   }
 
   return (
@@ -105,6 +109,18 @@ export default function WordsManager({
               name="meaning"
               placeholder="Significado"
               className="rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            />
+          </div>
+          <div className="mt-3">
+            <label className="mb-1 block text-xs font-medium text-zinc-500 dark:text-zinc-400">
+              Veces fallada
+            </label>
+            <input
+              name="fail_count"
+              type="number"
+              min="1"
+              defaultValue={1}
+              className="w-full max-w-[160px] rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
           </div>
           {addState?.error && <p className="mt-2 text-sm text-red-500">{addState.error}</p>}
@@ -151,6 +167,19 @@ export default function WordsManager({
                       className="rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
                     />
                   </div>
+                  <div className="mt-3">
+                    <label className="mb-1 block text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                      Veces fallada
+                    </label>
+                    <input
+                      name="fail_count"
+                      type="number"
+                      min="1"
+                      value={failCount}
+                      onChange={(e) => setFailCount(Math.max(1, parseInt(e.target.value) || 1))}
+                      className="w-full max-w-[160px] rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                    />
+                  </div>
                   {updateState?.error && <p className="text-sm text-red-500">{updateState.error}</p>}
                   <div className="flex gap-2">
                     <button type="submit" disabled={updatePending} className="rounded-lg bg-indigo-600 px-3 py-1 text-xs font-medium text-white hover:bg-indigo-700 disabled:opacity-50">
@@ -163,7 +192,7 @@ export default function WordsManager({
                 </form>
               ) : (
                 <div className="flex items-start justify-between">
-                  <div className="grid gap-1 sm:grid-cols-3 sm:gap-4">
+                  <div className="grid gap-1 sm:grid-cols-4 sm:gap-4">
                     <div>
                       <span className="text-xs text-zinc-400 dark:text-zinc-500 sm:hidden">Palabra</span>
                       <p className="font-medium text-zinc-800 dark:text-zinc-100">{w.word}</p>
@@ -175,6 +204,10 @@ export default function WordsManager({
                     <div>
                       <span className="text-xs text-zinc-400 dark:text-zinc-500 sm:hidden">Significado</span>
                       <p className="text-sm text-zinc-600 dark:text-zinc-400">{w.meaning ?? "—"}</p>
+                    </div>
+                    <div>
+                      <span className="text-xs text-zinc-400 dark:text-zinc-500 sm:hidden">Veces fallada</span>
+                      <p className="text-sm text-zinc-600 dark:text-zinc-400">{w.fail_count ?? 0}</p>
                     </div>
                   </div>
                   <div className="flex gap-1">

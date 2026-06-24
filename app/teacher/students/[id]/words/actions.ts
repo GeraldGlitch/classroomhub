@@ -9,6 +9,7 @@ const wordSchema = z.object({
   word: z.string().min(1, "La palabra es obligatoria"),
   pronunciation: z.string().optional(),
   meaning: z.string().optional(),
+  fail_count: z.coerce.number().int().min(1).optional(),
 })
 
 export async function addWord(formData: FormData) {
@@ -17,6 +18,7 @@ export async function addWord(formData: FormData) {
     word: formData.get("word"),
     pronunciation: formData.get("pronunciation"),
     meaning: formData.get("meaning"),
+    fail_count: formData.get("fail_count"),
   })
 
   if (!parsed.success) return { error: "Datos inválidos" }
@@ -27,6 +29,7 @@ export async function addWord(formData: FormData) {
     word: parsed.data.word,
     pronunciation: parsed.data.pronunciation || null,
     meaning: parsed.data.meaning || null,
+    fail_count: parsed.data.fail_count ?? 1,
   })
 
   if (error) return { error: error.message }
@@ -39,6 +42,7 @@ export async function updateWord(formData: FormData) {
     word: formData.get("word"),
     pronunciation: formData.get("pronunciation"),
     meaning: formData.get("meaning"),
+    fail_count: formData.get("fail_count"),
   })
 
   if (!parsed.success) return { error: "Datos inválidos" }
@@ -58,6 +62,7 @@ export async function updateWord(formData: FormData) {
       word: parsed.data.word,
       pronunciation: parsed.data.pronunciation || null,
       meaning: parsed.data.meaning || null,
+      fail_count: parsed.data.fail_count ?? 1,
     })
     .eq("id", id)
 

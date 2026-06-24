@@ -22,7 +22,7 @@ export default async function StudentProfilePage({
 
   if (!student) notFound()
 
-  const { data: wordCount } = await supabase
+  const { count } = await supabase
     .from("difficult_words")
     .select("id", { count: "exact", head: true })
     .eq("student_id", id)
@@ -92,7 +92,7 @@ export default async function StudentProfilePage({
               <div className="min-w-0 flex-1">
                 <h3 className="font-semibold text-zinc-800 dark:text-zinc-100">Palabras difíciles</h3>
                 <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                  {wordCount?.length ?? 0} palabras
+                  {count ?? 0} palabras
                 </p>
                 {wordStats && readCount > 0 && (
                   <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">

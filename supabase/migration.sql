@@ -48,6 +48,7 @@ CREATE TABLE difficult_words (
   word TEXT NOT NULL,
   pronunciation TEXT,
   meaning TEXT,
+  fail_count INTEGER DEFAULT 1,
   created_at TIMESTAMPTZ DEFAULT now()
 );
 
