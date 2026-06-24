@@ -19,7 +19,7 @@ export default async function EditResourcePage({
 
   return (
     <div className="mx-auto max-w-lg">
-      <h1 className="mb-6 text-2xl font-bold text-zinc-800 dark:text-zinc-100">Editar recurso</h1>
+      <h1 className="mb-6 animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">Editar recurso</h1>
       <ResourceForm resource={resource} />
     </div>
   )

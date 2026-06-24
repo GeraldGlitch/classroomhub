@@ -3,9 +3,15 @@
 import { useState } from "react"
 import { useActionState } from "react"
 import { loginTeacher, findStudentByCode } from "@/lib/actions/auth"
-import { LogIn, GraduationCap } from "lucide-react"
+import { LogIn, GraduationCap, Loader2 } from "lucide-react"
 
 type Tab = "teacher" | "student"
+
+const inputClass =
+  "mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm shadow-sm transition-all duration-150 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800"
+
+const labelClass =
+  "block text-sm font-medium text-zinc-700 dark:text-zinc-300"
 
 export default function LoginForm() {
   const [tab, setTab] = useState<Tab>("student")
@@ -21,15 +27,20 @@ export default function LoginForm() {
   )
 
   return (
-    <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6 shadow-sm">
-      <div className="mb-6 flex rounded-lg bg-zinc-100 dark:bg-zinc-800 p-1">
+    <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+      <div className="relative mb-6 flex rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800">
+        <div
+          className={`absolute bottom-1 top-1 w-[calc(50%-0.25rem)] rounded-md bg-white shadow-sm transition-transform duration-200 ease-out dark:bg-zinc-900 ${
+            tab === "teacher" ? "translate-x-full" : "translate-x-0"
+          }`}
+        />
         <button
           type="button"
           onClick={() => setTab("teacher")}
-          className={`flex flex-1 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+          className={`relative z-10 flex flex-1 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
             tab === "teacher"
-              ? "bg-white dark:bg-zinc-900 text-indigo-600 shadow-sm"
-              : "text-zinc-500 hover:text-zinc-700"
+              ? "text-indigo-600 dark:text-indigo-400"
+              : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
           }`}
         >
           <LogIn className="h-4 w-4" />
@@ -38,10 +49,10 @@ export default function LoginForm() {
         <button
           type="button"
           onClick={() => setTab("student")}
-          className={`flex flex-1 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+          className={`relative z-10 flex flex-1 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
             tab === "student"
-              ? "bg-white dark:bg-zinc-900 text-indigo-600 shadow-sm"
-              : "text-zinc-500 hover:text-zinc-700"
+              ? "text-indigo-600 dark:text-indigo-400"
+              : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
           }`}
         >
           <GraduationCap className="h-4 w-4" />
@@ -50,9 +61,9 @@ export default function LoginForm() {
       </div>
 
       {tab === "teacher" ? (
-        <form action={teacherAction} className="space-y-4">
+        <form key="teacher" action={teacherAction} className="space-y-4 animate-fade-in-up">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            <label htmlFor="email" className={labelClass}>
               Email
             </label>
             <input
@@ -60,12 +71,12 @@ export default function LoginForm() {
               name="email"
               type="email"
               required
-              className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className={inputClass}
               placeholder="profesor@ejemplo.com"
             />
           </div>
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            <label htmlFor="password" className={labelClass}>
               Contraseña
             </label>
             <input
@@ -73,7 +84,7 @@ export default function LoginForm() {
               name="password"
               type="password"
               required
-              className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className={inputClass}
               placeholder="••••••••"
             />
           </div>
@@ -83,15 +94,22 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={teacherPending}
-            className="w-full rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
           >
-            {teacherPending ? "Entrando..." : "Entrar"}
+            {teacherPending ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Entrando...
+              </>
+            ) : (
+              "Entrar"
+            )}
           </button>
         </form>
       ) : (
-        <form action={studentAction} className="space-y-4">
+        <form key="student" action={studentAction} className="space-y-4 animate-fade-in-up">
           <div>
-            <label htmlFor="code" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">
+            <label htmlFor="code" className={labelClass}>
               Código de acceso
             </label>
             <input
@@ -99,7 +117,7 @@ export default function LoginForm() {
               name="code"
               type="text"
               required
-              className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className={inputClass}
               placeholder="Tu código personal"
               maxLength={10}
             />
@@ -113,9 +131,16 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={studentPending}
-            className="w-full rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
           >
-            {studentPending ? "Verificando..." : "Acceder"}
+            {studentPending ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Verificando...
+              </>
+            ) : (
+              "Acceder"
+            )}
           </button>
         </form>
       )}

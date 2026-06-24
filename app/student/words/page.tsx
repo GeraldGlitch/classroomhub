@@ -18,11 +18,11 @@ export default async function StudentWordsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">Palabras difíciles</h1>
+      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">Palabras difíciles</h1>
 
       {!words || words.length === 0 ? (
-        <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-zinc-300 bg-white p-12 text-center dark:border-zinc-700 dark:bg-zinc-900">
-          <BookMarked className="h-10 w-10 text-zinc-300 dark:text-zinc-600" />
+        <div className="flex animate-fade-in flex-col items-center gap-3 rounded-xl border border-dashed border-zinc-300 bg-white p-12 text-center dark:border-zinc-700 dark:bg-zinc-900">
+          <BookMarked className="h-10 w-10 animate-bounce-subtle text-zinc-300 dark:text-zinc-600" />
           <p className="text-sm text-zinc-400 dark:text-zinc-500">No tienes palabras registradas aún</p>
         </div>
       ) : (

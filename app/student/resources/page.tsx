@@ -27,7 +27,7 @@ export default async function StudentResourcesPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">Recursos</h1>
+      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">Recursos</h1>
       <ResourcesList grouped={grouped} />
     </div>
   )

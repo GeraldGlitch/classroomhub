@@ -23,10 +23,11 @@ export default function WordList({ words }: { words: Word[] }) {
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        {paginatedWords.map((w) => (
+        {paginatedWords.map((w, i) => (
           <div
             key={w.id}
-            className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+            className="animate-fade-in-up rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+            style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
           >
             <div className="grid gap-2 sm:grid-cols-3">
               <div>

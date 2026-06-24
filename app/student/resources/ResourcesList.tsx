@@ -63,8 +63,8 @@ export default function ResourcesList({
       )}
 
       {groups.length === 0 ? (
-        <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-zinc-300 bg-white p-12 text-center dark:border-zinc-700 dark:bg-zinc-900">
-          <Search className="h-10 w-10 text-zinc-300 dark:text-zinc-600" />
+        <div className="flex animate-fade-in flex-col items-center gap-3 rounded-xl border border-dashed border-zinc-300 bg-white p-12 text-center dark:border-zinc-700 dark:bg-zinc-900">
+          <Search className="h-10 w-10 animate-bounce-subtle text-zinc-300 dark:text-zinc-600" />
           <p className="text-sm text-zinc-400 dark:text-zinc-500">
             {searchTerm ? "No se encontraron recursos" : "No hay recursos compartidos aún"}
           </p>

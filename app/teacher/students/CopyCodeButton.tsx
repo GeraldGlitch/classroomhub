@@ -1,29 +1,44 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Copy, Check } from "lucide-react"
 
 export default function CopyCodeButton({ code }: { code: string }) {
   const [copied, setCopied] = useState(false)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   async function handleCopy() {
-    await navigator.clipboard.writeText(code)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    try {
+      await navigator.clipboard.writeText(code)
+      setCopied(true)
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+      timeoutRef.current = setTimeout(() => setCopied(false), 2000)
+    } catch {
+      // clipboard API may be blocked
+    }
   }
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    }
+  }, [])
 
   return (
     <button
       type="button"
       onClick={handleCopy}
-      className="text-zinc-300 hover:text-indigo-500 flex-shrink-0"
+      className="flex-shrink-0 text-zinc-300 hover:text-indigo-500"
       title="Copiar código"
+      aria-label="Copiar código de acceso"
     >
-      {copied ? (
-        <Check className="h-3 w-3 text-green-500" />
-      ) : (
-        <Copy className="h-3 w-3" />
-      )}
+      <span key={copied ? "check" : "copy"} className="inline-flex animate-scale-in">
+        {copied ? (
+          <Check className="h-3 w-3 text-green-500" />
+        ) : (
+          <Copy className="h-3 w-3" />
+        )}
+      </span>
     </button>
   )
 }

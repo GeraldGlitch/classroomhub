@@ -61,7 +61,7 @@ export default function StudentProfileForm({ student }: { student: Student }) {
           name="name"
           required
           defaultValue={student.name}
-          className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+          className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800"
         />
       </div>
 
@@ -75,7 +75,7 @@ export default function StudentProfileForm({ student }: { student: Student }) {
             maxLength={20}
             value={code}
             onChange={(e) => setCode(e.target.value)}
-            className="block flex-1 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 font-mono text-sm tracking-widest shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            className="block flex-1 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 font-mono text-sm tracking-widest shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800"
           />
           <form action={regenFormAction} className="inline">
             <button
@@ -83,6 +83,7 @@ export default function StudentProfileForm({ student }: { student: Student }) {
               disabled={regenPending}
               className="flex items-center gap-1 rounded-lg border border-zinc-200 dark:border-zinc-800 px-2 py-2 text-xs text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800 dark:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300 disabled:opacity-50"
               title="Generar código aleatorio"
+              aria-label="Generar código aleatorio"
             >
               <RefreshCw className={`h-3.5 w-3.5 ${regenPending ? "animate-spin" : ""}`} />
             </button>
@@ -98,14 +99,14 @@ export default function StudentProfileForm({ student }: { student: Student }) {
               <input
                 value={field.key}
                 onChange={(e) => updateField(i, e.target.value, field.value)}
-                className="block w-2/5 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="block w-2/5 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800"
               />
               <input
                 value={field.value}
                 onChange={(e) => updateField(i, field.key, e.target.value)}
-                className="block flex-1 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="block flex-1 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800"
               />
-              <button type="button" onClick={() => removeField(i)} className="text-zinc-400 hover:text-red-500">
+              <button type="button" onClick={() => removeField(i)} aria-label="Eliminar campo" className="text-zinc-400 hover:text-red-500">
                 <X className="h-4 w-4" />
               </button>
             </div>
@@ -115,15 +116,15 @@ export default function StudentProfileForm({ student }: { student: Student }) {
               value={newKey}
               onChange={(e) => setNewKey(e.target.value)}
               placeholder="Nuevo campo"
-              className="block w-2/5 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="block w-2/5 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800"
             />
             <input
               value={newValue}
               onChange={(e) => setNewValue(e.target.value)}
               placeholder="Valor"
-              className="block flex-1 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+              className="block flex-1 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800"
             />
-            <button type="button" onClick={addField} className="rounded-lg bg-zinc-100 dark:bg-zinc-800 px-3 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200">
+            <button type="button" onClick={addField} aria-label="Añadir campo" className="rounded-lg bg-zinc-100 dark:bg-zinc-800 px-3 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200">
               <Plus className="h-4 w-4" />
             </button>
           </div>

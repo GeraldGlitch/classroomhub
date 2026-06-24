@@ -1,9 +1,10 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { useActionState } from "react"
 import { createEvent } from "./actions"
-import { X } from "lucide-react"
+import { X, ChevronLeft, ChevronRight } from "lucide-react"
+import { useToast } from "@/components/Toast"
 
 interface AgendaEvent {
   id: string
@@ -17,11 +18,28 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
   const [selectedDate, setSelectedDate] = useState("")
   const [currentMonth, setCurrentMonth] = useState(() => new Date().getMonth())
   const [currentYear, setCurrentYear] = useState(() => new Date().getFullYear())
+  const titleInputRef = useRef<HTMLInputElement>(null)
+  const lastTriggerRef = useRef<HTMLButtonElement | null>(null)
 
   const [state, action, pending] = useActionState(
     async (_prev: unknown, formData: FormData) => createEvent(formData),
     undefined,
   )
+
+  const { show } = useToast()
+  const wasPending = useRef(false)
+
+  useEffect(() => {
+    if (wasPending.current && !pending) {
+      if (state?.error) {
+        show(state.error, "error")
+      } else {
+        show("Evento creado", "success")
+        closeModal()
+      }
+    }
+    wasPending.current = pending
+  }, [pending, state, show])
 
   const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate()
   const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay()
@@ -33,7 +51,23 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
 
   const dayNames = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"]
 
-  function handleDayClick(day: number) {
+  const closeModal = useCallback(() => {
+    setShowForm(false)
+    lastTriggerRef.current?.focus()
+  }, [])
+
+  useEffect(() => {
+    if (!showForm) return
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "Escape") closeModal()
+    }
+    document.addEventListener("keydown", onKey)
+    titleInputRef.current?.focus()
+    return () => document.removeEventListener("keydown", onKey)
+  }, [showForm, closeModal])
+
+  function handleDayClick(day: number, e: React.MouseEvent<HTMLButtonElement>) {
+    lastTriggerRef.current = e.currentTarget
     const date = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`
     setSelectedDate(date)
     setShowForm(true)
@@ -67,18 +101,20 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
       <div className="mb-4 flex items-center justify-between">
         <button
           onClick={handlePrevMonth}
-          className="rounded-lg px-3 py-1 text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100"
+          aria-label="Mes anterior"
+          className="flex items-center justify-center rounded-lg p-1.5 text-zinc-600 transition-colors hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
         >
-          ◀
+          <ChevronLeft className="h-4 w-4" />
         </button>
-        <span className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+        <span key={`${currentYear}-${currentMonth}`} className="animate-fade-in text-sm font-semibold text-zinc-700 dark:text-zinc-300">
           {monthNames[currentMonth]} {currentYear}
         </span>
         <button
           onClick={handleNextMonth}
-          className="rounded-lg px-3 py-1 text-sm text-zinc-600 dark:text-zinc-400 hover:bg-zinc-100"
+          aria-label="Mes siguiente"
+          className="flex items-center justify-center rounded-lg p-1.5 text-zinc-600 transition-colors hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
         >
-          ▶
+          <ChevronRight className="h-4 w-4" />
         </button>
       </div>
 
@@ -88,7 +124,7 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
         ))}
       </div>
 
-      <div className="mt-1 grid grid-cols-7 gap-1">
+      <div key={`${currentYear}-${currentMonth}`} className="mt-1 grid animate-fade-in grid-cols-7 gap-1">
         {Array.from({ length: firstDayOfWeek }).map((_, i) => (
           <div key={`empty-${i}`} />
         ))}
@@ -103,14 +139,18 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
           return (
             <button
               key={day}
-              onClick={() => handleDayClick(day)}
-              className={`relative rounded-lg p-2 text-sm transition-colors hover:bg-indigo-50 dark:bg-indigo-950 ${
-                isToday ? "bg-indigo-100 dark:bg-indigo-950 font-semibold text-indigo-700" : "text-zinc-700"
+              onClick={(e) => handleDayClick(day, e)}
+              className={`relative rounded-lg p-2 text-sm transition-colors hover:bg-indigo-50 dark:hover:bg-indigo-950 ${
+                isToday
+                  ? "bg-indigo-100 font-semibold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300"
+                  : "text-zinc-700 dark:text-zinc-300"
               }`}
             >
               <span>{day}</span>
               {dayEvents.length > 0 && (
-                <span className="absolute bottom-1 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-indigo-500" />
+                <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-indigo-600 px-1 text-[10px] font-bold text-white">
+                  {dayEvents.length}
+                </span>
               )}
             </button>
           )
@@ -118,13 +158,26 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
       </div>
 
       {showForm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
-          <div className="w-full max-w-sm rounded-xl bg-white dark:bg-zinc-900 p-6 shadow-lg">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/30 backdrop-blur-sm animate-fade-in"
+          onClick={closeModal}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Crear nuevo evento"
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-sm animate-scale-in overflow-hidden rounded-xl bg-white p-6 shadow-lg dark:bg-zinc-900"
+          >
             <div className="mb-4 flex items-center justify-between">
               <h3 className="font-semibold text-zinc-800 dark:text-zinc-100">
                 Nuevo evento — {selectedDate}
               </h3>
-              <button onClick={() => setShowForm(false)} className="text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-400">
+              <button
+                onClick={closeModal}
+                aria-label="Cerrar"
+                className="text-zinc-400 transition-colors hover:text-zinc-600 dark:hover:text-zinc-300"
+              >
                 <X className="h-5 w-5" />
               </button>
             </div>
@@ -135,9 +188,10 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
               <div>
                 <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Título</label>
                 <input
+                  ref={titleInputRef}
                   name="title"
                   required
-                  className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm transition-all focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:ring-indigo-800"
                 />
               </div>
 
@@ -146,7 +200,7 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
                 <textarea
                   name="description"
                   rows={3}
-                  className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm transition-all focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:ring-indigo-800"
                 />
               </div>
 
@@ -155,7 +209,7 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
               <button
                 type="submit"
                 disabled={pending}
-                className="w-full rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+                className="w-full rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
               >
                 {pending ? "Guardando..." : "Crear evento"}
               </button>

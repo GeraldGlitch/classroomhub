@@ -47,7 +47,7 @@ export default async function StudentProfilePage({
           <Smile className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
         </div>
         <div className="flex-1">
-          <h1 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">{student.name}</h1>
+          <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">{student.name}</h1>
           <p className="text-sm text-zinc-500 dark:text-zinc-400">Perfil de estudiante</p>
         </div>
       </div>

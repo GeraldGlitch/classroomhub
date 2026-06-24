@@ -1,8 +1,9 @@
 "use client"
 
-import { useActionState, useState } from "react"
+import { useActionState, useState, useEffect, useRef } from "react"
 import { addWord, updateWord, deleteWord } from "./actions"
 import { Plus, Pencil, Trash2, X, Check } from "lucide-react"
+import { useToast } from "@/components/Toast"
 
 interface Word {
   id: string
@@ -33,6 +34,32 @@ export default function WordsManager({
     async (_prev: unknown, formData: FormData) => updateWord(formData),
     undefined,
   )
+
+  const { show } = useToast()
+  const wasAddPending = useRef(false)
+  const wasUpdatePending = useRef(false)
+
+  useEffect(() => {
+    if (wasAddPending.current && !addPending) {
+      if (addState?.error) show(addState.error, "error")
+      else {
+        show("Palabra añadida", "success")
+        resetForm()
+      }
+    }
+    wasAddPending.current = addPending
+  }, [addPending, addState, show])
+
+  useEffect(() => {
+    if (wasUpdatePending.current && !updatePending) {
+      if (updateState?.error) show(updateState.error, "error")
+      else {
+        show("Palabra actualizada", "success")
+        resetForm()
+      }
+    }
+    wasUpdatePending.current = updatePending
+  }, [updatePending, updateState, show])
 
   function resetForm() {
     setWord("")
@@ -151,7 +178,11 @@ export default function WordsManager({
                     </div>
                   </div>
                   <div className="flex gap-1">
-                    <button onClick={() => startEdit(w)} className="rounded-lg p-2 text-zinc-400 dark:text-zinc-500 hover:bg-zinc-100 dark:hover:bg-zinc-800 dark:bg-zinc-800 hover:text-zinc-600 dark:hover:text-zinc-400">
+                    <button
+                      onClick={() => startEdit(w)}
+                      aria-label="Editar palabra"
+                      className="rounded-lg p-2 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-400"
+                    >
                       <Pencil className="h-4 w-4" />
                     </button>
                     <DeleteWordButton id={w.id} />
@@ -167,17 +198,58 @@ export default function WordsManager({
 }
 
 function DeleteWordButton({ id }: { id: string }) {
-  const [, action, pending] = useActionState(
+  const [confirming, setConfirming] = useState(false)
+  const [state, action, pending] = useActionState(
     async (_prev: unknown, formData: FormData) => deleteWord(formData),
     undefined,
   )
+  const { show } = useToast()
+  const wasPending = useRef(false)
+
+  useEffect(() => {
+    if (wasPending.current && !pending) {
+      if (state?.error) show(state.error, "error")
+      else {
+        show("Palabra eliminada", "success")
+        setConfirming(false)
+      }
+    }
+    wasPending.current = pending
+  }, [pending, state, show])
+
+  if (confirming) {
+    return (
+      <div className="flex animate-scale-in items-center gap-2 rounded-lg bg-red-50 px-2 py-1 dark:bg-red-950">
+        <span className="text-xs text-red-600 dark:text-red-400">¿Eliminar?</span>
+        <form action={action}>
+          <input type="hidden" name="id" value={id} />
+          <button
+            type="submit"
+            disabled={pending}
+            className="text-xs font-medium text-red-600 hover:text-red-800 dark:text-red-400"
+            aria-label="Confirmar eliminación"
+          >
+            {pending ? "..." : "Sí"}
+          </button>
+        </form>
+        <button
+          onClick={() => setConfirming(false)}
+          className="text-xs text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300"
+          aria-label="Cancelar eliminación"
+        >
+          No
+        </button>
+      </div>
+    )
+  }
 
   return (
-    <form action={action}>
-      <input type="hidden" name="id" value={id} />
-      <button type="submit" disabled={pending} className="rounded-lg p-2 text-zinc-400 dark:text-zinc-500 hover:bg-red-50 dark:bg-red-950 hover:text-red-500">
-        <Trash2 className="h-4 w-4" />
-      </button>
-    </form>
+    <button
+      onClick={() => setConfirming(true)}
+      className="rounded-lg p-2 text-zinc-400 transition-colors hover:bg-red-50 hover:text-red-500 dark:text-zinc-500 dark:hover:bg-red-950 dark:hover:text-red-400"
+      aria-label="Eliminar palabra"
+    >
+      <Trash2 className="h-4 w-4" />
+    </button>
   )
 }

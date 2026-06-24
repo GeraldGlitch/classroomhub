@@ -24,17 +24,17 @@ export default async function ClassDashboardPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100 dark:text-zinc-100">Panel de Clase</h1>
+      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">Panel de Clase</h1>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <Link
           href="/teacher/class-dashboard/resources"
-          className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 shadow-sm transition-all hover:border-indigo-200 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-indigo-800"
+          className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-indigo-800 dark:focus-visible:ring-offset-zinc-950"
         >
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-semibold text-zinc-800 dark:text-zinc-100 dark:text-zinc-100">Recursos</h2>
-              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400 dark:text-zinc-400">{resourceCount} recursos</p>
+              <h2 className="font-semibold text-zinc-800 dark:text-zinc-100">Recursos</h2>
+              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{resourceCount} recursos</p>
             </div>
             <BookOpen className="h-8 w-8 text-indigo-500" />
           </div>
@@ -45,12 +45,12 @@ export default async function ClassDashboardPage() {
 
         <Link
           href="/teacher/class-dashboard/agenda"
-          className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 shadow-sm transition-all hover:border-orange-200 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-orange-800"
+          className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-orange-800 dark:focus-visible:ring-offset-zinc-950"
         >
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-semibold text-zinc-800 dark:text-zinc-100 dark:text-zinc-100">Agenda</h2>
-              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400 dark:text-zinc-400">
+              <h2 className="font-semibold text-zinc-800 dark:text-zinc-100">Agenda</h2>
+              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
                 {upcoming?.length ?? 0} próximos eventos
               </p>
             </div>
@@ -63,12 +63,16 @@ export default async function ClassDashboardPage() {
       </div>
 
       {upcoming && upcoming.length > 0 && (
-        <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-          <h3 className="mb-3 font-semibold text-zinc-700 dark:text-zinc-300 dark:text-zinc-300">Próximos eventos</h3>
+        <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+          <h3 className="mb-3 font-semibold text-zinc-700 dark:text-zinc-300">Próximos eventos</h3>
           <div className="space-y-2">
-            {upcoming.map((event) => (
-              <div key={event.id} className="flex items-center gap-3 text-sm">
-                <span className="rounded-md bg-indigo-100 dark:bg-indigo-950 px-2 py-1 text-xs font-medium text-indigo-700 dark:text-indigo-300 dark:bg-indigo-950 dark:text-indigo-300">
+            {upcoming.map((event, i) => (
+              <div
+                key={event.id}
+                className="flex animate-fade-in-up items-center gap-3 text-sm"
+                style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
+              >
+                <span className="rounded-md bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
                   {parseLocalDate(event.event_date).toLocaleDateString("es-ES", {
                     day: "numeric",
                     month: "short",

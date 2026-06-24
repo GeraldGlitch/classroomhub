@@ -17,7 +17,7 @@ export default async function StudentsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">Estudiantes</h1>
+        <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">Estudiantes</h1>
         <Link
           href="/teacher/students/new"
           className="flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
@@ -28,17 +28,18 @@ export default async function StudentsPage() {
       </div>
 
       {!students || students.length === 0 ? (
-        <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 bg-white dark:bg-zinc-900 p-12 text-center">
-          <User className="h-10 w-10 text-zinc-300" />
+        <div className="flex animate-fade-in flex-col items-center gap-3 rounded-xl border border-dashed border-zinc-300 bg-white p-12 text-center dark:border-zinc-700 dark:bg-zinc-900">
+          <User className="h-10 w-10 animate-bounce-subtle text-zinc-300" />
           <h2 className="font-semibold text-zinc-600 dark:text-zinc-400">No hay estudiantes</h2>
           <p className="text-sm text-zinc-400 dark:text-zinc-500">Añade tu primer estudiante para empezar</p>
         </div>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {students.map((student) => (
+          {students.map((student, i) => (
             <div
               key={student.id}
-              className="flex items-center gap-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 shadow-sm"
+              className="animate-fade-in-up flex items-center gap-3 rounded-xl border border-zinc-200 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+              style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-950">
                 <Smile className="h-5 w-5 text-indigo-600" />

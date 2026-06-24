@@ -36,7 +36,7 @@ export default async function StudentWordsPage({
         Volver a {student.name}
       </Link>
 
-      <h1 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">
+      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">
         Palabras difíciles — {student.name}
       </h1>
 

@@ -3,7 +3,7 @@ import { Settings, Key } from "lucide-react"
 export default function SettingsPage() {
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">Ajustes</h1>
+      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">Ajustes</h1>
 
       <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 shadow-sm">
         <div className="flex items-start gap-3">

@@ -30,7 +30,7 @@ export default async function ResourcesPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-zinc-800 dark:text-zinc-100">Recursos</h1>
+        <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">Recursos</h1>
         <Link
           href="/teacher/class-dashboard/resources/new"
           className="flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
@@ -41,8 +41,8 @@ export default async function ResourcesPage() {
       </div>
 
       {Object.keys(grouped).length === 0 ? (
-        <div className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 bg-white dark:bg-zinc-900 p-12 text-center">
-          <BookOpen className="h-10 w-10 text-zinc-300" />
+        <div className="flex animate-fade-in flex-col items-center gap-3 rounded-xl border border-dashed border-zinc-300 bg-white p-12 text-center dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100">
+          <BookOpen className="h-10 w-10 animate-bounce-subtle text-zinc-300" />
           <h2 className="font-semibold text-zinc-600 dark:text-zinc-400">No hay recursos aún</h2>
           <p className="text-sm text-zinc-400 dark:text-zinc-500">Crea tu primer recurso para compartir con la clase</p>
         </div>
@@ -52,10 +52,11 @@ export default async function ResourcesPage() {
             <section key={group}>
               <h2 className="mb-3 text-lg font-semibold text-zinc-700 dark:text-zinc-300">{group}</h2>
               <div className="space-y-3">
-                {items.map((resource) => (
+                {items.map((resource, i) => (
                   <div
                     key={resource.id}
-                    className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 shadow-sm"
+                    className="animate-fade-in-up rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+                    style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
@@ -83,7 +84,8 @@ export default async function ResourcesPage() {
                       <div className="flex items-center gap-1">
                         <Link
                           href={`/teacher/class-dashboard/resources/${resource.id}/edit`}
-                          className="rounded-lg p-2 text-zinc-400 dark:text-zinc-500 transition-colors hover:bg-zinc-100 dark:hover:bg-zinc-800 dark:bg-zinc-800 hover:text-zinc-600 dark:hover:text-zinc-400"
+                          aria-label="Editar recurso"
+                          className="rounded-lg p-2 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-400"
                         >
                           <Pencil className="h-4 w-4" />
                         </Link>

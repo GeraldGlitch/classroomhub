@@ -34,10 +34,11 @@ export default function ResourceGroup({ group, items }: { group: string; items: 
     <section>
       <h2 className="mb-3 text-lg font-semibold text-zinc-700 dark:text-zinc-300">{group}</h2>
       <div className="space-y-3">
-        {paginatedItems.map((resource) => (
+        {paginatedItems.map((resource, i) => (
           <div
             key={resource.id}
-            className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+            className="animate-fade-in-up rounded-xl border border-zinc-200 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+            style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
           >
             <h3 className="font-medium text-zinc-800 dark:text-zinc-100">{resource.title}</h3>
             {resource.description && (

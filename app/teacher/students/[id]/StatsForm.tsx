@@ -1,7 +1,9 @@
 "use client"
 
-import { useActionState } from "react"
+import { useActionState, useEffect, useRef } from "react"
 import { updateStats } from "./actions"
+import { CheckCircle2, ListTodo, BookCheck } from "lucide-react"
+import { useToast } from "@/components/Toast"
 
 interface Stats {
   correct_answers: number
@@ -21,17 +23,70 @@ export default function StatsForm({
     undefined,
   )
 
+  const { show } = useToast()
+  const wasPending = useRef(false)
+
+  useEffect(() => {
+    if (wasPending.current && !pending) {
+      if (state?.error) show(state.error, "error")
+      else show("Estadísticas actualizadas", "success")
+    }
+    wasPending.current = pending
+  }, [pending, state, show])
+
   const correct = stats?.correct_answers ?? 0
   const total = stats?.total_answers ?? 0
   const completed = stats?.completed_questionnaires ?? 0
+  const percentage = total > 0 ? Math.round((correct / total) * 100) : 0
 
   return (
     <form action={action} className="space-y-4">
       <input type="hidden" name="student_id" value={studentId} />
 
       {stats && (
-        <div className="rounded-lg bg-indigo-50 dark:bg-indigo-950 p-3 text-sm text-indigo-700">
-          {correct} respuestas correctas de {total} preguntas en {completed} cuestionarios.
+        <div className="space-y-3 rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900/50">
+          <div className="grid grid-cols-3 gap-3">
+            <div className="rounded-lg border border-zinc-200 bg-white p-3 dark:border-zinc-800 dark:bg-zinc-900">
+              <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                <CheckCircle2 className="h-3 w-3 text-green-500" />
+                Correctas
+              </div>
+              <p className="mt-1 text-xl font-bold text-zinc-800 dark:text-zinc-100">{correct}</p>
+            </div>
+            <div className="rounded-lg border border-zinc-200 bg-white p-3 dark:border-zinc-800 dark:bg-zinc-900">
+              <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                <ListTodo className="h-3 w-3 text-indigo-500" />
+                Totales
+              </div>
+              <p className="mt-1 text-xl font-bold text-zinc-800 dark:text-zinc-100">{total}</p>
+            </div>
+            <div className="rounded-lg border border-zinc-200 bg-white p-3 dark:border-zinc-800 dark:bg-zinc-900">
+              <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                <BookCheck className="h-3 w-3 text-orange-500" />
+                Cuestionarios
+              </div>
+              <p className="mt-1 text-xl font-bold text-zinc-800 dark:text-zinc-100">{completed}</p>
+            </div>
+          </div>
+
+          {total > 0 && (
+            <div>
+              <div className="mb-1 flex justify-between text-xs font-medium text-zinc-500 dark:text-zinc-400">
+                <span>Aciertos</span>
+                <span>{percentage}%</span>
+              </div>
+              <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-200 dark:bg-zinc-800">
+                <div
+                  className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-indigo-400 transition-all duration-500"
+                  style={{ width: `${percentage}%` }}
+                />
+              </div>
+            </div>
+          )}
+
+          <p className="text-xs text-zinc-500 dark:text-zinc-400">
+            {correct} correctas de {total} preguntas en {completed} cuestionarios
+          </p>
         </div>
       )}
 
@@ -43,7 +98,7 @@ export default function StatsForm({
             type="number"
             defaultValue={correct}
             min={0}
-            className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm transition-all focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:ring-indigo-800"
           />
         </div>
         <div>
@@ -53,7 +108,7 @@ export default function StatsForm({
             type="number"
             defaultValue={total}
             min={0}
-            className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm transition-all focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:ring-indigo-800"
           />
         </div>
         <div>
@@ -63,7 +118,7 @@ export default function StatsForm({
             type="number"
             defaultValue={completed}
             min={0}
-            className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+            className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm transition-all focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:ring-indigo-800"
           />
         </div>
       </div>
@@ -71,7 +126,7 @@ export default function StatsForm({
       <button
         type="submit"
         disabled={pending}
-        className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+        className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
       >
         {pending ? "Guardando..." : "Actualizar estadísticas"}
       </button>
