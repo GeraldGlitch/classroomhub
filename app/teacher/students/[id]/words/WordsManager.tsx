@@ -3,6 +3,7 @@
 import { useActionState, useState, useEffect, useRef } from "react"
 import { addWord, updateWord, deleteWord } from "./actions"
 import { Plus, Pencil, Trash2, X, Check } from "lucide-react"
+import SpeakButton from "@/components/SpeakButton"
 import { useToast } from "@/components/Toast"
 
 interface Word {
@@ -211,6 +212,7 @@ export default function WordsManager({
                     </div>
                   </div>
                   <div className="flex gap-1">
+                    <SpeakButton word={w.word} />
                     <button
                       onClick={() => startEdit(w)}
                       aria-label="Editar palabra"

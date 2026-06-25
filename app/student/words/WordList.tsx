@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import SpeakButton from "@/components/SpeakButton"
 
 interface Word {
   id: string
@@ -33,7 +34,10 @@ export default function WordList({ words }: { words: Word[] }) {
             <div className="grid gap-2 sm:grid-cols-4">
               <div>
                 <p className="text-xs text-zinc-400 dark:text-zinc-500">Palabra</p>
-                <p className="font-medium text-zinc-800 dark:text-zinc-100">{w.word}</p>
+                <div className="flex items-center gap-1">
+                  <p className="font-medium text-zinc-800 dark:text-zinc-100">{w.word}</p>
+                  <SpeakButton word={w.word} />
+                </div>
               </div>
               <div>
                 <p className="text-xs text-zinc-400 dark:text-zinc-500">Pronunciación</p>
