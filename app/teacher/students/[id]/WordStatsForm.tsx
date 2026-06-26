@@ -43,27 +43,27 @@ export default function WordStatsForm({
       <input type="hidden" name="student_id" value={studentId} />
 
       {stats && (
-        <div className="space-y-3 rounded-lg border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900/50">
+        <div className="space-y-4 rounded-xl border border-zinc-200 bg-zinc-50 p-4 dark:border-zinc-800 dark:bg-zinc-900/50">
           <div className="grid grid-cols-2 gap-3">
-            <div className="rounded-lg border border-zinc-200 bg-white p-3 dark:border-zinc-800 dark:bg-zinc-900">
-              <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                <ListTodo className="h-3 w-3 text-indigo-500" />
+            <div className="stat-tile">
+              <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                <ListTodo className="h-4 w-4 text-indigo-500" />
                 Totales
               </div>
-              <p className="mt-1 text-xl font-bold text-zinc-800 dark:text-zinc-100">{totales}</p>
+              <p className="mt-1 text-2xl font-extrabold text-zinc-800 dark:text-zinc-100">{totales}</p>
             </div>
-            <div className="rounded-lg border border-zinc-200 bg-white p-3 dark:border-zinc-800 dark:bg-zinc-900">
-              <div className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                <CheckCircle2 className="h-3 w-3 text-red-500" />
+            <div className="stat-tile">
+              <div className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+                <CheckCircle2 className="h-4 w-4 text-red-500" />
                 Erradas
               </div>
-              <p className="mt-1 text-xl font-bold text-zinc-800 dark:text-zinc-100">{erradas}</p>
+              <p className="mt-1 text-2xl font-extrabold text-zinc-800 dark:text-zinc-100">{erradas}</p>
             </div>
           </div>
 
           {totales > 0 && (
             <div>
-              <div className="mb-1 flex justify-between text-xs font-medium text-zinc-500 dark:text-zinc-400">
+              <div className="mb-1 flex justify-between text-xs font-bold text-zinc-500 dark:text-zinc-400">
                 <span>Aciertos</span>
                 <span>{percentage}%</span>
               </div>
@@ -108,7 +108,7 @@ export default function WordStatsForm({
       <button
         type="submit"
         disabled={pending}
-        className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
+        className="btn-primary"
       >
         {pending ? "Guardando..." : "Actualizar estadísticas"}
       </button>

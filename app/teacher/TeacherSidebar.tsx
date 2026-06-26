@@ -68,10 +68,12 @@ export default function TeacherSidebar({ teacherName }: { teacherName: string })
 
   const sidebarContent = (
     <>
-      <div className="flex items-center gap-2 border-b border-zinc-100 px-3 py-4 dark:border-zinc-800">
-        <GraduationCap className="h-5 w-5 flex-shrink-0 text-indigo-600" />
+      <div className="flex items-center gap-2.5 border-b border-zinc-100 px-3 py-4 dark:border-zinc-800">
+        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-950">
+          <GraduationCap className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+        </div>
         {!collapsed && (
-          <span className="truncate font-semibold text-zinc-800 dark:text-zinc-100">ClassroomHub</span>
+          <span className="truncate text-base font-bold text-zinc-800 dark:text-zinc-100">ClassroomHub</span>
         )}
       </div>
 
@@ -82,7 +84,7 @@ export default function TeacherSidebar({ teacherName }: { teacherName: string })
         </div>
       )}
 
-      <nav className="flex-1 space-y-1 px-1.5 py-4">
+      <nav className="flex-1 space-y-1.5 px-1.5 py-4">
         {navItems.map(({ href, label, icon: Icon }) => {
           const active = pathname.startsWith(href)
           return (
@@ -92,16 +94,16 @@ export default function TeacherSidebar({ teacherName }: { teacherName: string })
               title={collapsed ? label : undefined}
               aria-label={collapsed ? label : undefined}
               onClick={() => setMobileOpen(false)}
-              className={`group relative flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-all duration-150 ${
+              className={`group relative flex items-center gap-3.5 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-150 hover-lift active:scale-95 ${
                 active
-                  ? "bg-indigo-50 text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300"
-                  : "text-zinc-600 transition-transform hover:translate-x-0.5 hover:bg-zinc-50 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+                  ? "bg-indigo-50 text-indigo-700 shadow-sm shadow-indigo-600/10 dark:bg-indigo-950 dark:text-indigo-300"
+                  : "text-zinc-600 hover:-translate-x-0.5 hover:bg-zinc-50 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
               } ${collapsed ? "justify-center px-0" : ""}`}
             >
               {active && (
-                <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-r bg-indigo-600 dark:bg-indigo-400 animate-fade-in" />
+                <span className="absolute left-0 top-1/2 h-7 w-1 -translate-y-1/2 rounded-r bg-indigo-600 dark:bg-indigo-400 animate-scale-in" />
               )}
-              <Icon className="h-4 w-4 flex-shrink-0" />
+              <Icon className={`h-6 w-6 flex-shrink-0 transition-transform duration-150 ${active ? "scale-110" : "group-hover:scale-110 group-hover:-rotate-3"}`} />
               {!collapsed && <span className="truncate">{label}</span>}
             </Link>
           )
@@ -111,13 +113,13 @@ export default function TeacherSidebar({ teacherName }: { teacherName: string })
       <div className="border-t border-zinc-100 p-1 dark:border-zinc-800">
         <button
           onClick={() => setCollapsed((c) => !c)}
-          className="hidden w-full items-center justify-center rounded-lg p-2 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-300 lg:flex"
+          className="hidden w-full items-center justify-center rounded-xl p-2.5 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 active:scale-90 dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-300 lg:flex"
           aria-label={collapsed ? "Expandir sidebar" : "Colapsar sidebar"}
         >
           {collapsed ? (
-            <PanelLeftOpen className="h-4 w-4" />
+            <PanelLeftOpen className="h-5 w-5" />
           ) : (
-            <PanelLeftClose className="h-4 w-4" />
+            <PanelLeftClose className="h-5 w-5" />
           )}
         </button>
       </div>
@@ -132,11 +134,11 @@ export default function TeacherSidebar({ teacherName }: { teacherName: string })
             type="submit"
             title={collapsed ? "Cerrar sesión" : undefined}
             aria-label={collapsed ? "Cerrar sesión" : undefined}
-            className={`flex items-center gap-3 rounded-lg text-sm font-medium text-zinc-600 transition-colors hover:bg-red-50 hover:text-red-600 dark:text-zinc-400 dark:hover:bg-red-950 dark:hover:text-red-400 ${
-              collapsed ? "justify-center p-2" : "w-full px-3 py-2"
+            className={`flex items-center gap-3.5 rounded-xl text-sm font-semibold text-zinc-600 transition-colors hover:bg-red-50 hover:text-red-600 active:scale-95 dark:text-zinc-400 dark:hover:bg-red-950 dark:hover:text-red-400 ${
+              collapsed ? "justify-center p-2.5" : "w-full px-3 py-2.5"
             }`}
           >
-            <LogOut className="h-4 w-4 flex-shrink-0" />
+            <LogOut className="h-6 w-6 flex-shrink-0" />
             {!collapsed && "Cerrar sesión"}
           </button>
         </form>

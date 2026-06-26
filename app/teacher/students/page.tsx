@@ -17,41 +17,48 @@ export default async function StudentsPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">Estudiantes</h1>
+        <div className="page-header animate-fade-in-up">
+          <div className="page-header-icon">
+            <User className="h-7 w-7" />
+          </div>
+          <h1 className="page-title">Estudiantes</h1>
+        </div>
         <Link
           href="/teacher/students/new"
-          className="flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+          className="btn-primary flex items-center gap-2"
         >
-          <Plus className="h-4 w-4" />
+          <Plus className="h-5 w-5" />
           Añadir estudiante
         </Link>
       </div>
 
       {!students || students.length === 0 ? (
-        <div className="flex animate-fade-in flex-col items-center gap-3 rounded-xl border border-dashed border-zinc-300 bg-white p-12 text-center dark:border-zinc-700 dark:bg-zinc-900">
-          <User className="h-10 w-10 animate-bounce-subtle text-zinc-300" />
-          <h2 className="font-semibold text-zinc-600 dark:text-zinc-400">No hay estudiantes</h2>
+        <div className="empty-state animate-fade-in">
+          <div className="empty-state-icon animate-bob">
+            <User className="h-10 w-10" />
+          </div>
+          <h2 className="text-lg font-bold text-zinc-600 dark:text-zinc-400">No hay estudiantes</h2>
           <p className="text-sm text-zinc-400 dark:text-zinc-500">Añade tu primer estudiante para empezar</p>
         </div>
       ) : (
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {students.map((student, i) => (
             <div
               key={student.id}
-              className="animate-fade-in-up flex items-center gap-3 rounded-xl border border-zinc-200 bg-white p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900"
+              className="card card-hover group animate-fade-in-up flex items-center gap-3 p-4"
               style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-950">
-                <Smile className="h-5 w-5 text-indigo-600" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-indigo-950 dark:text-indigo-400">
+                <Smile className="h-6 w-6" />
               </div>
               <div className="flex-1 min-w-0">
                 <Link
                   href={`/teacher/students/${student.id}`}
-                  className="text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-indigo-600 truncate block"
+                  className="text-sm font-bold text-zinc-700 hover:text-indigo-600 truncate block dark:text-zinc-300 dark:hover:text-indigo-400"
                 >
                   {student.name}
                 </Link>
-                <div className="mt-0.5 flex items-center gap-1">
+                <div className="mt-1 flex items-center gap-1.5">
                   <span className="text-xs font-mono text-zinc-400 dark:text-zinc-500 tracking-wider">
                     {student.access_code}
                   </span>

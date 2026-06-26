@@ -102,19 +102,19 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
         <button
           onClick={handlePrevMonth}
           aria-label="Mes anterior"
-          className="flex items-center justify-center rounded-lg p-1.5 text-zinc-600 transition-colors hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
+          className="flex items-center justify-center rounded-xl p-2 text-zinc-600 transition-all duration-150 hover:bg-zinc-100 active:scale-90 dark:text-zinc-400 dark:hover:bg-zinc-800"
         >
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-5 w-5" />
         </button>
-        <span key={`${currentYear}-${currentMonth}`} className="animate-fade-in text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+        <span key={`${currentYear}-${currentMonth}`} className="animate-fade-in text-base font-bold text-zinc-700 dark:text-zinc-300">
           {monthNames[currentMonth]} {currentYear}
         </span>
         <button
           onClick={handleNextMonth}
           aria-label="Mes siguiente"
-          className="flex items-center justify-center rounded-lg p-1.5 text-zinc-600 transition-colors hover:bg-zinc-100 dark:text-zinc-400 dark:hover:bg-zinc-800"
+          className="flex items-center justify-center rounded-xl p-2 text-zinc-600 transition-all duration-150 hover:bg-zinc-100 active:scale-90 dark:text-zinc-400 dark:hover:bg-zinc-800"
         >
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-5 w-5" />
         </button>
       </div>
 
@@ -140,15 +140,15 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
             <button
               key={day}
               onClick={(e) => handleDayClick(day, e)}
-              className={`relative rounded-lg p-2 text-sm transition-colors hover:bg-indigo-50 dark:hover:bg-indigo-950 ${
+              className={`relative rounded-xl p-2 text-sm font-medium transition-all duration-150 hover:bg-indigo-50 hover:scale-105 active:scale-95 dark:hover:bg-indigo-950 ${
                 isToday
-                  ? "bg-indigo-100 font-semibold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300"
+                  ? "bg-indigo-100 font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300"
                   : "text-zinc-700 dark:text-zinc-300"
               }`}
             >
               <span>{day}</span>
               {dayEvents.length > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-indigo-600 px-1 text-[10px] font-bold text-white">
+                <span className="absolute -top-1 -right-1 flex h-5 min-w-5 animate-pop-in items-center justify-center rounded-full bg-indigo-600 px-1 text-[10px] font-bold text-white shadow-sm dark:bg-indigo-500">
                   {dayEvents.length}
                 </span>
               )}
@@ -167,16 +167,16 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
             aria-modal="true"
             aria-label="Crear nuevo evento"
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-sm animate-scale-in overflow-hidden rounded-xl bg-white p-6 shadow-lg dark:bg-zinc-900"
+            className="w-full max-w-sm animate-pop-in overflow-hidden rounded-2xl bg-white p-6 shadow-2xl dark:bg-zinc-900"
           >
             <div className="mb-4 flex items-center justify-between">
-              <h3 className="font-semibold text-zinc-800 dark:text-zinc-100">
+              <h3 className="text-lg font-bold text-zinc-800 dark:text-zinc-100">
                 Nuevo evento — {selectedDate}
               </h3>
               <button
                 onClick={closeModal}
                 aria-label="Cerrar"
-                className="text-zinc-400 transition-colors hover:text-zinc-600 dark:hover:text-zinc-300"
+                className="press-bouncy rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 active:scale-90 dark:hover:bg-zinc-800 dark:hover:text-zinc-300"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -186,30 +186,30 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
               <input type="hidden" name="event_date" value={selectedDate} />
 
               <div>
-                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Título</label>
+                <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">Título</label>
                 <input
                   ref={titleInputRef}
                   name="title"
                   required
-                  className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm transition-all focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:ring-indigo-800"
+                  className="input-field mt-1"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Descripción</label>
+                <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">Descripción</label>
                 <textarea
                   name="description"
                   rows={3}
-                  className="mt-1 block w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm shadow-sm transition-all focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:ring-indigo-800"
+                  className="input-field mt-1"
                 />
               </div>
 
-              {state?.error && <p className="text-sm text-red-500">{state.error}</p>}
+              {state?.error && <p className="text-sm text-red-500 animate-fade-in">{state.error}</p>}
 
               <button
                 type="submit"
                 disabled={pending}
-                className="w-full rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
+                className="w-full rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-600/30 transition-all duration-150 hover:bg-indigo-700 hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:active:scale-100"
               >
                 {pending ? "Guardando..." : "Crear evento"}
               </button>

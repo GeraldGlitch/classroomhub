@@ -28,14 +28,14 @@ export default function DeleteStudentButton({ id }: { id: string; name?: string 
 
   if (confirming) {
     return (
-      <div className="flex animate-scale-in items-center gap-2 rounded-lg bg-red-50 px-2 py-1 dark:bg-red-950">
-        <span className="text-xs text-red-600 dark:text-red-400">¿Eliminar?</span>
+      <div className="flex animate-pop-in items-center gap-2 rounded-lg bg-red-50 px-2 py-1 dark:bg-red-950">
+        <span className="text-xs font-semibold text-red-600 dark:text-red-400">¿Eliminar?</span>
         <form action={action}>
           <input type="hidden" name="id" value={id} />
           <button
             type="submit"
             disabled={pending}
-            className="text-xs font-medium text-red-600 hover:text-red-800 dark:text-red-400"
+            className="text-xs font-bold text-red-600 hover:text-red-800 active:scale-90 dark:text-red-400"
             aria-label="Confirmar eliminación"
           >
             {pending ? "..." : "Sí"}
@@ -43,7 +43,7 @@ export default function DeleteStudentButton({ id }: { id: string; name?: string 
         </form>
         <button
           onClick={() => setConfirming(false)}
-          className="text-xs text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300"
+          className="text-xs font-medium text-zinc-500 hover:text-zinc-700 active:scale-90 dark:text-zinc-400 dark:hover:text-zinc-300"
           aria-label="Cancelar eliminación"
         >
           No
@@ -56,9 +56,9 @@ export default function DeleteStudentButton({ id }: { id: string; name?: string 
     <button
       onClick={() => setConfirming(true)}
       aria-label="Eliminar estudiante"
-      className="rounded-lg p-2 text-zinc-400 transition-colors hover:bg-red-50 hover:text-red-500 dark:text-zinc-500 dark:hover:bg-red-950 dark:hover:text-red-400"
+      className="press-bouncy rounded-lg p-2 text-zinc-400 hover:bg-red-50 hover:text-red-500 active:scale-90 dark:text-zinc-500 dark:hover:bg-red-950 dark:hover:text-red-400"
     >
-      <Trash2 className="h-4 w-4" />
+      <Trash2 className="h-5 w-5" />
     </button>
   )
 }

@@ -90,7 +90,7 @@ export default function ResourceForm({ resource }: { resource?: Resource }) {
         <button
           type="submit"
           disabled={pending}
-          className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
+          className="btn-primary"
         >
           {pending ? "Guardando..." : resource ? "Guardar cambios" : "Crear recurso"}
         </button>

@@ -8,10 +8,10 @@ import { LogIn, GraduationCap, Loader2 } from "lucide-react"
 type Tab = "teacher" | "student"
 
 const inputClass =
-  "mt-1 block w-full rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm shadow-sm transition-all duration-150 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800"
+  "mt-1 block w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-sm shadow-sm transition-all duration-150 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:ring-indigo-800"
 
 const labelClass =
-  "block text-sm font-medium text-zinc-700 dark:text-zinc-300"
+  "block text-sm font-semibold text-zinc-700 dark:text-zinc-300"
 
 export default function LoginForm() {
   const [tab, setTab] = useState<Tab>("student")
@@ -27,35 +27,36 @@ export default function LoginForm() {
   )
 
   return (
-    <div className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-      <div className="relative mb-6 flex rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800">
+    <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-lg shadow-zinc-200/50 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-black/20">
+      <div className="relative mb-6 flex rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800">
         <div
-          className={`absolute bottom-1 top-1 w-[calc(50%-0.25rem)] rounded-md bg-white shadow-sm transition-transform duration-200 ease-out dark:bg-zinc-900 ${
+          className={`absolute bottom-1 top-1 w-[calc(50%-0.25rem)] rounded-lg bg-white shadow-sm transition-transform duration-200 dark:bg-zinc-900 ${
             tab === "teacher" ? "translate-x-full" : "translate-x-0"
           }`}
+          style={{ transitionTimingFunction: "var(--ease-bounce)" }}
         />
         <button
           type="button"
           onClick={() => setTab("teacher")}
-          className={`relative z-10 flex flex-1 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+          className={`relative z-10 flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors active:scale-95 ${
             tab === "teacher"
               ? "text-indigo-600 dark:text-indigo-400"
               : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
           }`}
         >
-          <LogIn className="h-4 w-4" />
+          <LogIn className={`h-5 w-5 transition-transform duration-200 ${tab === "teacher" ? "scale-110" : ""}`} />
           Profesor
         </button>
         <button
           type="button"
           onClick={() => setTab("student")}
-          className={`relative z-10 flex flex-1 items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-colors ${
+          className={`relative z-10 flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors active:scale-95 ${
             tab === "student"
               ? "text-indigo-600 dark:text-indigo-400"
               : "text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-300"
           }`}
         >
-          <GraduationCap className="h-4 w-4" />
+          <GraduationCap className={`h-5 w-5 transition-transform duration-200 ${tab === "student" ? "scale-110" : ""}`} />
           Estudiante
         </button>
       </div>
@@ -94,7 +95,7 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={teacherPending}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-600/30 transition-all duration-150 hover:bg-indigo-700 hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:active:scale-100"
           >
             {teacherPending ? (
               <>
@@ -131,7 +132,7 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={studentPending}
-            className="flex w-full items-center justify-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-600/30 transition-all duration-150 hover:bg-indigo-700 hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:active:scale-100"
           >
             {studentPending ? (
               <>

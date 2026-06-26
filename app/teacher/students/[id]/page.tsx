@@ -48,36 +48,42 @@ export default async function StudentProfilePage({
     <div className="space-y-6">
       <Link
         href="/teacher/students"
-        className="inline-flex items-center gap-1 text-sm text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300"
+        className="press-bouncy inline-flex items-center gap-1.5 text-sm font-medium text-zinc-500 hover:text-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-300"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <ArrowLeft className="h-5 w-5" />
         Volver a estudiantes
       </Link>
 
-      <div className="flex items-start gap-6">
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-indigo-100 dark:bg-indigo-950">
-          <Smile className="h-8 w-8 text-indigo-600 dark:text-indigo-400" />
+      <div className="flex items-start gap-5">
+        <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-3xl bg-indigo-100 shadow-sm dark:bg-indigo-950">
+          <Smile className="h-11 w-11 text-indigo-600 dark:text-indigo-400" />
         </div>
-        <div className="flex-1">
-          <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">{student.name}</h1>
+        <div className="flex-1 pt-1">
+          <h1 className="animate-fade-in text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-800 dark:text-zinc-100">{student.name}</h1>
           <p className="text-sm text-zinc-500 dark:text-zinc-400">Perfil de estudiante</p>
         </div>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="space-y-6">
-          <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-            <h2 className="mb-4 font-semibold text-zinc-700 dark:text-zinc-300">Información</h2>
+          <div className="card p-5">
+            <h2 className="section-title mb-4 text-base">
+              Información
+            </h2>
             <StudentProfileForm student={student} />
           </div>
 
-          <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-            <h2 className="mb-4 font-semibold text-zinc-700 dark:text-zinc-300">Estadísticas de cuestionarios</h2>
+          <div className="card p-5">
+            <h2 className="section-title mb-4 text-base">
+              Estadísticas de cuestionarios
+            </h2>
             <StatsForm studentId={id} stats={stats ?? null} />
           </div>
 
-          <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-            <h2 className="mb-4 font-semibold text-zinc-700 dark:text-zinc-300">Estadísticas de lectura</h2>
+          <div className="card p-5">
+            <h2 className="section-title mb-4 text-base">
+              Estadísticas de lectura
+            </h2>
             <WordStatsForm studentId={id} stats={wordStats ?? null} />
           </div>
         </div>
@@ -85,12 +91,14 @@ export default async function StudentProfilePage({
         <div className="space-y-4">
           <Link
             href={`/teacher/students/${id}/words`}
-            className="block rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-indigo-800 dark:focus-visible:ring-offset-zinc-950"
+            className="card card-hover group block p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950"
           >
             <div className="flex items-center gap-3">
-              <BookMarked className="h-8 w-8 flex-shrink-0 text-indigo-500" />
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-500 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-indigo-950 dark:text-indigo-400">
+                <BookMarked className="h-7 w-7" />
+              </div>
               <div className="min-w-0 flex-1">
-                <h3 className="font-semibold text-zinc-800 dark:text-zinc-100">Palabras difíciles</h3>
+                <h3 className="font-bold text-zinc-800 dark:text-zinc-100">Palabras difíciles</h3>
                 <p className="text-sm text-zinc-500 dark:text-zinc-400">
                   {count ?? 0} palabras
                 </p>
@@ -103,7 +111,7 @@ export default async function StudentProfilePage({
             </div>
             {wordStats && readCount > 0 && (
               <div className="mt-3">
-                <div className="mb-1 flex justify-between text-[10px] font-medium text-zinc-500 dark:text-zinc-400">
+                <div className="mb-1 flex justify-between text-[10px] font-bold text-zinc-500 dark:text-zinc-400">
                   <span>Aciertos</span>
                   <span>{miniPercentage}%</span>
                 </div>

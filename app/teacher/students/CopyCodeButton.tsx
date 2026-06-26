@@ -28,15 +28,15 @@ export default function CopyCodeButton({ code }: { code: string }) {
     <button
       type="button"
       onClick={handleCopy}
-      className="flex-shrink-0 text-zinc-300 hover:text-indigo-500"
+      className="press-bouncy flex-shrink-0 rounded-md p-0.5 text-zinc-400 hover:text-indigo-500 active:scale-90"
       title="Copiar código"
       aria-label="Copiar código de acceso"
     >
-      <span key={copied ? "check" : "copy"} className="inline-flex animate-scale-in">
+      <span key={copied ? "check" : "copy"} className="inline-flex animate-pop-in">
         {copied ? (
-          <Check className="h-3 w-3 text-green-500" />
+          <Check className="h-4 w-4 text-green-500" />
         ) : (
-          <Copy className="h-3 w-3" />
+          <Copy className="h-4 w-4" />
         )}
       </span>
     </button>

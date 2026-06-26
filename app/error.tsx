@@ -9,11 +9,12 @@ export default function GlobalError({
 }) {
   return (
     <div className="flex h-screen flex-col items-center justify-center gap-4">
-      <h1 className="text-2xl font-bold text-zinc-800">Algo salió mal</h1>
-      <p className="text-sm text-zinc-500">{error.message}</p>
+      <div className="text-6xl animate-pop-in">⚠️</div>
+      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800">Algo salió mal</h1>
+      <p className="max-w-sm text-center text-sm text-zinc-500">{error.message}</p>
       <button
         onClick={reset}
-        className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700"
+        className="btn-primary"
       >
         Intentar de nuevo
       </button>

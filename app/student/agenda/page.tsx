@@ -32,17 +32,29 @@ export default async function StudentAgendaPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">Agenda</h1>
+      <div className="page-header animate-fade-in-up">
+        <div className="page-header-icon bg-orange-100 text-orange-600 dark:bg-orange-950 dark:text-orange-400">
+          <Calendar className="h-7 w-7" />
+        </div>
+        <h1 className="page-title">Agenda</h1>
+      </div>
 
       {(!upcoming || upcoming.length === 0) && (!past || past.length === 0) ? (
-        <div className="flex animate-fade-in flex-col items-center gap-3 rounded-xl border border-dashed border-zinc-300 bg-white p-12 text-center dark:border-zinc-700 dark:bg-zinc-900">
-          <Calendar className="h-10 w-10 animate-bounce-subtle text-zinc-300 dark:text-zinc-600" />
+        <div className="empty-state animate-fade-in">
+          <div className="empty-state-icon animate-bob">
+            <Calendar className="h-10 w-10" />
+          </div>
           <p className="text-sm text-zinc-400 dark:text-zinc-500">No hay eventos en la agenda</p>
         </div>
       ) : (
         <>
           <div>
-            <h2 className="mb-3 text-lg font-semibold text-zinc-700 dark:text-zinc-300">Próximos eventos</h2>
+            <h2 className="mb-3 flex items-center gap-2.5 text-lg font-bold text-zinc-700 dark:text-zinc-300">
+              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
+                <Calendar className="h-5 w-5" />
+              </span>
+              Próximos eventos
+            </h2>
             {(!upcoming || upcoming.length === 0) ? (
               <p className="text-sm text-zinc-400 dark:text-zinc-500">No hay eventos próximos</p>
             ) : (
@@ -50,12 +62,12 @@ export default async function StudentAgendaPage() {
                 {upcoming.map((event, i) => (
                   <div
                     key={event.id}
-                    className="flex animate-fade-in-up items-start gap-4 rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-900"
+                    className="card card-hover flex animate-fade-in-up items-start gap-4 p-4"
                     style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
                   >
                     <DateBadge dateStr={event.event_date} size="md" />
                     <div>
-                      <h3 className="font-medium text-zinc-800 dark:text-zinc-100">{event.title}</h3>
+                      <h3 className="font-bold text-zinc-800 dark:text-zinc-100">{event.title}</h3>
                       {event.description && (
                         <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{event.description}</p>
                       )}
@@ -68,7 +80,7 @@ export default async function StudentAgendaPage() {
 
           {past && past.length > 0 && (
             <div>
-              <h2 className="mb-3 text-lg font-semibold text-zinc-400 dark:text-zinc-500">Eventos pasados</h2>
+              <h2 className="mb-3 text-base font-bold text-zinc-400 dark:text-zinc-500">Eventos pasados</h2>
               <div className="space-y-1">
                 {past.map((event) => (
                   <div key={event.id} className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-zinc-400 dark:text-zinc-500">

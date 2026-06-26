@@ -1,8 +1,7 @@
 "use client"
 
-import { useActionState, useState } from "react"
-import { updateStudent } from "../actions"
-import { regenerateStudentCode } from "../actions"
+import { useActionState, useState, useTransition } from "react"
+import { updateStudent, regenerateStudentCode } from "../actions"
 import { Plus, X, RefreshCw } from "lucide-react"
 
 interface Student {
@@ -26,15 +25,16 @@ export default function StudentProfileForm({ student }: { student: Student }) {
   const [newValue, setNewValue] = useState("")
 
   const [code, setCode] = useState(student.access_code)
+  const [regenPending, startRegen] = useTransition()
 
-  const regenAction = async (_prev: { code?: string; error?: string } | null, _formData: FormData) => {
-    const fd = new FormData()
-    fd.set("id", student.id)
-    const result = await regenerateStudentCode(fd)
-    if (result?.code) setCode(result.code)
-    return result ?? null
+  function handleRegenerate() {
+    startRegen(async () => {
+      const fd = new FormData()
+      fd.set("id", student.id)
+      const result = await regenerateStudentCode(fd)
+      if (result?.code) setCode(result.code)
+    })
   }
-  const [, regenFormAction, regenPending] = useActionState(regenAction, null)
 
   function addField() {
     if (!newKey) return
@@ -77,17 +77,16 @@ export default function StudentProfileForm({ student }: { student: Student }) {
             onChange={(e) => setCode(e.target.value)}
             className="block flex-1 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 font-mono text-sm tracking-widest shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800"
           />
-          <form action={regenFormAction} className="inline">
-            <button
-              type="submit"
-              disabled={regenPending}
-              className="flex items-center gap-1 rounded-lg border border-zinc-200 dark:border-zinc-800 px-2 py-2 text-xs text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800 dark:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300 disabled:opacity-50"
-              title="Generar código aleatorio"
-              aria-label="Generar código aleatorio"
-            >
-              <RefreshCw className={`h-3.5 w-3.5 ${regenPending ? "animate-spin" : ""}`} />
-            </button>
-          </form>
+          <button
+            type="button"
+            onClick={handleRegenerate}
+            disabled={regenPending}
+            className="press-bouncy flex items-center gap-1 rounded-xl border border-zinc-200 px-2.5 py-2 text-xs text-zinc-500 hover:bg-zinc-50 hover:text-zinc-700 active:scale-90 disabled:opacity-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-300"
+            title="Generar código aleatorio"
+            aria-label="Generar código aleatorio"
+          >
+            <RefreshCw className={`h-5 w-5 ${regenPending ? "animate-spin" : ""}`} />
+          </button>
         </div>
       </div>
 
@@ -124,20 +123,20 @@ export default function StudentProfileForm({ student }: { student: Student }) {
               placeholder="Valor"
               className="block flex-1 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-800"
             />
-            <button type="button" onClick={addField} aria-label="Añadir campo" className="rounded-lg bg-zinc-100 dark:bg-zinc-800 px-3 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200">
-              <Plus className="h-4 w-4" />
+            <button type="button" onClick={addField} aria-label="Añadir campo" className="press-bouncy rounded-xl bg-zinc-100 dark:bg-zinc-800 px-3 py-2.5 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 active:scale-90">
+              <Plus className="h-5 w-5" />
             </button>
           </div>
         </div>
         <input type="hidden" name="custom_fields" value={JSON.stringify(Object.fromEntries(fields.map((f) => [f.key, f.value])))} />
       </div>
 
-      {state?.error && <p className="text-sm text-red-500">{state.error}</p>}
+      {state?.error && <p className="text-sm text-red-500 animate-fade-in">{state.error}</p>}
 
       <button
         type="submit"
         disabled={pending}
-        className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+        className="btn-primary"
       >
         {pending ? "Guardando..." : "Guardar cambios"}
       </button>

@@ -30,13 +30,13 @@ export default async function StudentWordsPage({
     <div className="space-y-6">
       <Link
         href={`/teacher/students/${id}`}
-        className="inline-flex items-center gap-1 text-sm text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300"
+        className="press-bouncy inline-flex items-center gap-1.5 text-sm font-medium text-zinc-500 dark:text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-300"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <ArrowLeft className="h-5 w-5" />
         Volver a {student.name}
       </Link>
 
-      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">
+      <h1 className="animate-fade-in text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-800 dark:text-zinc-100">
         Palabras difíciles — {student.name}
       </h1>
 

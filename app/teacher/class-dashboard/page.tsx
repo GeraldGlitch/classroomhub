@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import Link from "next/link"
-import { BookOpen, Calendar, ArrowRight } from "lucide-react"
+import { BookOpen, Calendar, ArrowRight, LayoutDashboard } from "lucide-react"
 import { parseLocalDate } from "@/lib/date"
 
 export default async function ClassDashboardPage() {
@@ -24,55 +24,69 @@ export default async function ClassDashboardPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">Panel de Clase</h1>
+      <div className="page-header animate-fade-in-up">
+        <div className="page-header-icon">
+          <LayoutDashboard className="h-7 w-7" />
+        </div>
+        <h1 className="page-title">Panel de Clase</h1>
+      </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
         <Link
           href="/teacher/class-dashboard/resources"
-          className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-indigo-800 dark:focus-visible:ring-offset-zinc-950"
+          className="card card-hover group p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950"
         >
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-semibold text-zinc-800 dark:text-zinc-100">Recursos</h2>
+              <h2 className="font-bold text-zinc-800 dark:text-zinc-100">Recursos</h2>
               <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{resourceCount} recursos</p>
             </div>
-            <BookOpen className="h-8 w-8 text-indigo-500" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-500 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-indigo-950 dark:text-indigo-400">
+              <BookOpen className="h-7 w-7" />
+            </div>
           </div>
-          <div className="mt-3 flex items-center gap-1 text-sm font-medium text-indigo-600">
-            Gestionar <ArrowRight className="h-3 w-3" />
+          <div className="mt-3 flex items-center gap-1 text-sm font-semibold text-indigo-600 dark:text-indigo-400">
+            Gestionar <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
           </div>
         </Link>
 
         <Link
           href="/teacher/class-dashboard/agenda"
-          className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-orange-800 dark:focus-visible:ring-offset-zinc-950"
+          className="card card-hover group p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950"
         >
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="font-semibold text-zinc-800 dark:text-zinc-100">Agenda</h2>
+              <h2 className="font-bold text-zinc-800 dark:text-zinc-100">Agenda</h2>
               <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
                 {upcoming?.length ?? 0} próximos eventos
               </p>
             </div>
-            <Calendar className="h-8 w-8 text-orange-500" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-100 text-orange-500 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-orange-950 dark:text-orange-400">
+              <Calendar className="h-7 w-7" />
+            </div>
           </div>
-          <div className="mt-3 flex items-center gap-1 text-sm font-medium text-orange-600">
-            Ver calendario <ArrowRight className="h-3 w-3" />
+          <div className="mt-3 flex items-center gap-1 text-sm font-semibold text-orange-600 dark:text-orange-400">
+            Ver calendario <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
           </div>
         </Link>
       </div>
 
       {upcoming && upcoming.length > 0 && (
-        <div className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
-          <h3 className="mb-3 font-semibold text-zinc-700 dark:text-zinc-300">Próximos eventos</h3>
+        <div className="card p-5 animate-fade-in-up">
+          <h3 className="section-title mb-3">
+            <span className="section-title-icon">
+              <Calendar className="h-5 w-5" />
+            </span>
+            Próximos eventos
+          </h3>
           <div className="space-y-2">
             {upcoming.map((event, i) => (
               <div
                 key={event.id}
-                className="flex animate-fade-in-up items-center gap-3 text-sm"
+                className="group flex animate-fade-in-up items-center gap-3 rounded-xl px-2 py-1.5 text-sm transition-colors hover:bg-zinc-50 dark:hover:bg-zinc-800/60"
                 style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
               >
-                <span className="rounded-md bg-indigo-100 px-2 py-1 text-xs font-medium text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                <span className="rounded-lg bg-indigo-100 px-2.5 py-1 text-xs font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
                   {parseLocalDate(event.event_date).toLocaleDateString("es-ES", {
                     day: "numeric",
                     month: "short",

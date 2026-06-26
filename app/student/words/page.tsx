@@ -29,30 +29,40 @@ export default async function StudentWordsPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">
-        Palabras difíciles ({words?.length ?? 0} palabras)
-      </h1>
+      <div className="page-header animate-fade-in-up">
+        <div className="page-header-icon">
+          <BookMarked className="h-7 w-7" />
+        </div>
+        <h1 className="page-title">
+          Palabras difíciles
+        </h1>
+        {words?.length ? (
+          <span className="ml-1 self-end mb-1 rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-bold text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400">
+            {words.length} palabras
+          </span>
+        ) : null}
+      </div>
 
       {wordStats && totales > 0 && (
-        <div className="animate-fade-in-up space-y-4 rounded-xl border border-zinc-200 bg-white p-6 shadow-sm dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="card animate-fade-in-up space-y-4 p-6">
           <div className="grid gap-3 sm:grid-cols-2">
-            <div className="rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
-              <div className="flex items-center gap-2 text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                <ListTodo className="h-4 w-4 text-indigo-500" />
+            <div className="stat-tile">
+              <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+                <ListTodo className="h-5 w-5 text-indigo-500" />
                 Totales leídas
               </div>
-              <p className="mt-1 text-2xl font-bold text-zinc-800 dark:text-zinc-100">{totales}</p>
+              <p className="mt-1 text-2xl font-extrabold text-zinc-800 dark:text-zinc-100">{totales}</p>
             </div>
-            <div className="rounded-lg border border-zinc-200 bg-white p-4 dark:border-zinc-800 dark:bg-zinc-900">
-              <div className="flex items-center gap-2 text-xs font-medium text-zinc-500 dark:text-zinc-400">
-                <CheckCircle2 className="h-4 w-4 text-red-500" />
+            <div className="stat-tile">
+              <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
+                <CheckCircle2 className="h-5 w-5 text-red-500" />
                 Erradas
               </div>
-              <p className="mt-1 text-2xl font-bold text-zinc-800 dark:text-zinc-100">{erradas}</p>
+              <p className="mt-1 text-2xl font-extrabold text-zinc-800 dark:text-zinc-100">{erradas}</p>
             </div>
           </div>
 
-          <div className="rounded-lg bg-green-50 p-4 dark:bg-green-950">
+          <div className="rounded-xl bg-green-50 p-4 dark:bg-green-950">
             <p className="text-sm text-green-800 dark:text-green-300">
               <span className="font-bold">{aciertos}</span> aciertos de{" "}
               <span className="font-bold">{totales}</span> palabras leídas{" "}
@@ -62,7 +72,7 @@ export default async function StudentWordsPage() {
               .
             </p>
             <div className="mt-3">
-              <div className="mb-1 flex justify-between text-xs font-medium text-green-700 dark:text-green-400">
+              <div className="mb-1 flex justify-between text-xs font-bold text-green-700 dark:text-green-400">
                 <span>Aciertos</span>
                 <span>{percentage}%</span>
               </div>
@@ -78,8 +88,10 @@ export default async function StudentWordsPage() {
       )}
 
       {!words || words.length === 0 ? (
-        <div className="flex animate-fade-in flex-col items-center gap-3 rounded-xl border border-dashed border-zinc-300 bg-white p-12 text-center dark:border-zinc-700 dark:bg-zinc-900">
-          <BookMarked className="h-10 w-10 animate-bounce-subtle text-zinc-300 dark:text-zinc-600" />
+        <div className="empty-state animate-fade-in">
+          <div className="empty-state-icon animate-bob">
+            <BookMarked className="h-10 w-10" />
+          </div>
           <p className="text-sm text-zinc-400 dark:text-zinc-500">No tienes palabras registradas aún</p>
         </div>
       ) : (

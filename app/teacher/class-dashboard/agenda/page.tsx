@@ -1,4 +1,5 @@
 import { createClient } from "@/lib/supabase/server"
+import { Calendar } from "lucide-react"
 import AgendaCalendar from "./AgendaCalendar"
 import AgendaEventList from "./AgendaEventList"
 
@@ -14,10 +15,15 @@ export default async function AgendaPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">Agenda</h1>
+      <div className="page-header animate-fade-in-up">
+        <div className="page-header-icon bg-orange-100 text-orange-600 dark:bg-orange-950 dark:text-orange-400">
+          <Calendar className="h-7 w-7" />
+        </div>
+        <h1 className="page-title">Agenda</h1>
+      </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-4 shadow-sm">
+        <div className="card p-4">
           <AgendaCalendar events={events ?? []} />
         </div>
         <AgendaEventList events={events ?? []} />

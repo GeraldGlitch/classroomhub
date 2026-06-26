@@ -45,14 +45,15 @@ export default function ResourcesList({
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Buscar recursos..."
-            className="w-full rounded-xl border border-zinc-200 bg-white py-2 pl-4 pr-4 text-sm text-zinc-800 placeholder:text-zinc-400 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-indigo-600 dark:focus:ring-indigo-900"
+            className="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-10 pr-4 text-sm text-zinc-800 placeholder:text-zinc-400 transition-all duration-150 focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500 dark:focus:border-indigo-600 dark:focus:ring-indigo-900"
           />
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400 dark:text-zinc-500" />
         </div>
         <button
           onClick={handleSearch}
-          className="rounded-xl border border-zinc-200 bg-white p-2.5 text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-700 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+          className="press-bouncy rounded-xl border border-zinc-200 bg-white p-2.5 text-zinc-500 transition-colors hover:bg-zinc-50 hover:text-zinc-700 active:scale-90 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
         >
-          <Search className="h-4 w-4" />
+          <Search className="h-5 w-5" />
         </button>
       </div>
 
@@ -63,8 +64,10 @@ export default function ResourcesList({
       )}
 
       {groups.length === 0 ? (
-        <div className="flex animate-fade-in flex-col items-center gap-3 rounded-xl border border-dashed border-zinc-300 bg-white p-12 text-center dark:border-zinc-700 dark:bg-zinc-900">
-          <Search className="h-10 w-10 animate-bounce-subtle text-zinc-300 dark:text-zinc-600" />
+        <div className="empty-state animate-fade-in">
+          <div className="empty-state-icon animate-bob">
+            <Search className="h-10 w-10" />
+          </div>
           <p className="text-sm text-zinc-400 dark:text-zinc-500">
             {searchTerm ? "No se encontraron recursos" : "No hay recursos compartidos aún"}
           </p>

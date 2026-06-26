@@ -55,14 +55,14 @@ export default function SpeakButton({ word }: { word: string }) {
     <button
       onClick={handleSpeak}
       aria-label={`Pronunciar ${word}`}
-      className="rounded-lg p-2 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-indigo-600 dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-indigo-400"
+      className="press-bouncy rounded-lg p-2 text-zinc-400 transition-colors hover:bg-indigo-50 hover:text-indigo-600 active:scale-90 dark:text-zinc-500 dark:hover:bg-indigo-950 dark:hover:text-indigo-400"
     >
       {speaking ? (
-        <Volume2 className="h-4 w-4 animate-pulse text-indigo-600 dark:text-indigo-400" />
+        <Volume2 className="h-5 w-5 animate-pulse text-indigo-600 dark:text-indigo-400" />
       ) : !ready ? (
-        <VolumeX className="h-4 w-4 opacity-50" />
+        <VolumeX className="h-5 w-5 opacity-50" />
       ) : (
-        <Volume2 className="h-4 w-4" />
+        <Volume2 className="h-5 w-5" />
       )}
     </button>
   )

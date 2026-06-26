@@ -41,24 +41,29 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           <div
             key={t.id}
             role="status"
-            className={`pointer-events-auto flex animate-slide-in-right items-center gap-2 rounded-xl border px-4 py-3 shadow-lg ${
+            className={`pointer-events-auto flex animate-slide-in-right items-center gap-2.5 rounded-xl border px-4 py-3 shadow-lg ${
               t.type === "success"
                 ? "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-400"
                 : "border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-400"
             }`}
           >
-            {t.type === "success" ? (
-              <CheckCircle2 className="h-4 w-4 flex-shrink-0" />
-            ) : (
-              <AlertCircle className="h-4 w-4 flex-shrink-0" />
-            )}
-            <span className="text-sm font-medium">{t.message}</span>
+            <span
+              key={t.type}
+              className="inline-flex animate-pop-in"
+            >
+              {t.type === "success" ? (
+                <CheckCircle2 className="h-5 w-5 flex-shrink-0" />
+              ) : (
+                <AlertCircle className="h-5 w-5 flex-shrink-0" />
+              )}
+            </span>
+            <span className="text-sm font-semibold">{t.message}</span>
             <button
               onClick={() => setToasts((prev) => prev.filter((x) => x.id !== t.id))}
-              className="ml-2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
+              className="ml-2 text-zinc-400 transition-colors hover:text-zinc-600 active:scale-90 dark:hover:text-zinc-300"
               aria-label="Cerrar notificación"
             >
-              <X className="h-3.5 w-3.5" />
+              <X className="h-4 w-4" />
             </button>
           </div>
         ))}

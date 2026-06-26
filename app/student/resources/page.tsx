@@ -1,6 +1,7 @@
 import { cookies } from "next/headers"
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
+import { BookOpen } from "lucide-react"
 import ResourcesList from "./ResourcesList"
 
 export default async function StudentResourcesPage() {
@@ -27,7 +28,12 @@ export default async function StudentResourcesPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="animate-fade-in text-2xl font-bold text-zinc-800 dark:text-zinc-100">Recursos</h1>
+      <div className="page-header animate-fade-in-up">
+        <div className="page-header-icon">
+          <BookOpen className="h-7 w-7" />
+        </div>
+        <h1 className="page-title">Recursos</h1>
+      </div>
       <ResourcesList grouped={grouped} />
     </div>
   )

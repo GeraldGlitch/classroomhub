@@ -86,10 +86,10 @@ export default function StudentForm({ student }: { student?: Student }) {
           <button
             type="button"
             onClick={regenerateLocalCode}
-            className="flex items-center gap-1 rounded-lg border border-zinc-200 dark:border-zinc-800 px-2 py-2 text-xs text-zinc-500 dark:text-zinc-400 hover:bg-zinc-50 dark:hover:bg-zinc-800 dark:bg-zinc-800 hover:text-zinc-700 dark:hover:text-zinc-300"
+            className="press-bouncy flex items-center gap-1 rounded-xl border border-zinc-200 px-2.5 py-2 text-xs text-zinc-500 hover:bg-zinc-50 hover:text-zinc-700 active:scale-90 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700 dark:hover:text-zinc-300"
             title="Generar código aleatorio"
           >
-            <RefreshCw className="h-3.5 w-3.5" />
+            <RefreshCw className="h-5 w-5" />
           </button>
         </div>
         {student?.access_code && (
@@ -121,8 +121,8 @@ export default function StudentForm({ student }: { student?: Student }) {
                 placeholder="Valor"
                 className="block flex-1 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
               />
-              <button type="button" onClick={() => removeField(i)} className="text-zinc-400 hover:text-red-500">
-                <X className="h-4 w-4" />
+              <button type="button" onClick={() => removeField(i)} className="press-bouncy text-zinc-400 hover:text-red-500 active:scale-90">
+                <X className="h-5 w-5" />
               </button>
             </div>
           ))}
@@ -139,8 +139,8 @@ export default function StudentForm({ student }: { student?: Student }) {
               placeholder="Valor"
               className="block flex-1 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
             />
-            <button type="button" onClick={addField} className="rounded-lg bg-zinc-100 dark:bg-zinc-800 px-3 py-2 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200">
-              <Plus className="h-4 w-4" />
+            <button type="button" onClick={addField} className="press-bouncy rounded-xl bg-zinc-100 dark:bg-zinc-800 px-3 py-2.5 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 active:scale-90">
+              <Plus className="h-5 w-5" />
             </button>
           </div>
         </div>
@@ -152,7 +152,7 @@ export default function StudentForm({ student }: { student?: Student }) {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
+        className="btn-primary"
       >
         {pending ? "Guardando..." : student ? "Guardar cambios" : "Crear estudiante"}
       </button>
