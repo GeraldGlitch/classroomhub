@@ -13,6 +13,7 @@ import {
   LogOut,
   GraduationCap,
   BookMarked,
+  Drama,
   PanelLeftClose,
   PanelLeftOpen,
   Menu,
@@ -26,6 +27,7 @@ const navItems = [
   { href: "/student/words", label: "Palabras difíciles", icon: BookMarked },
   { href: "/student/questionnaires", label: "Cuestionarios", icon: FileText },
   { href: "/student/resources", label: "Recursos", icon: BookOpen },
+  { href: "/student/roleplays", label: "Roleplays", icon: Drama },
   { href: "/student/agenda", label: "Agenda", icon: Calendar },
 ]
 
