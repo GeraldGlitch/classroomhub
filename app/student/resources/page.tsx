@@ -30,7 +30,7 @@ export default async function StudentResourcesPage() {
     <div className="space-y-6">
       <div className="page-header animate-fade-in-up">
         <div className="page-header-icon">
-          <Image src="/recursos.svg" alt="" width={28} height={28} className="h-7 w-7" />
+          <Image src="/recursos.svg" alt="" width={36} height={36} className="h-9 w-9" />
         </div>
         <h1 className="page-title">Recursos</h1>
       </div>

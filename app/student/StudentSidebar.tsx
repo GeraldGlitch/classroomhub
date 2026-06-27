@@ -77,7 +77,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
     <>
       <div className="flex items-center gap-2.5 border-b border-zinc-100 px-3 py-4 dark:border-zinc-800">
         <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-950">
-          <Image src="/character.svg" alt="ClassroomHub" width={24} height={24} className="h-6 w-6" />
+          <Image src="/character.svg" alt="ClassroomHub" width={32} height={32} className="h-8 w-8" />
         </div>
         {!collapsed && (
           <span className="truncate text-base font-bold text-zinc-800 dark:text-zinc-100">ClassroomHub</span>
@@ -111,7 +111,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
                 <span className="absolute left-0 top-1/2 h-7 w-1 -translate-y-1/2 rounded-r bg-indigo-600 dark:bg-indigo-400 animate-scale-in" />
               )}
               {customIcon ? (
-                <Image src={customIcon} alt="" width={24} height={24} className="h-6 w-6 flex-shrink-0" />
+                <Image src={customIcon} alt="" width={32} height={32} className="h-8 w-8 flex-shrink-0" />
               ) : Icon ? (
                 <Icon className={`h-6 w-6 flex-shrink-0 transition-transform duration-150 ${active ? "scale-110" : "group-hover:scale-110 group-hover:-rotate-3"}`} />
               ) : null}
@@ -149,7 +149,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
               collapsed ? "justify-center p-2.5" : "w-full px-3 py-2.5"
             }`}
           >
-            <Image src="/salir.svg" alt="" width={24} height={24} className="h-6 w-6 flex-shrink-0" />
+            <Image src="/salir.svg" alt="" width={32} height={32} className="h-8 w-8 flex-shrink-0" />
             {!collapsed && "Salir"}
           </button>
         </form>

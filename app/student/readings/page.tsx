@@ -31,7 +31,7 @@ export default async function StudentReadingsPage() {
     <div className="space-y-6">
       <div className="page-header animate-fade-in-up">
         <div className="page-header-icon bg-emerald-100 dark:bg-emerald-950">
-          <Image src="/reading.svg" alt="" width={28} height={28} className="h-7 w-7" />
+          <Image src="/reading.svg" alt="" width={36} height={36} className="h-9 w-9" />
         </div>
         <h1 className="page-title">Lecturas</h1>
       </div>

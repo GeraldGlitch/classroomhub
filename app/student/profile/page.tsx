@@ -24,7 +24,7 @@ export default async function StudentProfilePage() {
     <div className="space-y-6">
       <div className="page-header animate-fade-in-up">
         <div className="page-header-icon">
-          <Image src="/login.svg" alt="" width={28} height={28} className="h-7 w-7" />
+          <Image src="/login.svg" alt="" width={36} height={36} className="h-9 w-9" />
         </div>
         <h1 className="page-title">Mi Perfil</h1>
       </div>

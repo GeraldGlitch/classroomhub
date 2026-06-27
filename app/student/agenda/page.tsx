@@ -35,7 +35,7 @@ export default async function StudentAgendaPage() {
     <div className="space-y-6">
       <div className="page-header animate-fade-in-up">
         <div className="page-header-icon bg-orange-100 text-orange-600 dark:bg-orange-950 dark:text-orange-400">
-          <Image src="/agenda.svg" alt="" width={28} height={28} className="h-7 w-7" />
+          <Image src="/agenda.svg" alt="" width={36} height={36} className="h-9 w-9" />
         </div>
         <h1 className="page-title">Agenda</h1>
       </div>
@@ -43,7 +43,7 @@ export default async function StudentAgendaPage() {
       {(!upcoming || upcoming.length === 0) && (!past || past.length === 0) ? (
         <div className="empty-state animate-fade-in">
           <div className="empty-state-icon animate-bob">
-            <Image src="/agenda.svg" alt="" width={40} height={40} className="h-10 w-10" />
+            <Image src="/agenda.svg" alt="" width={52} height={52} className="h-[52px] w-[52px]" />
           </div>
           <p className="text-sm text-zinc-400 dark:text-zinc-500">No hay eventos en la agenda</p>
         </div>

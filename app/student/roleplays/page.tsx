@@ -42,7 +42,7 @@ export default async function StudentRoleplaysPage() {
     <div className="space-y-6">
       <div className="page-header animate-fade-in-up">
         <div className="page-header-icon bg-purple-100 dark:bg-purple-950">
-          <Image src="/roleplays.svg" alt="" width={28} height={28} className="h-7 w-7" />
+          <Image src="/roleplays.svg" alt="" width={36} height={36} className="h-9 w-9" />
         </div>
         <h1 className="page-title">Roleplays</h1>
       </div>

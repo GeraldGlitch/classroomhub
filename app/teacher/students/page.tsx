@@ -20,7 +20,7 @@ export default async function StudentsPage() {
       <div className="flex items-center justify-between">
         <div className="page-header animate-fade-in-up">
           <div className="page-header-icon">
-            <Image src="/students.svg" alt="" width={28} height={28} className="h-7 w-7" />
+            <Image src="/students.svg" alt="" width={36} height={36} className="h-9 w-9" />
           </div>
           <h1 className="page-title">Estudiantes</h1>
         </div>
@@ -36,7 +36,7 @@ export default async function StudentsPage() {
       {!students || students.length === 0 ? (
         <div className="empty-state animate-fade-in">
           <div className="empty-state-icon animate-bob">
-            <Image src="/students.svg" alt="" width={40} height={40} className="h-10 w-10" />
+            <Image src="/students.svg" alt="" width={52} height={52} className="h-[52px] w-[52px]" />
           </div>
           <h2 className="text-lg font-bold text-zinc-600 dark:text-zinc-400">No hay estudiantes</h2>
           <p className="text-sm text-zinc-400 dark:text-zinc-500">Añade tu primer estudiante para empezar</p>
