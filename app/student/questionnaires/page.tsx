@@ -1,7 +1,8 @@
 import { cookies } from "next/headers"
 import { createClient } from "@/lib/supabase/server"
+import Image from "next/image"
 import { redirect } from "next/navigation"
-import { FileText, CheckCircle2, ListTodo, BookCheck } from "lucide-react"
+import { CheckCircle2, ListTodo, BookCheck } from "lucide-react"
 
 export default async function StudentQuestionnairesPage() {
   const cookieStore = await cookies()
@@ -24,7 +25,7 @@ export default async function StudentQuestionnairesPage() {
     <div className="space-y-6">
       <div className="page-header animate-fade-in-up">
         <div className="page-header-icon">
-          <FileText className="h-7 w-7" />
+          <Image src="/questionnaries.svg" alt="" width={28} height={28} className="h-7 w-7" />
         </div>
         <h1 className="page-title">Cuestionarios</h1>
       </div>
@@ -32,7 +33,7 @@ export default async function StudentQuestionnairesPage() {
       {!stats ? (
         <div className="empty-state animate-fade-in">
           <div className="empty-state-icon animate-bob">
-            <FileText className="h-10 w-10" />
+            <Image src="/questionnaries.svg" alt="" width={40} height={40} className="h-10 w-10" />
           </div>
           <p className="text-sm text-zinc-400 dark:text-zinc-500">Aún no hay datos de cuestionarios</p>
         </div>

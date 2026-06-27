@@ -10,6 +10,7 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "ClassroomHub",
   description: "Portal de gestión para ClassroomHub",
+  icons: { icon: "/character.svg" },
 };
 
 export default function RootLayout({

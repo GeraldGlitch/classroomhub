@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
+import Image from "next/image"
 import Link from "next/link"
-import { BookOpen, BookText, Calendar, ArrowRight, LayoutDashboard, Drama } from "lucide-react"
+import { Calendar, ArrowRight, LayoutDashboard } from "lucide-react"
 import { parseLocalDate } from "@/lib/date"
 
 export default async function ClassDashboardPage() {
@@ -50,7 +51,7 @@ export default async function ClassDashboardPage() {
               <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{resourceCount ?? 0} recursos</p>
             </div>
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-500 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-indigo-950 dark:text-indigo-400">
-              <BookOpen className="h-7 w-7" />
+              <Image src="/recursos.svg" alt="" width={28} height={28} className="h-7 w-7" />
             </div>
           </div>
           <div className="mt-3 flex items-center gap-1 text-sm font-semibold text-indigo-600 dark:text-indigo-400">
@@ -67,8 +68,8 @@ export default async function ClassDashboardPage() {
               <h2 className="font-bold text-zinc-800 dark:text-zinc-100">Roleplays</h2>
               <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{roleplayCount ?? 0} roleplays</p>
             </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 text-purple-500 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-purple-950 dark:text-purple-400">
-              <Drama className="h-7 w-7" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-purple-950">
+              <Image src="/roleplays.svg" alt="" width={28} height={28} className="h-7 w-7" />
             </div>
           </div>
           <div className="mt-3 flex items-center gap-1 text-sm font-semibold text-purple-600 dark:text-purple-400">
@@ -85,8 +86,8 @@ export default async function ClassDashboardPage() {
               <h2 className="font-bold text-zinc-800 dark:text-zinc-100">Lecturas</h2>
               <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{readingCount ?? 0} lecturas</p>
             </div>
-            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-500 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-emerald-950 dark:text-emerald-400">
-              <BookText className="h-7 w-7" />
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-emerald-950">
+              <Image src="/reading.svg" alt="" width={28} height={28} className="h-7 w-7" />
             </div>
           </div>
           <div className="mt-3 flex items-center gap-1 text-sm font-semibold text-emerald-600 dark:text-emerald-400">
@@ -106,7 +107,7 @@ export default async function ClassDashboardPage() {
               </p>
             </div>
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-orange-100 text-orange-500 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-orange-950 dark:text-orange-400">
-              <Calendar className="h-7 w-7" />
+              <Image src="/agenda.svg" alt="" width={28} height={28} className="h-7 w-7" />
             </div>
           </div>
           <div className="mt-3 flex items-center gap-1 text-sm font-semibold text-orange-600 dark:text-orange-400">

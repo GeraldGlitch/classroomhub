@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
+import Image from "next/image"
 import Link from "next/link"
-import { Plus, User, Smile } from "lucide-react"
+import { Plus, Smile } from "lucide-react"
 import DeleteStudentButton from "./DeleteStudentButton"
 import CopyCodeButton from "./CopyCodeButton"
 
@@ -19,7 +20,7 @@ export default async function StudentsPage() {
       <div className="flex items-center justify-between">
         <div className="page-header animate-fade-in-up">
           <div className="page-header-icon">
-            <User className="h-7 w-7" />
+            <Image src="/students.svg" alt="" width={28} height={28} className="h-7 w-7" />
           </div>
           <h1 className="page-title">Estudiantes</h1>
         </div>
@@ -35,7 +36,7 @@ export default async function StudentsPage() {
       {!students || students.length === 0 ? (
         <div className="empty-state animate-fade-in">
           <div className="empty-state-icon animate-bob">
-            <User className="h-10 w-10" />
+            <Image src="/students.svg" alt="" width={40} height={40} className="h-10 w-10" />
           </div>
           <h2 className="text-lg font-bold text-zinc-600 dark:text-zinc-400">No hay estudiantes</h2>
           <p className="text-sm text-zinc-400 dark:text-zinc-500">Añade tu primer estudiante para empezar</p>

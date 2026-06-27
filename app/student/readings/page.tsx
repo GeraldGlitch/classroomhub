@@ -1,7 +1,7 @@
 import { cookies } from "next/headers"
 import { createClient } from "@/lib/supabase/server"
+import Image from "next/image"
 import { redirect } from "next/navigation"
-import { BookText } from "lucide-react"
 import ReadingsList from "./ReadingsList"
 
 export default async function StudentReadingsPage() {
@@ -30,8 +30,8 @@ export default async function StudentReadingsPage() {
   return (
     <div className="space-y-6">
       <div className="page-header animate-fade-in-up">
-        <div className="page-header-icon bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400">
-          <BookText className="h-7 w-7" />
+        <div className="page-header-icon bg-emerald-100 dark:bg-emerald-950">
+          <Image src="/reading.svg" alt="" width={28} height={28} className="h-7 w-7" />
         </div>
         <h1 className="page-title">Lecturas</h1>
       </div>

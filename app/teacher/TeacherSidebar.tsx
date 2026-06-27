@@ -2,15 +2,11 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { signOut } from "@/lib/actions/auth"
 import ThemeToggle from "@/components/ThemeToggle"
 import {
-  LayoutDashboard,
-  Users,
-  Settings,
-  LogOut,
-  GraduationCap,
   PanelLeftClose,
   PanelLeftOpen,
   Menu,
@@ -19,10 +15,17 @@ import {
 
 const COLLAPSED_KEY = "teacher-sidebar-collapsed"
 
-const navItems = [
-  { href: "/teacher/class-dashboard", label: "Clase", icon: LayoutDashboard },
-  { href: "/teacher/students", label: "Estudiantes", icon: Users },
-  { href: "/teacher/settings", label: "Ajustes", icon: Settings },
+interface NavItem {
+  href: string
+  label: string
+  icon?: React.ComponentType<{ className?: string }>
+  customIcon?: string
+}
+
+const navItems: NavItem[] = [
+  { href: "/teacher/class-dashboard", label: "Clase", customIcon: "/classroom.svg" },
+  { href: "/teacher/students", label: "Estudiantes", customIcon: "/students.svg" },
+  { href: "/teacher/settings", label: "Ajustes", customIcon: "/settings.svg" },
 ]
 
 function getInitialCollapsed() {
@@ -70,7 +73,7 @@ export default function TeacherSidebar({ teacherName }: { teacherName: string })
     <>
       <div className="flex items-center gap-2.5 border-b border-zinc-100 px-3 py-4 dark:border-zinc-800">
         <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-950">
-          <GraduationCap className="h-6 w-6 text-indigo-600 dark:text-indigo-400" />
+          <Image src="/character.svg" alt="ClassroomHub" width={24} height={24} className="h-6 w-6" />
         </div>
         {!collapsed && (
           <span className="truncate text-base font-bold text-zinc-800 dark:text-zinc-100">ClassroomHub</span>
@@ -85,7 +88,7 @@ export default function TeacherSidebar({ teacherName }: { teacherName: string })
       )}
 
       <nav className="flex-1 space-y-1.5 px-1.5 py-4">
-        {navItems.map(({ href, label, icon: Icon }) => {
+        {navItems.map(({ href, label, icon: Icon, customIcon }) => {
           const active = pathname.startsWith(href)
           return (
             <Link
@@ -103,7 +106,11 @@ export default function TeacherSidebar({ teacherName }: { teacherName: string })
               {active && (
                 <span className="absolute left-0 top-1/2 h-7 w-1 -translate-y-1/2 rounded-r bg-indigo-600 dark:bg-indigo-400 animate-scale-in" />
               )}
-              <Icon className={`h-6 w-6 flex-shrink-0 transition-transform duration-150 ${active ? "scale-110" : "group-hover:scale-110 group-hover:-rotate-3"}`} />
+              {customIcon ? (
+                <Image src={customIcon} alt="" width={24} height={24} className="h-6 w-6 flex-shrink-0" />
+              ) : Icon ? (
+                <Icon className={`h-6 w-6 flex-shrink-0 transition-transform duration-150 ${active ? "scale-110" : "group-hover:scale-110 group-hover:-rotate-3"}`} />
+              ) : null}
               {!collapsed && <span className="truncate">{label}</span>}
             </Link>
           )
@@ -138,7 +145,7 @@ export default function TeacherSidebar({ teacherName }: { teacherName: string })
               collapsed ? "justify-center p-2.5" : "w-full px-3 py-2.5"
             }`}
           >
-            <LogOut className="h-6 w-6 flex-shrink-0" />
+            <Image src="/salir.svg" alt="" width={24} height={24} className="h-6 w-6 flex-shrink-0" />
             {!collapsed && "Cerrar sesión"}
           </button>
         </form>

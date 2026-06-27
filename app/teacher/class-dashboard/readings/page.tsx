@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
-import { BookText, Plus, Pencil } from "lucide-react"
+import Image from "next/image"
+import { Plus, Pencil } from "lucide-react"
 import Link from "next/link"
 import DeleteReadingButton from "./DeleteReadingButton"
 
@@ -27,8 +28,8 @@ export default async function ReadingsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="page-header animate-fade-in-up">
-          <div className="page-header-icon bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400">
-            <BookText className="h-7 w-7" />
+          <div className="page-header-icon bg-emerald-100 dark:bg-emerald-950">
+            <Image src="/reading.svg" alt="" width={28} height={28} className="h-7 w-7" />
           </div>
           <h1 className="page-title">Lecturas</h1>
         </div>
@@ -44,7 +45,7 @@ export default async function ReadingsPage() {
       {Object.keys(grouped).length === 0 ? (
         <div className="empty-state animate-fade-in">
           <div className="empty-state-icon animate-bob">
-            <BookText className="h-10 w-10" />
+            <Image src="/reading.svg" alt="" width={40} height={40} className="h-10 w-10" />
           </div>
           <h2 className="text-lg font-bold text-zinc-600 dark:text-zinc-400">No hay lecturas aún</h2>
           <p className="text-sm text-zinc-400 dark:text-zinc-500">
