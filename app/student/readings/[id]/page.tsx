@@ -2,7 +2,8 @@ import { cookies } from "next/headers"
 import { createClient } from "@/lib/supabase/server"
 import { redirect, notFound } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft, BookText } from "lucide-react"
+import Image from "next/image"
+import { ArrowLeft } from "lucide-react"
 import ReadingParagraph from "./ReadingParagraph"
 
 export default async function StudentReadingPage({
@@ -39,7 +40,7 @@ export default async function StudentReadingPage({
 
       <div className="page-header animate-fade-in-up">
         <div className="page-header-icon bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400">
-          <BookText className="h-7 w-7" />
+          <Image src="/reading.svg" alt="" width={28} height={28} className="h-7 w-7" />
         </div>
         <div>
           <h1 className="page-title">{reading.title}</h1>

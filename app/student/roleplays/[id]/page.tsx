@@ -2,7 +2,8 @@ import { cookies } from "next/headers"
 import { createClient } from "@/lib/supabase/server"
 import { redirect, notFound } from "next/navigation"
 import Link from "next/link"
-import { ArrowLeft, Drama } from "lucide-react"
+import Image from "next/image"
+import { ArrowLeft } from "lucide-react"
 import RoleplayScript from "./RoleplayScript"
 
 export default async function StudentRoleplayPage({
@@ -45,7 +46,7 @@ export default async function StudentRoleplayPage({
 
       <div className="page-header animate-fade-in-up">
         <div className="page-header-icon bg-purple-100 text-purple-600 dark:bg-purple-950 dark:text-purple-400">
-          <Drama className="h-7 w-7" />
+          <Image src="/roleplays.svg" alt="" width={28} height={28} className="h-7 w-7" />
         </div>
         <div>
           <h1 className="page-title">{roleplay.title}</h1>

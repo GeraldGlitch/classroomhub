@@ -1,7 +1,8 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { ChevronLeft, ChevronRight, Drama } from "lucide-react"
+import Image from "next/image"
+import { ChevronLeft, ChevronRight } from "lucide-react"
 import SpeakButton from "@/components/SpeakButton"
 
 interface Line {
@@ -111,7 +112,7 @@ export default function RoleplayScript({ lines }: { lines: Line[] }) {
     return (
       <div className="empty-state animate-fade-in">
         <div className="empty-state-icon animate-bob">
-          <Drama className="h-10 w-10" />
+          <Image src="/roleplays.svg" alt="" width={40} height={40} className="h-10 w-10" />
         </div>
         <p className="text-sm text-zinc-400 dark:text-zinc-500">
           Este roleplay aún no tiene líneas

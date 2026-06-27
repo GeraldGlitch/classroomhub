@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Search, Drama, Globe, ChevronRight } from "lucide-react"
+import { Search, Globe, ChevronRight } from "lucide-react"
 
 export interface Roleplay {
   id: string
@@ -102,7 +102,7 @@ export default function RoleplaysList({
                     style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
                   >
                     <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-purple-100 text-purple-600 dark:bg-purple-950 dark:text-purple-400">
-                      <Drama className="h-5 w-5" />
+                      <Image src="/roleplays.svg" alt="" width={20} height={20} className="h-5 w-5" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <h3 className="truncate font-bold text-zinc-800 dark:text-zinc-100">

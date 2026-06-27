@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Search, BookText, ChevronRight } from "lucide-react"
+import { Search, ChevronRight } from "lucide-react"
 
 export interface Reading {
   id: string
@@ -95,7 +95,7 @@ export default function ReadingsList({
                     style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
                   >
                     <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400">
-                      <BookText className="h-5 w-5" />
+                      <Image src="/reading.svg" alt="" width={20} height={20} className="h-5 w-5" />
                     </div>
                     <div className="min-w-0 flex-1">
                       <h3 className="truncate font-bold text-zinc-800 dark:text-zinc-100">
