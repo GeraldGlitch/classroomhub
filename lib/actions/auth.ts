@@ -50,22 +50,10 @@ export async function findStudentByCode(formData: FormData) {
   // Prefix-code format: teacher_prefix-student_code
   const dashIdx = trimmed.indexOf("-")
   if (dashIdx > 0) {
-    const teacherPrefix = trimmed.slice(0, dashIdx)
-    const studentCode = trimmed.slice(dashIdx + 1)
-
-    const { data: teacher } = await supabase
-      .from("teachers")
-      .select("id")
-      .eq("access_code", teacherPrefix)
-      .single()
-
-    if (!teacher) return { error: "Código incorrecto" }
-
     const { data: student } = await supabase
       .from("students")
       .select("id, name, teacher_id")
       .eq("access_code", trimmed)
-      .eq("teacher_id", teacher.id)
       .single()
 
     if (!student) return { error: "Código incorrecto" }
