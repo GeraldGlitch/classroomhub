@@ -1,7 +1,8 @@
 import { cookies } from "next/headers"
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
-import { BookMarked, ListTodo, CheckCircle2 } from "lucide-react"
+import Image from "next/image"
+import { ListTodo, CheckCircle2 } from "lucide-react"
 import WordList from "./WordList"
 
 export default async function StudentWordsPage() {
@@ -31,7 +32,7 @@ export default async function StudentWordsPage() {
     <div className="space-y-6">
       <div className="page-header animate-fade-in-up">
         <div className="page-header-icon">
-          <BookMarked className="h-7 w-7" />
+          <Image src="/palabras-dificiles.svg" alt="" width={28} height={28} className="h-7 w-7" />
         </div>
         <h1 className="page-title">
           Palabras difíciles
@@ -90,7 +91,7 @@ export default async function StudentWordsPage() {
       {!words || words.length === 0 ? (
         <div className="empty-state animate-fade-in">
           <div className="empty-state-icon animate-bob">
-            <BookMarked className="h-10 w-10" />
+            <Image src="/palabras-dificiles.svg" alt="" width={40} height={40} className="h-10 w-10" />
           </div>
           <p className="text-sm text-zinc-400 dark:text-zinc-500">No tienes palabras registradas aún</p>
         </div>

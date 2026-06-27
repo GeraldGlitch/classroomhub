@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useMemo } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { Search, Drama, Globe, ChevronRight } from "lucide-react"
 
@@ -76,7 +77,7 @@ export default function RoleplaysList({
       {groups.length === 0 ? (
         <div className="empty-state animate-fade-in">
           <div className="empty-state-icon animate-bob">
-            <Search className="h-10 w-10" />
+            <Image src="/roleplays.svg" alt="" width={40} height={40} className="h-10 w-10" />
           </div>
           <p className="text-sm text-zinc-400 dark:text-zinc-500">
             {searchTerm ? "No se encontraron roleplays" : "No hay roleplays compartidos aún"}
