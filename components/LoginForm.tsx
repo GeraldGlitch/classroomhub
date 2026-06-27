@@ -119,11 +119,11 @@ export default function LoginForm() {
               type="text"
               required
               className={inputClass}
-              placeholder="Tu código personal"
-              maxLength={10}
+              placeholder="prefijo-gerald123"
+              maxLength={50}
             />
             <p className="mt-1 text-xs text-zinc-400 dark:text-zinc-500">
-              Ingresa el código proporcionado por tu profesor
+              Ingresa el código completo: <span className="font-mono font-medium text-zinc-500 dark:text-zinc-400">prefijo-tucódigo</span> (proporcionado por tu profesor)
             </p>
           </div>
           {studentState?.error && (

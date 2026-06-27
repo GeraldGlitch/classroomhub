@@ -44,11 +44,60 @@ export async function findStudentByCode(formData: FormData) {
     return { error: "Código inválido" }
   }
 
+  const trimmed = code.trim()
   const supabase = await createClient()
+
+  // Prefix-code format: teacher_prefix-student_code
+  const dashIdx = trimmed.indexOf("-")
+  if (dashIdx > 0) {
+    const teacherPrefix = trimmed.slice(0, dashIdx)
+    const studentCode = trimmed.slice(dashIdx + 1)
+
+    const { data: teacher } = await supabase
+      .from("teachers")
+      .select("id")
+      .eq("access_code", teacherPrefix)
+      .single()
+
+    if (!teacher) return { error: "Código incorrecto" }
+
+    const { data: student } = await supabase
+      .from("students")
+      .select("id, name, teacher_id")
+      .eq("access_code", trimmed)
+      .eq("teacher_id", teacher.id)
+      .single()
+
+    if (!student) return { error: "Código incorrecto" }
+
+    const cookieStore = await cookies()
+    cookieStore.set("student_id", student.id, {
+      path: "/",
+      maxAge: 60 * 60 * 24,
+      httpOnly: true,
+      sameSite: "lax",
+    })
+    cookieStore.set("student_name", student.name, {
+      path: "/",
+      maxAge: 60 * 60 * 24,
+      httpOnly: true,
+      sameSite: "lax",
+    })
+    cookieStore.set("teacher_id", student.teacher_id, {
+      path: "/",
+      maxAge: 60 * 60 * 24,
+      httpOnly: true,
+      sameSite: "lax",
+    })
+
+    redirect("/student")
+  }
+
+  // Legacy: no dash, search globally (existing students without prefixed code)
   const { data: students } = await supabase
     .from("students")
     .select("id, name, teacher_id")
-    .eq("access_code", code.trim())
+    .eq("access_code", trimmed)
     .limit(1)
 
   if (!students || students.length === 0) {
