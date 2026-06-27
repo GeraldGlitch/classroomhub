@@ -7,19 +7,19 @@ export default async function ClassDashboardPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  const { data: resources } = await supabase
+  const { count: resourceCount } = await supabase
     .from("resources")
-    .select("id", { count: "exact", head: true })
+    .select("*", { count: "exact", head: true })
     .eq("teacher_id", user!.id)
 
-  const { data: roleplays } = await supabase
+  const { count: roleplayCount } = await supabase
     .from("roleplays")
-    .select("id", { count: "exact", head: true })
+    .select("*", { count: "exact", head: true })
     .eq("teacher_id", user!.id)
 
-  const { data: readings } = await supabase
+  const { count: readingCount } = await supabase
     .from("readings")
-    .select("id", { count: "exact", head: true })
+    .select("*", { count: "exact", head: true })
     .eq("teacher_id", user!.id)
 
   const { data: upcoming } = await supabase
@@ -29,10 +29,6 @@ export default async function ClassDashboardPage() {
     .gte("event_date", new Date().toISOString().split("T")[0])
     .order("event_date")
     .limit(5)
-
-  const resourceCount = resources?.length ?? 0
-  const roleplayCount = roleplays?.length ?? 0
-  const readingCount = readings?.length ?? 0
 
   return (
     <div className="space-y-6">
@@ -51,7 +47,7 @@ export default async function ClassDashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-bold text-zinc-800 dark:text-zinc-100">Recursos</h2>
-              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{resourceCount} recursos</p>
+              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{resourceCount ?? 0} recursos</p>
             </div>
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-500 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-indigo-950 dark:text-indigo-400">
               <BookOpen className="h-7 w-7" />
@@ -69,7 +65,7 @@ export default async function ClassDashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-bold text-zinc-800 dark:text-zinc-100">Roleplays</h2>
-              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{roleplayCount} roleplays</p>
+              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{roleplayCount ?? 0} roleplays</p>
             </div>
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-100 text-purple-500 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-purple-950 dark:text-purple-400">
               <Drama className="h-7 w-7" />
@@ -87,7 +83,7 @@ export default async function ClassDashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <h2 className="font-bold text-zinc-800 dark:text-zinc-100">Lecturas</h2>
-              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{readingCount} lecturas</p>
+              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{readingCount ?? 0} lecturas</p>
             </div>
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-500 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-emerald-950 dark:text-emerald-400">
               <BookText className="h-7 w-7" />
