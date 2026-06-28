@@ -2,7 +2,8 @@
 
 import { useActionState, useState } from "react"
 import { createStudent, updateStudent } from "./actions"
-import { Plus, X, RefreshCw } from "lucide-react"
+import type { StudentActionState } from "./actions"
+import { RefreshCw } from "lucide-react"
 
 interface Student {
   id: string
@@ -17,34 +18,12 @@ function randomCode(): string {
 
 export default function StudentForm({ student }: { student?: Student }) {
   const action = student ? updateStudent : createStudent
-  const [state, formAction, pending] = useActionState(
-    async (_prev: unknown, formData: FormData) => action(formData),
-    undefined,
+  const [state, formAction, pending] = useActionState<StudentActionState, FormData>(
+    async (_prev: unknown, formData: FormData) => action(_prev, formData),
+    {},
   )
 
   const [code, setCode] = useState(student?.access_code ?? randomCode())
-
-  const initialFields = student?.custom_fields ?? {}
-  const [fields, setFields] = useState<{ key: string; value: string }[]>(
-    Object.entries(initialFields).map(([key, value]) => ({ key, value })),
-  )
-  const [newKey, setNewKey] = useState("")
-  const [newValue, setNewValue] = useState("")
-
-  function addField() {
-    if (!newKey) return
-    setFields([...fields, { key: newKey, value: newValue }])
-    setNewKey("")
-    setNewValue("")
-  }
-
-  function removeField(i: number) {
-    setFields(fields.filter((_, idx) => idx !== i))
-  }
-
-  function updateField(i: number, key: string, value: string) {
-    setFields(fields.map((f, idx) => (idx === i ? { key, value } : f)))
-  }
 
   function regenerateLocalCode() {
     setCode(randomCode())
@@ -106,48 +85,11 @@ export default function StudentForm({ student }: { student?: Student }) {
 
       <div>
         <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">Campos personalizados</label>
-        <div className="mt-1 space-y-2">
-          {fields.map((field, i) => (
-            <div key={i} className="flex items-center gap-2">
-              <input
-                value={field.key}
-                onChange={(e) => updateField(i, e.target.value, field.value)}
-                placeholder="Nombre del campo"
-                className="block w-1/3 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-              />
-              <input
-                value={field.value}
-                onChange={(e) => updateField(i, field.key, e.target.value)}
-                placeholder="Valor"
-                className="block flex-1 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-              />
-              <button type="button" onClick={() => removeField(i)} className="press-bouncy text-zinc-400 hover:text-red-500 active:scale-90">
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-          ))}
-          <div className="flex items-center gap-2">
-            <input
-              value={newKey}
-              onChange={(e) => setNewKey(e.target.value)}
-              placeholder="Campo (ej: Edad)"
-              className="block w-1/3 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-            />
-            <input
-              value={newValue}
-              onChange={(e) => setNewValue(e.target.value)}
-              placeholder="Valor"
-              className="block flex-1 rounded-lg border border-zinc-300 bg-white dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
-            />
-            <button type="button" onClick={addField} className="press-bouncy rounded-xl bg-zinc-100 dark:bg-zinc-800 px-3 py-2.5 text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200 active:scale-90">
-              <Plus className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
-        <input type="hidden" name="custom_fields" value={JSON.stringify(Object.fromEntries(fields.map((f) => [f.key, f.value])))} />
+        <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">Los campos personalizados se gestionan desde la aplicación de escritorio.</p>
       </div>
 
       {state?.error && <p className="text-sm text-red-500">{state.error}</p>}
+      {state?.success && <p className="text-sm text-green-600">&#10003; Guardado correctamente</p>}
 
       <button
         type="submit"

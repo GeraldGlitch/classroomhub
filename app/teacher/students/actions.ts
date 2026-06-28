@@ -5,6 +5,11 @@ import { revalidatePath } from "next/cache"
 import { redirect } from "next/navigation"
 import { z } from "zod"
 
+export interface StudentActionState {
+  error?: string
+  success?: boolean
+}
+
 const studentSchema = z.object({
   name: z.string().min(1, "El nombre es obligatorio"),
   access_code: z.string().min(3, "El código debe tener al menos 3 caracteres").max(50),
@@ -48,11 +53,9 @@ async function isCodeTaken(
   return (count ?? 0) > 0
 }
 
-export async function createStudent(formData: FormData) {
+export async function createStudent(prevState: unknown, formData: FormData) {
   const name = formData.get("name") as string
   const accessCode = formData.get("access_code") as string
-  const customFieldsRaw = formData.get("custom_fields") as string
-  const custom_fields = customFieldsRaw ? JSON.parse(customFieldsRaw) : {}
 
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -76,7 +79,6 @@ export async function createStudent(formData: FormData) {
     teacher_id: user.id,
     name: parsed.data.name,
     access_code: parsed.data.access_code,
-    custom_fields,
   })
 
   if (error) return { error: error.message }
@@ -84,12 +86,10 @@ export async function createStudent(formData: FormData) {
   redirect("/teacher/students")
 }
 
-export async function updateStudent(formData: FormData) {
+export async function updateStudent(prevState: unknown, formData: FormData) {
   const id = formData.get("id") as string
   const name = formData.get("name") as string
   const accessCode = formData.get("access_code") as string
-  const customFieldsRaw = formData.get("custom_fields") as string
-  const custom_fields = customFieldsRaw ? JSON.parse(customFieldsRaw) : {}
 
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -113,13 +113,13 @@ export async function updateStudent(formData: FormData) {
     .update({
       name: parsed.data.name,
       access_code: parsed.data.access_code,
-      custom_fields,
     })
     .eq("id", id)
 
   if (error) return { error: error.message }
   revalidatePath("/teacher/students")
-  redirect("/teacher/students")
+  revalidatePath(`/teacher/students/${id}`)
+  return { success: true }
 }
 
 export async function regenerateStudentCode(formData: FormData) {
