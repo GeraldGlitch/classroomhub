@@ -1,9 +1,10 @@
 import { createClient } from "@/lib/supabase/server"
 import Image from "next/image"
 import Link from "next/link"
-import { Plus, Smile } from "lucide-react"
+import { Plus } from "lucide-react"
 import DeleteStudentButton from "./DeleteStudentButton"
 import CopyCodeButton from "./CopyCodeButton"
+import { getAvatarSrc } from "@/lib/avatar"
 
 export default async function StudentsPage() {
   const supabase = await createClient()
@@ -49,8 +50,12 @@ export default async function StudentsPage() {
               className="card card-hover group animate-fade-in-up flex items-center gap-3 p-4"
               style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-indigo-950 dark:text-indigo-400">
-                <Smile className="h-6 w-6" />
+              <div className="relative flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-indigo-950 dark:text-indigo-400 overflow-hidden">
+                {student.avatar_url ? (
+                  <img src={getAvatarSrc(student.avatar_url)!} alt={student.name} className="h-full w-full object-cover" />
+                ) : (
+                  <span className="text-base font-extrabold">{student.name.charAt(0).toUpperCase()}</span>
+                )}
               </div>
               <div className="flex-1 min-w-0">
                 <Link

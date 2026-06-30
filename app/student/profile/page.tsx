@@ -3,8 +3,9 @@ import { createClient } from "@/lib/supabase/server"
 import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { Smile, AlertTriangle, ArrowRight } from "lucide-react"
+import { AlertTriangle, ArrowRight } from "lucide-react"
 import SpeakButton from "@/components/SpeakButton"
+import { getAvatarSrc } from "@/lib/avatar"
 
 export default async function StudentProfilePage() {
   const cookieStore = await cookies()
@@ -41,8 +42,14 @@ export default async function StudentProfilePage() {
 
       <div className="card animate-fade-in-up p-6">
         <div className="flex items-center gap-4">
-          <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-3xl bg-indigo-100 shadow-sm dark:bg-indigo-950">
-            <Smile className="h-11 w-11 text-indigo-600 dark:text-indigo-400" />
+          <div className="relative flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-3xl bg-indigo-100 shadow-sm dark:bg-indigo-950 overflow-hidden">
+            {getAvatarSrc(student.avatar_url) ? (
+              <img src={getAvatarSrc(student.avatar_url)!} alt={student.name} className="h-full w-full object-cover" />
+            ) : (
+              <span className="text-2xl font-extrabold text-indigo-600 dark:text-indigo-400">
+                {student.name.charAt(0).toUpperCase()}
+              </span>
+            )}
           </div>
           <div>
             <h2 className="text-2xl font-extrabold tracking-tight text-zinc-800 dark:text-zinc-100">{student.name}</h2>
