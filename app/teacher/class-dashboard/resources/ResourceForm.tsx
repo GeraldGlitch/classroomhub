@@ -1,15 +1,23 @@
 "use client"
 
-import { useActionState } from "react"
+import { useActionState, useState } from "react"
 import { createResource, updateResource } from "./actions"
+import { FileText, Presentation, Video } from "lucide-react"
 
 interface Resource {
   id: string
   title: string
   description: string | null
   topic_group: string | null
+  resource_type: string | null
   external_links: { label: string; url: string }[]
 }
+
+const RESOURCE_TYPES = [
+  { value: "DOC", label: "DOC", icon: FileText },
+  { value: "SLIDE", label: "SLIDE", icon: Presentation },
+  { value: "VIDEO", label: "VIDEO", icon: Video },
+]
 
 function firstLink(resource?: Resource): string {
   const links = resource?.external_links
@@ -23,6 +31,7 @@ export default function ResourceForm({ resource }: { resource?: Resource }) {
     async (_prev: unknown, formData: FormData) => action(formData),
     undefined,
   )
+  const [selectedType, setSelectedType] = useState(resource?.resource_type ?? "DOC")
 
   return (
     <form action={formAction} className="space-y-4">
@@ -32,6 +41,34 @@ export default function ResourceForm({ resource }: { resource?: Resource }) {
         </div>
       )}
       {resource && <input type="hidden" name="id" value={resource.id} />}
+
+      <div>
+        <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-2">
+          Tipo de recurso
+        </label>
+        <div className="flex gap-2">
+          {RESOURCE_TYPES.map((t) => {
+            const Icon = t.icon
+            const isActive = selectedType === t.value
+            return (
+              <button
+                key={t.value}
+                type="button"
+                onClick={() => setSelectedType(t.value)}
+                className={`press-bouncy flex cursor-pointer items-center gap-1.5 rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all active:scale-95 ${
+                  isActive
+                    ? "border-indigo-300 bg-indigo-50 text-indigo-700 shadow-sm dark:border-indigo-700 dark:bg-indigo-950 dark:text-indigo-400"
+                    : "border-zinc-200 bg-white text-zinc-600 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-700"
+                }`}
+              >
+                <Icon className="h-4 w-4" />
+                {t.label}
+              </button>
+            )
+          })}
+          <input type="hidden" name="resource_type" value={selectedType} />
+        </div>
+      </div>
 
       <div>
         <label htmlFor="title" className="block text-sm font-medium text-zinc-700 dark:text-zinc-300">

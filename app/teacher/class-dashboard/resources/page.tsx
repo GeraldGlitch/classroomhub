@@ -1,7 +1,19 @@
 import { createClient } from "@/lib/supabase/server"
-import { BookOpen, ExternalLink, Plus, Pencil, Video, Globe } from "lucide-react"
+import { BookOpen, ExternalLink, Plus, Pencil, Video, Globe, FileText, Presentation } from "lucide-react"
 import Link from "next/link"
 import DeleteResourceButton from "./DeleteResourceButton"
+
+const TYPE_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  DOC: FileText,
+  SLIDE: Presentation,
+  VIDEO: Video,
+}
+
+const TYPE_COLORS: Record<string, string> = {
+  DOC: "bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-400",
+  SLIDE: "bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-400",
+  VIDEO: "bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-400",
+}
 
 function linkIcon(url: string) {
   if (url.includes("youtube.com") || url.includes("youtu.be")) return Video
@@ -16,7 +28,6 @@ export default async function ResourcesPage() {
     .from("resources")
     .select("*")
     .eq("teacher_id", user!.id)
-    .order("topic_group", { ascending: true, nullsFirst: false })
     .order("created_at", { ascending: false })
 
   const list = resources ?? []
@@ -72,7 +83,14 @@ export default async function ResourcesPage() {
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h3 className="font-bold text-zinc-800 dark:text-zinc-100">{resource.title}</h3>
+                        <div className="flex items-center gap-2">
+                          {resource.resource_type && (
+                            <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${TYPE_COLORS[resource.resource_type] ?? ""}`}>
+                              {resource.resource_type}
+                            </span>
+                          )}
+                          <h3 className="font-bold text-zinc-800 dark:text-zinc-100">{resource.title}</h3>
+                        </div>
                         {resource.description && (
                           <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{resource.description}</p>
                         )}

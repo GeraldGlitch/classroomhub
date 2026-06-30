@@ -15,7 +15,6 @@ export default async function StudentResourcesPage() {
     .from("resources")
     .select("*")
     .eq("teacher_id", teacherId)
-    .order("topic_group", { ascending: true, nullsFirst: false })
     .order("created_at", { ascending: false })
 
   const list = resources ?? []
@@ -34,7 +33,7 @@ export default async function StudentResourcesPage() {
         </div>
         <h1 className="page-title">Recursos</h1>
       </div>
-      <ResourcesList grouped={grouped} />
+      <ResourcesList grouped={grouped} allResources={list} />
     </div>
   )
 }

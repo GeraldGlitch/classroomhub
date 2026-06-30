@@ -20,6 +20,7 @@ const resourceSchema = z.object({
   title: z.string().min(1, "El título es obligatorio"),
   description: z.string().optional(),
   topic_group: z.string().optional(),
+  resource_type: z.string().optional(),
   external_url: z.string().optional(),
 })
 
@@ -27,9 +28,10 @@ export async function createResource(formData: FormData) {
   const title = formData.get("title") as string
   const description = formData.get("description") as string
   const topic_group = formData.get("topic_group") as string
+  const resource_type = formData.get("resource_type") as string
   const external_url = formData.get("external_url") as string
 
-  const parsed = resourceSchema.safeParse({ title, description, topic_group, external_url })
+  const parsed = resourceSchema.safeParse({ title, description, topic_group, resource_type, external_url })
   if (!parsed.success) return { error: "Datos inválidos" }
 
   const supabase = await createClient()
@@ -41,6 +43,7 @@ export async function createResource(formData: FormData) {
     title: parsed.data.title,
     description: parsed.data.description || null,
     topic_group: parsed.data.topic_group || null,
+    resource_type: parsed.data.resource_type || "DOC",
     external_links: buildLinks(parsed.data.external_url),
   })
 
@@ -54,9 +57,10 @@ export async function updateResource(formData: FormData) {
   const title = formData.get("title") as string
   const description = formData.get("description") as string
   const topic_group = formData.get("topic_group") as string
+  const resource_type = formData.get("resource_type") as string
   const external_url = formData.get("external_url") as string
 
-  const parsed = resourceSchema.safeParse({ title, description, topic_group, external_url })
+  const parsed = resourceSchema.safeParse({ title, description, topic_group, resource_type, external_url })
   if (!parsed.success) return { error: "Datos inválidos" }
 
   const supabase = await createClient()
@@ -66,6 +70,7 @@ export async function updateResource(formData: FormData) {
       title: parsed.data.title,
       description: parsed.data.description || null,
       topic_group: parsed.data.topic_group || null,
+      resource_type: parsed.data.resource_type || "DOC",
       external_links: buildLinks(parsed.data.external_url),
       updated_at: new Date().toISOString(),
     })

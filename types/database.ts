@@ -21,6 +21,7 @@ export interface Resource {
   title: string
   description: string | null
   topic_group: string | null
+  resource_type: string | null
   external_links: { label: string; url: string }[]
   created_at: string
   updated_at: string
