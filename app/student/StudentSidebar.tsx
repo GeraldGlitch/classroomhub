@@ -24,6 +24,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { href: "/student/profile", label: "Perfil", customIcon: "/login.svg" },
+  { href: "/student/progress", label: "Progreso", customIcon: "/progress.png" },
   { href: "/student/words", label: "Palabras difíciles", customIcon: "/palabras-dificiles.svg" },
   { href: "/student/questionnaires", label: "Cuestionarios", customIcon: "/questionnaries.svg" },
   { href: "/student/resources", label: "Recursos", customIcon: "/recursos.svg" },
