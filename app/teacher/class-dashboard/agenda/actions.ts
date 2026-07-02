@@ -34,6 +34,30 @@ export async function createEvent(formData: FormData) {
   revalidatePath("/teacher/class-dashboard/agenda")
 }
 
+export async function updateEvent(formData: FormData) {
+  const id = formData.get("id") as string
+  const parsed = eventSchema.safeParse({
+    title: formData.get("title"),
+    description: formData.get("description"),
+    event_date: formData.get("event_date"),
+  })
+
+  if (!parsed.success) return { error: "Datos inválidos" }
+
+  const supabase = await createClient()
+  const { error } = await supabase
+    .from("agenda_events")
+    .update({
+      title: parsed.data.title,
+      description: parsed.data.description || null,
+      event_date: parsed.data.event_date,
+    })
+    .eq("id", id)
+
+  if (error) return { error: error.message }
+  revalidatePath("/teacher/class-dashboard/agenda")
+}
+
 export async function deleteEvent(formData: FormData) {
   const id = formData.get("id") as string
 

@@ -23,8 +23,11 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { href: "/teacher/class-dashboard", label: "Clase", customIcon: "/classroom.svg" },
+  { href: "/teacher/class-dashboard/resources", label: "Recursos", customIcon: "/recursos.svg" },
   { href: "/teacher/students", label: "Estudiantes", customIcon: "/students.svg" },
+  { href: "/teacher/class-dashboard/roleplays", label: "Roleplays", customIcon: "/roleplays.svg" },
+  { href: "/teacher/class-dashboard/readings", label: "Lecturas", customIcon: "/reading.svg" },
+  { href: "/teacher/class-dashboard/agenda", label: "Agenda", customIcon: "/agenda.svg" },
   { href: "/teacher/settings", label: "Ajustes", customIcon: "/settings.svg" },
 ]
 
@@ -71,14 +74,17 @@ export default function TeacherSidebar({ teacherName }: { teacherName: string })
 
   const sidebarContent = (
     <>
-      <div className="flex items-center gap-2.5 border-b border-zinc-100 px-3 py-4 dark:border-zinc-800">
+      <Link
+        href="/teacher/class-dashboard"
+        className="flex items-center gap-2.5 border-b border-zinc-100 px-3 py-4 transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:hover:bg-zinc-900"
+      >
         <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-950">
-          <Image src="/character.svg" alt="ClassroomHub" width={32} height={32} className="h-8 w-8" />
+          <Image src="/character.svg" alt="ClassroomHub" width={32} height={32} className="h-8 w-8 animate-bob" />
         </div>
         {!collapsed && (
           <span className="truncate text-base font-bold text-zinc-800 dark:text-zinc-100">ClassroomHub</span>
         )}
-      </div>
+      </Link>
 
       {!collapsed && (
         <div className="border-b border-zinc-100 px-5 py-3 dark:border-zinc-800">

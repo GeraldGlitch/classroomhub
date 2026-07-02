@@ -23,6 +23,11 @@ export default async function ClassDashboardPage() {
     .select("*", { count: "exact", head: true })
     .eq("teacher_id", user!.id)
 
+  const { count: studentCount } = await supabase
+    .from("students")
+    .select("*", { count: "exact", head: true })
+    .eq("teacher_id", user!.id)
+
   const { data: upcoming } = await supabase
     .from("agenda_events")
     .select("id, title, event_date")
@@ -40,7 +45,7 @@ export default async function ClassDashboardPage() {
         <h1 className="page-title">Panel de Clase</h1>
       </div>
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <Link
           href="/teacher/class-dashboard/resources"
           className="card card-hover group p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950"
@@ -112,6 +117,24 @@ export default async function ClassDashboardPage() {
           </div>
           <div className="mt-3 flex items-center gap-1 text-sm font-semibold text-orange-600 dark:text-orange-400">
             Ver calendario <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+          </div>
+        </Link>
+
+        <Link
+          href="/teacher/students"
+          className="card card-hover group p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="font-bold text-zinc-800 dark:text-zinc-100">Estudiantes</h2>
+              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{studentCount ?? 0} estudiantes</p>
+            </div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-rose-100 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-rose-950">
+              <Image src="/students.svg" alt="" width={36} height={36} className="h-9 w-9" />
+            </div>
+          </div>
+          <div className="mt-3 flex items-center gap-1 text-sm font-semibold text-rose-600 dark:text-rose-400">
+            Gestionar <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
           </div>
         </Link>
       </div>

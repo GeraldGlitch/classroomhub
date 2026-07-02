@@ -1,8 +1,8 @@
 "use client"
 
 import { useActionState, useState, useEffect, useRef } from "react"
-import { deleteEvent } from "./actions"
-import { Trash2, Calendar } from "lucide-react"
+import { updateEvent, deleteEvent } from "./actions"
+import { Trash2, Pencil, Check, X, Calendar } from "lucide-react"
 import { parseLocalDate } from "@/lib/date"
 import DateBadge from "./DateBadge"
 import { useToast } from "@/components/Toast"
@@ -72,9 +72,79 @@ function DeleteEventButton({ id }: { id: string }) {
   )
 }
 
+function EditEventForm({
+  event,
+  onDone,
+}: {
+  event: AgendaEvent
+  onDone: () => void
+}) {
+  const [title, setTitle] = useState(event.title)
+  const [description, setDescription] = useState(event.description ?? "")
+  const [eventDate, setEventDate] = useState(event.event_date)
+
+  const [state, action, pending] = useActionState(
+    async (_prev: unknown, formData: FormData) => updateEvent(formData),
+    undefined,
+  )
+  const { show } = useToast()
+  const wasPending = useRef(false)
+
+  useEffect(() => {
+    if (wasPending.current && !pending) {
+      if (state?.error) show(state.error, "error")
+      else {
+        show("Evento actualizado", "success")
+        onDone()
+      }
+    }
+    wasPending.current = pending
+  }, [pending, state, show, onDone])
+
+  return (
+    <form action={action} className="space-y-3">
+      <input type="hidden" name="id" value={event.id} />
+      <input
+        name="title"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        required
+        placeholder="Título"
+        className="input-field w-full"
+      />
+      <textarea
+        name="description"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        placeholder="Descripción (opcional)"
+        rows={2}
+        className="input-field w-full resize-none"
+      />
+      <input
+        name="event_date"
+        type="date"
+        value={eventDate}
+        onChange={(e) => setEventDate(e.target.value)}
+        required
+        className="input-field w-full"
+      />
+      {state?.error && <p className="text-sm text-red-500">{state.error}</p>}
+      <div className="flex gap-2">
+        <button type="submit" disabled={pending} className="press-bouncy rounded-lg bg-indigo-600 px-3 py-1.5 text-white active:scale-90 disabled:opacity-50">
+          <Check className="h-5 w-5" />
+        </button>
+        <button type="button" onClick={onDone} className="press-bouncy rounded-lg bg-zinc-100 dark:bg-zinc-800 px-3 py-1.5 text-zinc-600 dark:text-zinc-400 active:scale-90">
+          <X className="h-5 w-5" />
+        </button>
+      </div>
+    </form>
+  )
+}
+
 export default function AgendaEventList({ events }: { events: AgendaEvent[] }) {
   const now = new Date()
   const today = now.toISOString().split("T")[0]
+  const [editingId, setEditingId] = useState<string | null>(null)
 
   const upcoming = events
     .filter((e) => e.event_date >= today)
@@ -103,14 +173,31 @@ export default function AgendaEventList({ events }: { events: AgendaEvent[] }) {
                 className="card card-hover flex animate-fade-in-up items-start gap-3 p-3"
                 style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
               >
-                <DateBadge dateStr={event.event_date} size="sm" />
-                <div className="flex-1">
-                  <p className="font-bold text-zinc-800 dark:text-zinc-100">{event.title}</p>
-                  {event.description && (
-                    <p className="text-sm text-zinc-500 dark:text-zinc-400">{event.description}</p>
-                  )}
-                </div>
-                <DeleteEventButton id={event.id} />
+                {editingId === event.id ? (
+                  <div className="w-full">
+                    <EditEventForm event={event} onDone={() => setEditingId(null)} />
+                  </div>
+                ) : (
+                  <>
+                    <DateBadge dateStr={event.event_date} size="sm" />
+                    <div className="flex-1">
+                      <p className="font-bold text-zinc-800 dark:text-zinc-100">{event.title}</p>
+                      {event.description && (
+                        <p className="text-sm text-zinc-500 dark:text-zinc-400">{event.description}</p>
+                      )}
+                    </div>
+                    <div className="flex gap-1">
+                      <button
+                        onClick={() => setEditingId(event.id)}
+                        aria-label="Editar evento"
+                        className="press-bouncy rounded-lg p-2 text-zinc-400 hover:bg-zinc-100 hover:text-zinc-600 active:scale-90 dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-400"
+                      >
+                        <Pencil className="h-5 w-5" />
+                      </button>
+                      <DeleteEventButton id={event.id} />
+                    </div>
+                  </>
+                )}
               </div>
             ))}
           </div>
