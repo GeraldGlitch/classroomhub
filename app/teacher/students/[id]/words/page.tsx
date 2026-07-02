@@ -24,7 +24,7 @@ export default async function StudentWordsPage({
     .from("difficult_words")
     .select("*")
     .eq("student_id", id)
-    .order("word")
+    .order("fail_count", { ascending: false })
 
   return (
     <div className="space-y-6">
