@@ -1,4 +1,5 @@
-import { Settings, Key, BookText } from "lucide-react"
+import Image from "next/image"
+import { Settings } from "lucide-react"
 import { getTeacherData } from "./actions"
 import PrefixForm from "./PrefixForm"
 
@@ -16,8 +17,8 @@ export default async function SettingsPage() {
 
       <div className="card animate-fade-in-up p-5">
         <div className="flex items-start gap-3.5">
-          <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-500 dark:bg-indigo-950 dark:text-indigo-400">
-            <Key className="h-6 w-6" />
+          <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-indigo-100 dark:bg-indigo-950">
+            <Image src="/login.svg" alt="" width={24} height={24} className="h-6 w-6" />
           </div>
           <div className="w-full">
             <h2 className="font-bold text-zinc-700 dark:text-zinc-300">Prefijo de clase</h2>
@@ -33,8 +34,8 @@ export default async function SettingsPage() {
 
       <div className="card animate-fade-in-up p-5">
         <div className="flex items-start gap-3.5">
-          <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-emerald-100 text-emerald-500 dark:bg-emerald-950 dark:text-emerald-400">
-            <BookText className="h-6 w-6" />
+          <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-emerald-100 dark:bg-emerald-950">
+            <Image src="/blue-knight.png" alt="" width={24} height={24} className="h-6 w-6" />
           </div>
           <div>
             <h2 className="font-bold text-zinc-700 dark:text-zinc-300">Formato del código de acceso</h2>
