@@ -30,6 +30,14 @@ function getTypeMeta(type: string) {
   return { color: "blue", bar: "bg-blue-500", bg: "bg-blue-100 dark:bg-blue-950", text: "text-blue-600 dark:text-blue-400", label: type || "Actividad" }
 }
 
+function extractSuccessRate(metrics: Record<string, unknown> | null): number | null {
+  if (!metrics) return null
+  const m = metrics as Record<string, number | string>
+  if (typeof m.accuracy === "number") return m.accuracy * 100
+  if (typeof m.correct === "number" && typeof m.total === "number" && m.total > 0) return (m.correct / m.total) * 100
+  return null
+}
+
 function extractMetric(metrics: Record<string, unknown> | null): string | null {
   if (!metrics) return null
   const m = metrics as Record<string, number | string>
@@ -60,14 +68,19 @@ export default function ProgressChart({ records }: { records: ProgressRecord[] }
     const weekAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
     const thisWeek = records.filter((r) => new Date(r.timestamp) >= weekAgo).length
 
-    const byType: Record<string, number> = {}
+    const byType: Record<string, { totalRate: number; count: number }> = {}
     for (const r of records) {
       const key = r.activity_type || "other"
-      byType[key] = (byType[key] || 0) + 1
+      if (!byType[key]) byType[key] = { totalRate: 0, count: 0 }
+      byType[key].count++
+      const rate = extractSuccessRate(r.metrics)
+      if (rate !== null) {
+        byType[key].totalRate += rate
+      }
     }
     const typeEntries = Object.entries(byType)
-      .map(([type, count]) => ({ type, count, meta: getTypeMeta(type) }))
-      .sort((a, b) => b.count - a.count)
+      .map(([type, { totalRate, count }]) => ({ type, avgRate: count > 0 ? totalRate / count : 0, meta: getTypeMeta(type) }))
+      .sort((a, b) => b.avgRate - a.avgRate)
 
     const byDay: Record<string, number> = {}
     for (let i = 13; i >= 0; i--) {
@@ -158,21 +171,21 @@ export default function ProgressChart({ records }: { records: ProgressRecord[] }
         <div className="card animate-fade-in-up p-6">
           <h3 className="section-title mb-4 text-base">
             <Activity className="h-5 w-5 text-indigo-500" />
-            Por tipo de actividad
+            Tasa de éxito por actividad
           </h3>
           <div className="space-y-3">
             {stats.typeEntries.map((t, i) => {
-              const pct = (t.count / stats.total) * 100
+              const displayRate = Math.round(t.avgRate)
               return (
                 <div key={t.type} className="space-y-1">
                   <div className="flex items-center justify-between text-sm">
                     <span className={`font-semibold ${t.meta.text}`}>{t.meta.label}</span>
-                    <span className="font-bold text-zinc-600 dark:text-zinc-300">{t.count}</span>
+                    <span className="font-bold text-zinc-600 dark:text-zinc-300">{displayRate}%</span>
                   </div>
                   <div className="h-2.5 w-full overflow-hidden rounded-full bg-zinc-100 dark:bg-zinc-800">
                     <div
                       className={`h-full rounded-full transition-all duration-700 ease-out ${t.meta.bar}`}
-                      style={{ width: `${pct}%`, animationDelay: `${i * 60}ms` }}
+                      style={{ width: `${displayRate}%`, animationDelay: `${i * 60}ms` }}
                     />
                   </div>
                 </div>
