@@ -3,11 +3,13 @@ import { createClient } from "@/lib/supabase/server"
 import Image from "next/image"
 import { redirect } from "next/navigation"
 import { CheckCircle2, ListTodo, BookCheck } from "lucide-react"
+import QuestionnaireList from "./QuestionnaireList"
 
 export default async function StudentQuestionnairesPage() {
   const cookieStore = await cookies()
   const studentId = cookieStore.get("student_id")?.value
-  if (!studentId) redirect("/login")
+  const teacherId = cookieStore.get("teacher_id")?.value
+  if (!studentId || !teacherId) redirect("/login")
 
   const supabase = await createClient()
   const { data: stats } = await supabase
@@ -15,6 +17,33 @@ export default async function StudentQuestionnairesPage() {
     .select("*")
     .eq("student_id", studentId)
     .single()
+
+  // Fetch published questionnaires
+  const { data: questionnaires } = await supabase
+    .from("questionnaires")
+    .select("id, title, description, topic_group, cooldown_minutes")
+    .eq("published", true)
+    .eq("teacher_id", teacherId)
+    .order("created_at", { ascending: false })
+
+  const list = questionnaires ?? []
+
+  // Get question counts
+  const questionCounts: Record<string, number> = {}
+  for (const q of list) {
+    const { count } = await supabase
+      .from("questionnaire_questions")
+      .select("id", { count: "exact", head: true })
+      .eq("questionnaire_id", q.id)
+    questionCounts[q.id] = count ?? 0
+  }
+
+  const grouped = list.reduce<Record<string, typeof list>>((acc, r) => {
+    const key = r.topic_group ?? "General"
+    if (!acc[key]) acc[key] = []
+    acc[key].push(r)
+    return acc
+  }, {})
 
   const correct = stats?.correct_answers ?? 0
   const total = stats?.total_answers ?? 0
@@ -30,14 +59,8 @@ export default async function StudentQuestionnairesPage() {
         <h1 className="page-title">Cuestionarios</h1>
       </div>
 
-      {!stats ? (
-        <div className="empty-state animate-fade-in">
-          <div className="empty-state-icon animate-bob">
-            <Image src="/questionnaries.svg" alt="" width={52} height={52} className="h-[52px] w-[52px]" />
-          </div>
-          <p className="text-sm text-zinc-400 dark:text-zinc-500">Aún no hay datos de cuestionarios</p>
-        </div>
-      ) : (
+      {/* Existing stats summary */}
+      {stats ? (
         <div className="card animate-fade-in-up space-y-4 p-6">
           <div className="grid gap-3 sm:grid-cols-3">
             <div className="stat-tile">
@@ -57,7 +80,7 @@ export default async function StudentQuestionnairesPage() {
             <div className="stat-tile">
               <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
                 <BookCheck className="h-5 w-5 text-orange-500" />
-                Cuestionarios
+                Completados
               </div>
               <p className="mt-1 text-2xl font-extrabold text-zinc-800 dark:text-zinc-100">{completed}</p>
             </div>
@@ -85,7 +108,25 @@ export default async function StudentQuestionnairesPage() {
             </div>
           )}
         </div>
+      ) : (
+        <div className="empty-state animate-fade-in">
+          <div className="empty-state-icon animate-bob">
+            <Image src="/questionnaries.svg" alt="" width={52} height={52} className="h-[52px] w-[52px]" />
+          </div>
+          <p className="text-sm text-zinc-400 dark:text-zinc-500">Aún no hay datos de cuestionarios</p>
+        </div>
       )}
+
+      {/* Questionnaire list below stats */}
+      <div>
+        <h2 className="section-title mb-4">
+          <span className="section-title-icon">
+            <BookCheck className="h-5 w-5" />
+          </span>
+          Cuestionarios disponibles
+        </h2>
+        <QuestionnaireList grouped={grouped} allQuestionnaires={list} questionCounts={questionCounts} />
+      </div>
     </div>
   )
 }

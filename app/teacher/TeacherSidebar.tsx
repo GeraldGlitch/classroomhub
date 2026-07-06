@@ -28,6 +28,7 @@ const navItems: NavItem[] = [
   { href: "/teacher/class-dashboard/words-vault", label: "Bóveda de palabras", customIcon: "/words-vault.svg" },
   { href: "/teacher/class-dashboard/roleplays", label: "Roleplays", customIcon: "/roleplays.svg" },
   { href: "/teacher/class-dashboard/readings", label: "Lecturas", customIcon: "/reading.svg" },
+  { href: "/teacher/class-dashboard/questionnaires", label: "Cuestionarios", customIcon: "/questionnaries.svg" },
   { href: "/teacher/class-dashboard/agenda", label: "Agenda", customIcon: "/agenda.svg" },
   { href: "/teacher/settings", label: "Ajustes", customIcon: "/settings.svg" },
 ]

@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { BookMarked, ArrowLeft } from "lucide-react"
+import { BookMarked, ArrowLeft, BarChart3 } from "lucide-react"
 import StudentProfileForm from "./StudentProfileForm"
 import StatsForm from "./StatsForm"
 import WordStatsForm from "./WordStatsForm"
@@ -130,6 +130,21 @@ export default async function StudentProfilePage({
                 </div>
               </div>
             )}
+          </Link>
+
+          <Link
+            href={`/teacher/students/${id}/questionnaires`}
+            className="card card-hover group block p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-2xl bg-amber-100 text-amber-500 transition-transform duration-200 group-hover:scale-110 group-hover:rotate-6 dark:bg-amber-950 dark:text-amber-400">
+                <BarChart3 className="h-7 w-7" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <h3 className="font-bold text-zinc-800 dark:text-zinc-100">Historial de cuestionarios</h3>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">Ver todos los intentos</p>
+              </div>
+            </div>
           </Link>
         </div>
       </div>
