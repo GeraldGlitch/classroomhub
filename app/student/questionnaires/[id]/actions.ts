@@ -181,6 +181,37 @@ export async function submitAttempt(attemptId: string, answers: AnswerInput[]) {
 
   if (insertError) return { error: insertError.message }
 
+  const { data: questionnaire } = await supabase
+    .from("questionnaires")
+    .select("title")
+    .eq("id", attempt.questionnaire_id)
+    .single()
+
+  const nowIso = new Date().toISOString()
+  const { error: progressError } = await supabase.from("progress_records").insert({
+    student_id: studentId,
+    local_record_id: `web-${attemptId}`,
+    activity_type: "questionnaire",
+    activity_id: attempt.questionnaire_id,
+    activity_title: questionnaire?.title ?? "Cuestionario",
+    date: nowIso.slice(0, 10),
+    timestamp: nowIso,
+    metrics: {
+      correct: score,
+      total: totalQuestions,
+    },
+    source: "web",
+    edited: false,
+    edit_log: [],
+    updated_at: nowIso,
+  })
+
+  if (progressError) {
+    console.error("Error inserting progress_record:", progressError)
+    return { error: `No se pudo guardar el progreso: ${progressError.message}` }
+  }
+
   revalidatePath(`/student/questionnaires/${attempt.questionnaire_id}`)
+  revalidatePath("/student/progress")
   return { success: true, attemptId }
 }

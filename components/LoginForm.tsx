@@ -17,12 +17,12 @@ export default function LoginForm() {
   const [tab, setTab] = useState<Tab>("student")
 
   const [teacherState, teacherAction, teacherPending] = useActionState(
-    async (_prev: unknown, formData: FormData) => loginTeacher(formData),
+    loginTeacher,
     undefined,
   )
 
   const [studentState, studentAction, studentPending] = useActionState(
-    async (_prev: unknown, formData: FormData) => findStudentByCode(formData),
+    findStudentByCode,
     undefined,
   )
 

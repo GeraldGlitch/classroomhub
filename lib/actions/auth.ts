@@ -10,7 +10,7 @@ const loginSchema = z.object({
   password: z.string().min(6),
 })
 
-export async function loginTeacher(formData: FormData) {
+export async function loginTeacher(prevState: unknown, formData: FormData) {
   const parsed = loginSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
@@ -20,13 +20,18 @@ export async function loginTeacher(formData: FormData) {
     return { error: "Email o contraseña inválidos" }
   }
 
-  const supabase = await createClient()
-  const { error } = await supabase.auth.signInWithPassword(parsed.data)
+  try {
+    const supabase = await createClient()
+    const { error } = await supabase.auth.signInWithPassword(parsed.data)
 
-  if (error) {
-    return { error: error.message === "Invalid login credentials"
-      ? "Email o contraseña incorrectos"
-      : "Error al iniciar sesión" }
+    if (error) {
+      return { error: error.message === "Invalid login credentials"
+        ? "Email o contraseña incorrectos"
+        : "Error al iniciar sesión" }
+    }
+  } catch (e) {
+    console.error("loginTeacher error:", e)
+    return { error: "Error al conectar con el servidor" }
   }
 
   redirect("/teacher")
@@ -38,7 +43,7 @@ export async function signOut() {
   redirect("/login")
 }
 
-export async function findStudentByCode(formData: FormData) {
+export async function findStudentByCode(prevState: unknown, formData: FormData) {
   const code = formData.get("code") as string
   if (!code || code.trim().length < 3) {
     return { error: "Código inválido" }
