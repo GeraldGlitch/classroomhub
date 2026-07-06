@@ -26,6 +26,7 @@ const navItems: NavItem[] = [
   { href: "/student/profile", label: "Perfil", customIcon: "/login.svg" },
   { href: "/student/progress", label: "Progreso", customIcon: "/progress.png" },
   { href: "/student/words", label: "Palabras difíciles", customIcon: "/palabras-dificiles.svg" },
+  { href: "/student/words-vault", label: "Bóveda de palabras", customIcon: "/words-vault.svg" },
   { href: "/student/questionnaires", label: "Cuestionarios", customIcon: "/questionnaries.svg" },
   { href: "/student/resources", label: "Recursos", customIcon: "/recursos.svg" },
   { href: "/student/roleplays", label: "Roleplays", customIcon: "/roleplays.svg" },
@@ -94,7 +95,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
 
       <nav className="flex-1 space-y-1.5 px-1.5 py-4">
         {navItems.map(({ href, label, icon: Icon, customIcon }) => {
-          const active = pathname.startsWith(href)
+          const active = pathname === href || pathname.startsWith(href + "/")
           return (
             <Link
               key={href}

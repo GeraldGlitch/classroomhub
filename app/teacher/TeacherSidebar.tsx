@@ -25,6 +25,7 @@ interface NavItem {
 const navItems: NavItem[] = [
   { href: "/teacher/class-dashboard/resources", label: "Recursos", customIcon: "/recursos.svg" },
   { href: "/teacher/students", label: "Estudiantes", customIcon: "/students.svg" },
+  { href: "/teacher/class-dashboard/words-vault", label: "Bóveda de palabras", customIcon: "/words-vault.svg" },
   { href: "/teacher/class-dashboard/roleplays", label: "Roleplays", customIcon: "/roleplays.svg" },
   { href: "/teacher/class-dashboard/readings", label: "Lecturas", customIcon: "/reading.svg" },
   { href: "/teacher/class-dashboard/agenda", label: "Agenda", customIcon: "/agenda.svg" },
