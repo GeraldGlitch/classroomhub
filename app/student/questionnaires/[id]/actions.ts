@@ -203,6 +203,7 @@ export async function submitAttempt(attemptId: string, answers: AnswerInput[]) {
     source: "web",
     edited: false,
     edit_log: [],
+    created_at: nowIso,
     updated_at: nowIso,
   })
 
