@@ -28,7 +28,7 @@ export default function WordList({ words }: { words: Word[] }) {
         {paginatedWords.map((w, i) => (
           <div
             key={w.id}
-            className="card card-hover animate-fade-in-up p-4"
+            className="panel-hud card-hover animate-fade-in-up p-4"
             style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
           >
             <div className="grid gap-2 sm:grid-cols-4">
@@ -41,7 +41,7 @@ export default function WordList({ words }: { words: Word[] }) {
               </div>
               <div>
                 <p className="text-xs font-semibold text-zinc-400 dark:text-zinc-500">Pronunciación</p>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400">{w.pronunciation ?? "—"}</p>
+                <p className="font-mono text-sm text-indigo-500 dark:text-indigo-400">{w.pronunciation ?? "—"}</p>
               </div>
               <div>
                 <p className="text-xs font-semibold text-zinc-400 dark:text-zinc-500">Significado</p>

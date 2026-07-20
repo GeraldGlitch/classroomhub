@@ -40,9 +40,9 @@ export default async function StudentProfilePage() {
         <h1 className="page-title">Mi Perfil</h1>
       </div>
 
-      <div className="card animate-fade-in-up p-6">
+      <div className="panel-hud animate-glow-pulse animate-fade-in-up p-6">
         <div className="flex items-center gap-4">
-          <div className="relative flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-3xl bg-indigo-100 shadow-sm dark:bg-indigo-950 overflow-hidden">
+          <div className="relative flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-3xl bg-indigo-100 shadow-sm ring-4 ring-amber-400 ring-offset-2 dark:bg-indigo-950 dark:ring-offset-zinc-900 overflow-hidden">
             {getAvatarSrc(student.avatar_url) ? (
               <img src={getAvatarSrc(student.avatar_url)!} alt={student.name} className="h-full w-full object-cover" />
             ) : (
@@ -63,8 +63,8 @@ export default async function StudentProfilePage() {
             Información adicional
           </h3>
           <div className="grid gap-3 sm:grid-cols-2">
-            {Object.entries(fields).map(([key, value]) => (
-              <div key={key} className="rounded-xl bg-zinc-50 p-3 transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-sm dark:bg-zinc-800">
+              {Object.entries(fields).map(([key, value]) => (
+              <div key={key} className="rounded-xl border-2 border-zinc-200 bg-zinc-50 p-3 transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-sm dark:border-zinc-700 dark:bg-zinc-800">
                 <p className="text-xs font-semibold text-zinc-400 dark:text-zinc-500">{key}</p>
                 <p className="text-sm font-medium text-zinc-700 dark:text-zinc-300">{value}</p>
               </div>
@@ -83,7 +83,7 @@ export default async function StudentProfilePage() {
             {topFailedWords.map((w, i) => (
               <div
                 key={w.id}
-                className="rounded-xl bg-zinc-50 p-4 transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-sm dark:bg-zinc-800"
+                className="rounded-xl border-l-4 border-l-red-400 bg-zinc-50 p-4 transition-transform duration-150 hover:-translate-y-0.5 hover:shadow-sm dark:border-l-red-500 dark:bg-zinc-800"
                 style={{ animationDelay: `${i * 80}ms` }}
               >
                 <div className="flex items-start justify-between gap-2">

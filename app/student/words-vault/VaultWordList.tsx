@@ -83,7 +83,7 @@ export default function VaultWordList({ words }: { words: VaultWord[] }) {
             {paginatedWords.map((w, i) => (
             <div
               key={w.id}
-              className="card card-hover animate-fade-in-up p-4"
+              className="panel-hud card-hover animate-fade-in-up p-4"
               style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
             >
               <div className="grid gap-2 sm:grid-cols-3">

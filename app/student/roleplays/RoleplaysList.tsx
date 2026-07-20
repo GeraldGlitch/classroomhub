@@ -87,7 +87,7 @@ export default function RoleplaysList({
         <div className="space-y-8">
           {groups.map(([group, items]) => (
             <section key={group}>
-              <h2 className="mb-3 flex items-center gap-2.5 text-lg font-bold text-zinc-700 dark:text-zinc-300">
+              <h2 className="mb-3 flex items-center gap-2.5 text-lg font-bold uppercase tracking-widest text-zinc-700 dark:text-zinc-300">
                 <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400">
                   <Globe className="h-5 w-5" />
                 </span>
@@ -98,7 +98,7 @@ export default function RoleplaysList({
                   <Link
                     key={roleplay.id}
                     href={`/student/roleplays/${roleplay.id}`}
-                    className="card card-hover animate-fade-in-up flex items-center gap-3 p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950"
+                    className="panel-hud card-hover animate-fade-in-up flex items-center gap-3 p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950"
                     style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
                   >
                     <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-purple-100 text-purple-600 dark:bg-purple-950 dark:text-purple-400">

@@ -4,6 +4,7 @@ import { useState } from "react"
 import { useActionState } from "react"
 import { loginTeacher, findStudentByCode } from "@/lib/actions/auth"
 import { LogIn, GraduationCap, Loader2 } from "lucide-react"
+import GameButton from "@/components/ui/GameButton"
 
 type Tab = "teacher" | "student"
 
@@ -27,7 +28,7 @@ export default function LoginForm() {
   )
 
   return (
-    <div className="rounded-2xl border border-zinc-200 bg-white p-6 shadow-lg shadow-zinc-200/50 dark:border-zinc-800 dark:bg-zinc-900 dark:shadow-black/20">
+    <div className="panel-hud animate-glow-pulse p-6 shadow-lg shadow-zinc-200/50 dark:shadow-black/20">
       <div className="relative mb-6 flex rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800">
         <div
           className={`absolute bottom-1 top-1 w-[calc(50%-0.25rem)] rounded-lg bg-white shadow-sm transition-transform duration-200 dark:bg-zinc-900 ${
@@ -92,11 +93,7 @@ export default function LoginForm() {
           {teacherState?.error && (
             <p className="text-sm text-red-500">{teacherState.error}</p>
           )}
-          <button
-            type="submit"
-            disabled={teacherPending}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-600/30 transition-all duration-150 hover:bg-indigo-700 hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:active:scale-100"
-          >
+          <GameButton type="submit" disabled={teacherPending} className="w-full">
             {teacherPending ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -105,7 +102,7 @@ export default function LoginForm() {
             ) : (
               "Entrar"
             )}
-          </button>
+          </GameButton>
         </form>
       ) : (
         <form key="student" action={studentAction} className="space-y-4 animate-fade-in-up">
@@ -129,11 +126,7 @@ export default function LoginForm() {
           {studentState?.error && (
             <p className="text-sm text-red-500">{studentState.error}</p>
           )}
-          <button
-            type="submit"
-            disabled={studentPending}
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-indigo-600/30 transition-all duration-150 hover:bg-indigo-700 hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:active:scale-100"
-          >
+          <GameButton type="submit" disabled={studentPending} className="w-full">
             {studentPending ? (
               <>
                 <Loader2 className="h-4 w-4 animate-spin" />
@@ -142,7 +135,7 @@ export default function LoginForm() {
             ) : (
               "Acceder"
             )}
-          </button>
+          </GameButton>
         </form>
       )}
     </div>

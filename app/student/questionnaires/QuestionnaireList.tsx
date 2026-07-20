@@ -95,7 +95,7 @@ export default function QuestionnaireList({
             if (filteredItems.length === 0) return null
             return (
               <section key={group}>
-                <h2 className="section-title mb-3">
+                <h2 className="section-title mb-3 uppercase tracking-widest">
                   <span className="section-title-icon">
                     <ClipboardList className="h-5 w-5" />
                   </span>
@@ -106,10 +106,15 @@ export default function QuestionnaireList({
                     <Link
                       key={q.id}
                       href={`/student/questionnaires/${q.id}`}
-                      className="card card-hover animate-fade-in-up block p-4"
+                      className="panel-hud card-hover animate-fade-in-up block border-l-4 border-l-amber-400 p-4 dark:border-l-amber-500"
                       style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
                     >
-                      <h3 className="font-bold text-zinc-800 dark:text-zinc-100">{q.title}</h3>
+                      <div className="flex items-start justify-between gap-2">
+                        <h3 className="font-bold text-zinc-800 dark:text-zinc-100">{q.title}</h3>
+                        <span className="flex-shrink-0 rounded-md border border-amber-400 bg-amber-100 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-amber-700 dark:bg-amber-950 dark:text-amber-300">
+                          Misión
+                        </span>
+                      </div>
                       {q.description && (
                         <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2">
                           {q.description}

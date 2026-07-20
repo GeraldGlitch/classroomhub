@@ -3,6 +3,9 @@
 import { useMemo } from "react"
 import Image from "next/image"
 import { Activity, CalendarDays, Flame, TrendingUp } from "lucide-react"
+import XPBar from "@/components/ui/XPBar"
+import LevelBadge from "@/components/ui/LevelBadge"
+import StatChip from "@/components/ui/StatChip"
 
 interface ProgressRecord {
   id: string
@@ -101,7 +104,17 @@ export default function ProgressChart({ records }: { records: ProgressRecord[] }
       else break
     }
 
-    return { total, thisWeek, typeEntries, dayEntries, maxDay, streak, uniqueTypes: typeEntries.length }
+    // XP derivado en cliente desde métricas existentes (sin cambios en DB)
+    const xp = records.reduce((sum, r) => {
+      const m = r.metrics as Record<string, number> | null
+      if (m && typeof m.xp === "number") return sum + m.xp
+      if (m && typeof m.score === "number") return sum + m.score
+      return sum + 10
+    }, 0)
+    const level = Math.floor(xp / 100) + 1
+    const xpInLevel = xp % 100
+
+    return { total, thisWeek, typeEntries, dayEntries, maxDay, streak, uniqueTypes: typeEntries.length, xp, level, xpInLevel }
   }, [records])
 
   if (records.length === 0) {
@@ -118,27 +131,22 @@ export default function ProgressChart({ records }: { records: ProgressRecord[] }
 
   return (
     <div className="space-y-6">
+      <div className="panel-hud animate-fade-in-up flex items-center gap-4 p-5">
+        <LevelBadge level={stats.level} />
+        <div className="flex-1">
+          <XPBar value={stats.xpInLevel} max={100} label={`XP · ${stats.xp} total`} />
+        </div>
+      </div>
+
       <div className="grid gap-3 sm:grid-cols-3">
-        <div className="stat-tile animate-fade-in-up">
-          <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
-            <Activity className="h-5 w-5 text-indigo-500" />
-            Actividades totales
-          </div>
-          <p className="mt-1 text-3xl font-extrabold text-zinc-800 dark:text-zinc-100">{stats.total}</p>
+        <div className="animate-fade-in-up">
+          <StatChip icon={<Activity className="h-5 w-5" />} label="Actividades totales" value={stats.total} accent="mana" />
         </div>
-        <div className="stat-tile animate-fade-in-up" style={{ animationDelay: "50ms" }}>
-          <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
-            <CalendarDays className="h-5 w-5 text-emerald-500" />
-            Esta semana
-          </div>
-          <p className="mt-1 text-3xl font-extrabold text-zinc-800 dark:text-zinc-100">{stats.thisWeek}</p>
+        <div className="animate-fade-in-up" style={{ animationDelay: "50ms" }}>
+          <StatChip icon={<CalendarDays className="h-5 w-5" />} label="Esta semana" value={stats.thisWeek} accent="loot" />
         </div>
-        <div className="stat-tile animate-fade-in-up" style={{ animationDelay: "100ms" }}>
-          <div className="flex items-center gap-2 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
-            <Flame className="h-5 w-5 text-orange-500" />
-            Racha de días
-          </div>
-          <p className="mt-1 text-3xl font-extrabold text-zinc-800 dark:text-zinc-100">{stats.streak}</p>
+        <div className="animate-fade-in-up" style={{ animationDelay: "100ms" }}>
+          <StatChip icon={<Flame className="h-5 w-5" />} label="Racha de días" value={stats.streak} accent="hp" />
         </div>
       </div>
 

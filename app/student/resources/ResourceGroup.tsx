@@ -59,7 +59,7 @@ export default function ResourceGroup({ group, items }: { group: string; items: 
           return (
             <div
               key={resource.id}
-              className="card card-hover animate-fade-in-up p-4"
+              className="panel-hud card-hover animate-fade-in-up p-4"
               style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
             >
               <div className="flex items-start gap-3">

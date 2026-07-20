@@ -70,7 +70,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
         >
           <Menu className="h-5 w-5 text-zinc-700 dark:text-zinc-300" />
         </button>
-        <aside className="flex w-56 flex-col border-r border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900" />
+        <aside className="flex w-56 flex-col border-r-2 border-zinc-200 bg-white dark:border-zinc-700 dark:bg-[#131318]" />
       </>
     )
   }
@@ -78,7 +78,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
   const sidebarContent = (
     <>
       <div className="flex items-center gap-2.5 border-b border-zinc-100 px-3 py-4 dark:border-zinc-800">
-        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-indigo-100 dark:bg-indigo-950">
+        <div className="animate-glow-pulse flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border-2 border-indigo-400 bg-indigo-50 dark:border-indigo-500 dark:bg-indigo-950">
           <Image src="/character.svg" alt="ClassroomHub" width={32} height={32} className="h-8 w-8" />
         </div>
         {!collapsed && (
@@ -105,12 +105,12 @@ export default function StudentSidebar({ studentName }: { studentName: string })
               onClick={() => setMobileOpen(false)}
               className={`group relative flex items-center gap-3.5 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-150 hover-lift active:scale-95 ${
                 active
-                  ? "bg-indigo-50 text-indigo-700 shadow-sm shadow-indigo-600/10 dark:bg-indigo-950 dark:text-indigo-300"
+                  ? "animate-glow-pulse bg-indigo-50 text-indigo-700 shadow-sm shadow-indigo-600/10 dark:bg-indigo-950 dark:text-indigo-300"
                   : "text-zinc-600 hover:-translate-x-0.5 hover:bg-zinc-50 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
               } ${collapsed ? "justify-center px-0" : ""}`}
             >
               {active && (
-                <span className="absolute left-0 top-1/2 h-7 w-1 -translate-y-1/2 rounded-r bg-indigo-600 dark:bg-indigo-400 animate-scale-in" />
+                <span className="absolute left-0 top-1/2 h-7 w-1.5 -translate-y-1/2 rounded-r bg-gradient-to-b from-indigo-400 to-indigo-600 animate-scale-in" />
               )}
               {customIcon ? (
                 <Image src={customIcon} alt="" width={32} height={32} className="h-8 w-8 flex-shrink-0" />
@@ -188,7 +188,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
       )}
 
       <aside
-        className={`hidden flex-col overflow-hidden border-r border-zinc-200 bg-white transition-all duration-300 ease-out dark:border-zinc-800 dark:bg-zinc-900 lg:flex ${
+        className={`hidden flex-col overflow-hidden border-r-2 border-zinc-200 bg-white transition-all duration-300 ease-out dark:border-zinc-700 dark:bg-[#131318] lg:flex ${
           collapsed ? "w-14" : "w-56"
         }`}
       >
@@ -196,7 +196,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
       </aside>
 
       {mobileOpen && (
-        <aside className="fixed inset-y-0 left-0 z-40 flex w-64 animate-slide-in-left flex-col overflow-hidden border-r border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900 lg:hidden">
+        <aside className="fixed inset-y-0 left-0 z-40 flex w-64 animate-slide-in-left flex-col overflow-hidden border-r-2 border-zinc-200 bg-white dark:border-zinc-700 dark:bg-[#131318] lg:hidden">
           {sidebarContent}
         </aside>
       )}

@@ -5,11 +5,27 @@ import { Sparkles } from "lucide-react"
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen items-center justify-center p-4 pb-24 sm:pb-28">
-      <div className="w-full max-w-sm">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-b from-indigo-50 via-zinc-50 to-zinc-100 p-4 pb-24 dark:from-indigo-950 dark:via-zinc-950 dark:to-zinc-950 sm:pb-28">
+      <Image
+        src="/blue-knight.png"
+        alt=""
+        width={220}
+        height={220}
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-8 bottom-0 hidden opacity-20 lg:block"
+      />
+      <Image
+        src="/red-knight.png"
+        alt=""
+        width={220}
+        height={220}
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-8 bottom-0 hidden -scale-x-100 opacity-20 lg:block"
+      />
+      <div className="relative w-full max-w-sm">
         <div className="mb-8 animate-fade-in text-center">
-          <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-2xl bg-indigo-100 shadow-lg shadow-indigo-200/50 animate-pop-in dark:bg-indigo-950 dark:shadow-indigo-900/30">
-            <Image src="/character.svg" alt="ClassroomHub" width={52} height={52} className="h-[52px] w-[52px]" />
+          <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-2xl border-2 border-indigo-400 bg-indigo-100 shadow-lg shadow-indigo-200/50 animate-pop-in dark:border-indigo-500 dark:bg-indigo-950 dark:shadow-indigo-900/30">
+            <Image src="/character.svg" alt="ClassroomHub" width={52} height={52} className="h-[52px] w-[52px] animate-bob" />
           </div>
           <h1 className="animate-fade-in-up text-2xl font-extrabold tracking-tight text-indigo-600 dark:text-indigo-400">ClassroomHub</h1>
           <p className="mt-1 animate-fade-in text-sm text-zinc-500 dark:text-zinc-400">Portal de gestión</p>

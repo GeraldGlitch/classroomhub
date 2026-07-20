@@ -26,7 +26,7 @@ export default function ResourceCard({ resource, index }: { resource: Resource; 
 
   return (
     <div
-      className="card card-hover animate-fade-in-up p-4"
+      className="panel-hud card-hover animate-fade-in-up p-4"
       style={{ animationDelay: `${Math.min(index, 10) * 50}ms` }}
     >
       <div className="flex items-start gap-3">

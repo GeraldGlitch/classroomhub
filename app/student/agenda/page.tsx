@@ -63,7 +63,7 @@ export default async function StudentAgendaPage() {
                 {upcoming.map((event, i) => (
                   <div
                     key={event.id}
-                    className="card card-hover flex animate-fade-in-up items-start gap-4 p-4"
+                    className="panel-hud card-hover flex animate-fade-in-up items-start gap-4 p-4"
                     style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
                   >
                     <DateBadge dateStr={event.event_date} size="md" />

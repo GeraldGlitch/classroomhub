@@ -41,10 +41,10 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           <div
             key={t.id}
             role="status"
-            className={`pointer-events-auto flex animate-slide-in-right items-center gap-2.5 rounded-xl border px-4 py-3 shadow-lg ${
+            className={`pointer-events-auto flex animate-slide-in-right items-center gap-2.5 rounded-xl border-2 px-4 py-3 shadow-lg ${
               t.type === "success"
-                ? "border-green-200 bg-green-50 text-green-700 dark:border-green-800 dark:bg-green-950 dark:text-green-400"
-                : "border-red-200 bg-red-50 text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-400"
+                ? "border-green-400 bg-green-50 text-green-700 dark:border-green-600 dark:bg-green-950 dark:text-green-400"
+                : "border-red-400 bg-red-50 text-red-700 dark:border-red-600 dark:bg-red-950 dark:text-red-400"
             }`}
           >
             <span

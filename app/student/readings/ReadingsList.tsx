@@ -85,13 +85,13 @@ export default function ReadingsList({
         <div className="space-y-8">
           {groups.map(([group, items]) => (
             <section key={group}>
-              <h2 className="section-title mb-3">{group}</h2>
+              <h2 className="section-title mb-3 uppercase tracking-widest">{group}</h2>
               <div className="space-y-3">
                 {items.map((reading, i) => (
                   <Link
                     key={reading.id}
                     href={`/student/readings/${reading.id}`}
-                    className="card card-hover animate-fade-in-up flex items-center gap-3 p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950"
+                    className="panel-hud card-hover animate-fade-in-up flex items-center gap-3 p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950"
                     style={{ animationDelay: `${Math.min(i, 10) * 50}ms` }}
                   >
                     <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-emerald-100 text-emerald-600 dark:bg-emerald-950 dark:text-emerald-400">

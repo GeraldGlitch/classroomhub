@@ -17,6 +17,14 @@
   --font-sans: var(--font-inter), system-ui, sans-serif;
   /* Spring-ish easing: snappy start, gentle overshoot settle */
   --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* ===== Game-feel tokens ===== */
+  --color-xp: #fbbf24;
+  --color-xp-dark: #b45309;
+  --color-hp: #ef4444;
+  --color-mana: #3b82f6;
+  --color-loot: #22c55e;
+  --shadow-glow-primary: 0 0 12px rgba(99, 102, 241, 0.45);
+  --shadow-glow-xp: 0 0 12px rgba(251, 191, 36, 0.45);
 }
 
 body {
@@ -83,6 +91,16 @@ body {
   100% { background-position: 200% 0; }
 }
 
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: var(--shadow-glow-primary); }
+  50% { box-shadow: 0 0 22px rgba(99, 102, 241, 0.75); }
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
 /* ===== Animation Utility Classes ===== */
 @utility animate-fade-in {
   animation: fade-in 0.2s ease-out both;
@@ -122,6 +140,29 @@ body {
   background-size: 200% 100%;
 }
 
+@utility animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+@utility animate-shine {
+  animation: shine 2.2s ease-in-out infinite;
+}
+
+/* Botón 3D tipo arcade: borde inferior grueso, hunde al presionar */
+@utility btn-3d {
+  border-bottom-width: 4px;
+  transition: transform 0.1s var(--ease-bounce), border-bottom-width 0.1s, box-shadow 0.15s;
+}
+@utility btn-3d-active {
+  transform: translateY(2px);
+  border-bottom-width: 1px;
+}
+
+/* Panel HUD: borde marcado estilo interfaz de juego */
+@utility panel-hud {
+  @apply rounded-2xl border-2 border-zinc-200 bg-white shadow-md dark:border-zinc-700 dark:bg-zinc-900;
+}
+
 /* Spring press feedback: scale down slightly on active, snapping back */
 @utility press-bouncy {
   transition: transform 0.12s var(--ease-bounce), background-color 0.15s ease-out, box-shadow 0.15s ease-out;
@@ -155,7 +196,9 @@ body {
   .animate-slide-in-right,
   .animate-slide-in-left,
   .animate-bounce-subtle,
-  .animate-bob {
+  .animate-bob,
+  .animate-glow-pulse,
+  .animate-shine {
     animation: none !important;
   }
 }
@@ -171,7 +214,7 @@ body {
   }
 
   .btn-primary {
-    @apply press-bouncy rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-indigo-600/20 hover:bg-indigo-700 hover:shadow-md hover:shadow-indigo-600/30 active:scale-95 disabled:opacity-50 disabled:active:scale-100;
+    @apply btn-3d active:btn-3d-active rounded-xl border-indigo-800 bg-indigo-600 px-4 py-2.5 text-sm font-bold uppercase tracking-wide text-white shadow-sm shadow-indigo-600/20 hover:bg-indigo-500 hover:shadow-md hover:shadow-indigo-600/30 disabled:opacity-50 dark:border-indigo-900;
   }
 
   .btn-secondary {
