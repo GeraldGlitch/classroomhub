@@ -5,6 +5,7 @@ import { BookMarked, ArrowLeft, BarChart3 } from "lucide-react"
 import StudentProfileForm from "./StudentProfileForm"
 import StatsForm from "./StatsForm"
 import WordStatsForm from "./WordStatsForm"
+import NsRoleplayFeedback from "@/components/NsRoleplayFeedback"
 import { getAvatarSrc } from "@/lib/avatar"
 
 export default async function StudentProfilePage({
@@ -93,6 +94,8 @@ export default async function StudentProfilePage({
             </h2>
             <WordStatsForm studentId={id} stats={wordStats ?? null} />
           </div>
+
+          <NsRoleplayFeedback studentId={id} />
         </div>
 
         <div className="space-y-4">

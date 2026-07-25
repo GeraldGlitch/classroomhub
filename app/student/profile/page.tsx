@@ -5,6 +5,7 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 import { AlertTriangle, ArrowRight } from "lucide-react"
 import SpeakButton from "@/components/SpeakButton"
+import NsRoleplayFeedback from "@/components/NsRoleplayFeedback"
 import { getAvatarSrc } from "@/lib/avatar"
 
 export default async function StudentProfilePage() {
@@ -117,6 +118,8 @@ export default async function StudentProfilePage() {
           </Link>
         </div>
       )}
+
+      <NsRoleplayFeedback studentId={studentId} />
     </div>
   )
 }
