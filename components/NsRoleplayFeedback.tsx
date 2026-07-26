@@ -22,6 +22,7 @@ export default async function NsRoleplayFeedback({ studentId }: { studentId: str
     .not("metrics->>feedback", "is", null)
     .not("metrics->>feedback", "eq", "")
     .order("timestamp", { ascending: false })
+    .limit(3)
 
   const feedbacks = (records ?? []) as ProgressRecord[]
 

@@ -28,7 +28,7 @@ export default function LoginForm() {
   )
 
   return (
-    <div className="panel-hud animate-glow-pulse p-6 shadow-lg shadow-zinc-200/50 dark:shadow-black/20">
+    <div className="panel-hud p-6 shadow-lg shadow-zinc-200/50 dark:shadow-black/20">
       <div className="relative mb-6 flex rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800">
         <div
           className={`absolute bottom-1 top-1 w-[calc(50%-0.25rem)] rounded-lg bg-white shadow-sm transition-transform duration-200 dark:bg-zinc-900 ${

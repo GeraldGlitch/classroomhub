@@ -23,8 +23,6 @@
   --color-hp: #ef4444;
   --color-mana: #3b82f6;
   --color-loot: #22c55e;
-  --shadow-glow-primary: 0 0 12px rgba(99, 102, 241, 0.45);
-  --shadow-glow-xp: 0 0 12px rgba(251, 191, 36, 0.45);
 }
 
 body {
@@ -91,11 +89,6 @@ body {
   100% { background-position: 200% 0; }
 }
 
-@keyframes glow-pulse {
-  0%, 100% { box-shadow: var(--shadow-glow-primary); }
-  50% { box-shadow: 0 0 22px rgba(99, 102, 241, 0.75); }
-}
-
 @keyframes shine {
   0% { transform: translateX(-100%); }
   100% { transform: translateX(200%); }
@@ -138,10 +131,6 @@ body {
 @utility animate-shimmer {
   animation: shimmer 1.5s infinite linear;
   background-size: 200% 100%;
-}
-
-@utility animate-glow-pulse {
-  animation: glow-pulse 2s ease-in-out infinite;
 }
 
 @utility animate-shine {
@@ -197,7 +186,6 @@ body {
   .animate-slide-in-left,
   .animate-bounce-subtle,
   .animate-bob,
-  .animate-glow-pulse,
   .animate-shine {
     animation: none !important;
   }

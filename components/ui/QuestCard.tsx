@@ -2,13 +2,12 @@ import type { ReactNode } from "react"
 
 interface QuestCardProps {
   children: ReactNode
-  glow?: boolean
   className?: string
 }
 
-export default function QuestCard({ children, glow = false, className = "" }: QuestCardProps) {
+export default function QuestCard({ children, className = "" }: QuestCardProps) {
   return (
-    <div className={`panel-hud p-5 ${glow ? "animate-glow-pulse" : ""} ${className}`}>
+    <div className={`panel-hud p-5 ${className}`}>
       {children}
     </div>
   )

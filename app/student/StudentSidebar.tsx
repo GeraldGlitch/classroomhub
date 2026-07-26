@@ -78,7 +78,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
   const sidebarContent = (
     <>
       <div className="flex items-center gap-2.5 border-b border-zinc-100 px-3 py-4 dark:border-zinc-800">
-        <div className="animate-glow-pulse flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border-2 border-indigo-400 bg-indigo-50 dark:border-indigo-500 dark:bg-indigo-950">
+        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border-2 border-indigo-400 bg-indigo-50 dark:border-indigo-500 dark:bg-indigo-950">
           <Image src="/character.svg" alt="ClassroomHub" width={32} height={32} className="h-8 w-8" />
         </div>
         {!collapsed && (
@@ -105,7 +105,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
               onClick={() => setMobileOpen(false)}
               className={`group relative flex items-center gap-3.5 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-150 hover-lift active:scale-95 ${
                 active
-                  ? "animate-glow-pulse bg-indigo-50 text-indigo-700 shadow-sm shadow-indigo-600/10 dark:bg-indigo-950 dark:text-indigo-300"
+                  ? "bg-indigo-50 text-indigo-700 shadow-sm shadow-indigo-600/10 dark:bg-indigo-950 dark:text-indigo-300"
                   : "text-zinc-600 hover:-translate-x-0.5 hover:bg-zinc-50 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
               } ${collapsed ? "justify-center px-0" : ""}`}
             >

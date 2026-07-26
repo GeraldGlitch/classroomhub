@@ -41,7 +41,7 @@ export default async function StudentProfilePage() {
         <h1 className="page-title">Mi Perfil</h1>
       </div>
 
-      <div className="panel-hud animate-glow-pulse animate-fade-in-up p-6">
+      <div className="panel-hud animate-fade-in-up p-6">
         <div className="flex items-center gap-4">
           <div className="relative flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-3xl bg-indigo-100 shadow-sm ring-4 ring-amber-400 ring-offset-2 dark:bg-indigo-950 dark:ring-offset-zinc-900 overflow-hidden">
             {getAvatarSrc(student.avatar_url) ? (
