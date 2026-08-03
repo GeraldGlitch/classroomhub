@@ -3,10 +3,11 @@
 import { useState } from "react"
 import { useActionState } from "react"
 import { loginTeacher, findStudentByCode } from "@/lib/actions/auth"
-import { LogIn, GraduationCap, Loader2 } from "lucide-react"
+import { LogIn, GraduationCap, Loader2, ShieldCheck } from "lucide-react"
 import GameButton from "@/components/ui/GameButton"
+import AdminLoginForm from "@/components/AdminLoginForm"
 
-type Tab = "teacher" | "student"
+type Tab = "teacher" | "student" | "admin"
 
 const inputClass =
   "mt-1 block w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-sm shadow-sm transition-all duration-150 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:ring-indigo-800"
@@ -29,6 +30,19 @@ export default function LoginForm() {
 
   return (
     <div className="panel-hud p-6 shadow-lg shadow-zinc-200/50 dark:shadow-black/20">
+      {tab === "admin" ? (
+        <>
+          <AdminLoginForm />
+          <button
+            type="button"
+            onClick={() => setTab("teacher")}
+            className="mx-auto mt-4 block text-xs text-zinc-400 transition-colors hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300"
+          >
+            Volver al login
+          </button>
+        </>
+      ) : (
+        <>
       <div className="relative mb-6 flex rounded-xl bg-zinc-100 p-1 dark:bg-zinc-800">
         <div
           className={`absolute bottom-1 top-1 w-[calc(50%-0.25rem)] rounded-lg bg-white shadow-sm transition-transform duration-200 dark:bg-zinc-900 ${
@@ -103,6 +117,14 @@ export default function LoginForm() {
               "Entrar"
             )}
           </GameButton>
+          <button
+            type="button"
+            onClick={() => setTab("admin")}
+            className="mx-auto flex items-center gap-1 text-xs text-zinc-400 transition-colors hover:text-zinc-600 dark:text-zinc-500 dark:hover:text-zinc-300"
+          >
+            <ShieldCheck className="h-3 w-3" />
+            Log as admin
+          </button>
         </form>
       ) : (
         <form key="student" action={studentAction} className="space-y-4 animate-fade-in-up">
@@ -137,6 +159,8 @@ export default function LoginForm() {
             )}
           </GameButton>
         </form>
+      )}
+      </>
       )}
     </div>
   )

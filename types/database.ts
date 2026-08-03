@@ -54,3 +54,54 @@ export interface QuestionnaireStat {
   completed_questionnaires: number
   updated_at: string
 }
+
+export interface Admin {
+  user_id: string
+  created_at: string
+  created_by: string | null
+}
+
+export type LicenseStatus = 'active' | 'suspended' | 'expired' | 'revoked'
+export type LicenseType = 'app_only' | 'full'
+
+export interface License {
+  id: string
+  teacher_id: string
+  license_key: string
+  license_type: LicenseType
+  status: LicenseStatus
+  expires_at: string | null
+  notes: string | null
+  max_devices: number
+  last_validation_at: string | null
+  last_ip: string | null
+  last_device: string | null
+  hardware_id: string | null
+  revoked_at: string | null
+  revoked_reason: string | null
+  created_by: string | null
+  created_at: string
+  updated_at: string
+}
+
+export interface LicenseEvent {
+  id: string
+  license_id: string
+  actor_id: string | null
+  action: string
+  from_status: LicenseStatus | null
+  to_status: LicenseStatus | null
+  metadata: {
+    fields?: { field: string; from: unknown; to: unknown }[]
+    reason?: string
+    regenerated_at?: string
+    license_type?: LicenseType
+  } | null
+  created_at: string
+}
+
+export interface TeacherLookup {
+  teacher_id: string
+  teacher_name: string
+  email: string
+}

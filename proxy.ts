@@ -23,6 +23,16 @@ export async function proxy(request: NextRequest) {
     }
   }
 
+  if (path.startsWith("/admin")) {
+    if (!user) {
+      return NextResponse.redirect(new URL("/login", request.url))
+    }
+    const { data: isAdmin } = await supabase.rpc("is_admin")
+    if (!isAdmin) {
+      return NextResponse.redirect(new URL("/teacher", request.url))
+    }
+  }
+
   if (path === "/login" && user) {
     return NextResponse.redirect(new URL("/teacher", request.url))
   }
