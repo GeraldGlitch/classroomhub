@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Clock, Target, BarChart3, Globe, ChevronRight, Check, Monitor, Smartphone } from "lucide-react"
+import { Clock, Target, BarChart3, Globe, ChevronRight, Check, Monitor, Smartphone, Landmark, CreditCard, QrCode } from "lucide-react"
 
 const USD_TO_NIO = 37
 
@@ -67,6 +67,12 @@ const plans = [
     teachers: "5 profesores",
     students: "Estudiantes ilimitados",
   },
+]
+
+const paymentMethods = [
+  { icon: Landmark, label: "Banco local Nicaragua" },
+  { icon: CreditCard, label: "PayPal" },
+  { icon: QrCode, label: "Kash" },
 ]
 
 const valueProps = [
@@ -335,7 +341,15 @@ export default function PricingPage() {
               />
             </button>
             <span className={`text-sm font-semibold ${currency === "$" ? "text-indigo-600 dark:text-indigo-400" : "text-zinc-400"}`}>$</span>
+          </div>
 
+          <div className="mt-4 flex animate-fade-in-up items-center justify-center gap-6" style={{ animationDelay: "350ms" }}>
+            {paymentMethods.map((m) => (
+              <div key={m.label} className="flex items-center gap-1.5 text-xs font-medium text-zinc-400 dark:text-zinc-500" title={m.label}>
+                <m.icon className="h-4 w-4 text-zinc-400 dark:text-zinc-500" />
+                <span className="hidden sm:inline">{m.label}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
