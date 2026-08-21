@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server"
 import Image from "next/image"
 import Link from "next/link"
 import { redirect } from "next/navigation"
-import { AlertTriangle, ArrowRight } from "lucide-react"
+import { AlertTriangle, ArrowRight, Heart } from "lucide-react"
 import SpeakButton from "@/components/SpeakButton"
 import NsRoleplayFeedback from "@/components/NsRoleplayFeedback"
 import { getAvatarSrc } from "@/lib/avatar"
@@ -54,6 +54,18 @@ export default async function StudentProfilePage() {
           </div>
           <div>
             <h2 className="text-2xl font-extrabold tracking-tight text-zinc-800 dark:text-zinc-100">{student.name}</h2>
+            <Link
+              href="/student/packages"
+              className="group mt-2 inline-flex items-center gap-2 rounded-full border-2 border-rose-200 bg-rose-50 px-3 py-1 transition-colors hover:border-rose-300 hover:bg-rose-100 dark:border-rose-900 dark:bg-rose-950 dark:hover:bg-rose-900"
+            >
+              <Heart className="h-4 w-4 fill-rose-500 text-rose-500" />
+              <span className="text-sm font-extrabold text-rose-600 dark:text-rose-400">
+                {Math.round(student.hearts_balance ?? 0)}
+              </span>
+              <span className="text-xs font-semibold text-rose-500 transition-transform duration-150 group-hover:translate-x-0.5 dark:text-rose-400">
+                Paquetes
+              </span>
+            </Link>
           </div>
         </div>
       </div>

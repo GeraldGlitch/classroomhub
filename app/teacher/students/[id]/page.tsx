@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import { notFound } from "next/navigation"
 import Link from "next/link"
-import { BookMarked, ArrowLeft, BarChart3 } from "lucide-react"
+import { BookMarked, ArrowLeft, BarChart3, Heart } from "lucide-react"
 import StudentProfileForm from "./StudentProfileForm"
 import StatsForm from "./StatsForm"
 import WordStatsForm from "./WordStatsForm"
@@ -18,7 +18,7 @@ export default async function StudentProfilePage({
 
   const { data: student } = await supabase
     .from("students")
-    .select("id, name, avatar_url, access_code, custom_fields")
+    .select("id, name, avatar_url, access_code, custom_fields, hearts_balance")
     .eq("id", id)
     .single()
 
@@ -69,6 +69,16 @@ export default async function StudentProfilePage({
         <div className="flex-1 pt-1">
           <h1 className="animate-fade-in text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-800 dark:text-zinc-100">{student.name}</h1>
           <p className="text-sm text-zinc-500 dark:text-zinc-400">Perfil de estudiante</p>
+          <Link
+            href="/teacher/packages"
+            className="mt-2 inline-flex items-center gap-2 rounded-full border-2 border-rose-200 bg-rose-50 px-3 py-1 transition-colors hover:border-rose-300 hover:bg-rose-100 dark:border-rose-900 dark:bg-rose-950 dark:hover:bg-rose-900"
+          >
+            <Heart className="h-4 w-4 fill-rose-500 text-rose-500" />
+            <span className="text-sm font-extrabold text-rose-600 dark:text-rose-400">
+              {Math.round(student.hearts_balance ?? 0)} hearts
+            </span>
+            <span className="text-xs font-semibold text-rose-500 dark:text-rose-400">Ver paquetes</span>
+          </Link>
         </div>
       </div>
 
