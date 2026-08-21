@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server"
 import Image from "next/image"
 import Link from "next/link"
-import { Calendar, ArrowRight, LayoutDashboard } from "lucide-react"
+import { Calendar, ArrowRight, LayoutDashboard, Heart } from "lucide-react"
 import { parseLocalDate } from "@/lib/date"
 
 export default async function ClassDashboardPage() {
@@ -25,6 +25,11 @@ export default async function ClassDashboardPage() {
 
   const { count: studentCount } = await supabase
     .from("students")
+    .select("*", { count: "exact", head: true })
+    .eq("teacher_id", user!.id)
+
+  const { count: packageCount } = await supabase
+    .from("packages")
     .select("*", { count: "exact", head: true })
     .eq("teacher_id", user!.id)
 
@@ -135,6 +140,24 @@ export default async function ClassDashboardPage() {
           </div>
           <div className="mt-3 flex items-center gap-1 text-sm font-semibold text-rose-600 dark:text-rose-400">
             Gestionar <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+          </div>
+        </Link>
+
+        <Link
+          href="/teacher/packages"
+          className="card card-hover group p-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-zinc-950"
+        >
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="font-bold text-zinc-800 dark:text-zinc-100">Paquetes y corazones</h2>
+              <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{packageCount ?? 0} paquetes</p>
+            </div>
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-fuchsia-100 text-fuchsia-500 transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6 dark:bg-fuchsia-950 dark:text-fuchsia-400">
+              <Heart className="h-6 w-6 fill-fuchsia-500 dark:fill-fuchsia-400" />
+            </div>
+          </div>
+          <div className="mt-3 flex items-center gap-1 text-sm font-semibold text-fuchsia-600 dark:text-fuchsia-400">
+            Ver paquetes <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
           </div>
         </Link>
       </div>

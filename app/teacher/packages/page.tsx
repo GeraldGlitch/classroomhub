@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server"
 import Image from "next/image"
 import { Heart } from "lucide-react"
 import { redirect } from "next/navigation"
+import DeletePackageButton from "./DeletePackageButton"
 
 export default async function TeacherPackagesPage() {
   const supabase = await createClient()
@@ -31,7 +32,9 @@ export default async function TeacherPackagesPage() {
           <Image src="/words-vault.svg" alt="" width={36} height={36} className="h-9 w-9" />
         </div>
         <h1 className="page-title">Paquetes y corazones</h1>
-        <p className="text-sm text-zinc-500 dark:text-zinc-400">Gestiona los paquetes desde la aplicación de escritorio.</p>
+        <p className="text-sm text-zinc-500 dark:text-zinc-400">
+          Los paquetes llegan desde la aplicación de escritorio. Aquí puedes eliminarlos.
+        </p>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
@@ -61,9 +64,12 @@ export default async function TeacherPackagesPage() {
                       {Math.round(pkg.hearts ?? 0)} hearts
                     </p>
                   </div>
-                  <span className="flex-shrink-0 rounded-full bg-indigo-100 px-3 py-1 text-sm font-extrabold text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400">
-                    {pkg.price || "—"}
-                  </span>
+                  <div className="flex flex-shrink-0 items-center gap-2">
+                    <span className="rounded-full bg-indigo-100 px-3 py-1 text-sm font-extrabold text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400">
+                      {pkg.price || "—"}
+                    </span>
+                    <DeletePackageButton id={pkg.id} name={pkg.name} />
+                  </div>
                 </div>
               ))}
             </div>
