@@ -78,6 +78,10 @@ export default async function TeacherPackagesPage() {
 
         <div className="card p-5">
           <h2 className="section-title mb-4 text-base">Balance de corazones por estudiante</h2>
+          <p className="mb-4 text-sm text-zinc-500 dark:text-zinc-400">
+            Los corazones representan tus clases disponibles. Cada corazón equivale a una clase y te
+            permite llevar un control sencillo de tus clases y asistencias.
+          </p>
           {students.length === 0 ? (
             <p className="text-sm text-zinc-400 dark:text-zinc-500">No hay estudiantes aún</p>
           ) : (
