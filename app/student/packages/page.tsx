@@ -22,7 +22,7 @@ export default async function StudentPackagesPage() {
     .from("packages")
     .select("*")
     .eq("teacher_id", teacherId)
-    .order("price", { ascending: true })
+    .order("name", { ascending: true })
 
   return (
     <div className="space-y-6">
@@ -75,7 +75,7 @@ export default async function StudentPackagesPage() {
                   )}
                 </div>
                 <span className="flex-shrink-0 rounded-full bg-rose-100 px-3 py-1 text-sm font-extrabold text-rose-600 dark:bg-rose-950 dark:text-rose-400">
-                  ${Number(pkg.price ?? 0).toFixed(2)}
+                  {pkg.price || "—"}
                 </span>
               </div>
               <div className="mt-4 flex items-center gap-2 border-t border-zinc-100 pt-3 dark:border-zinc-800">

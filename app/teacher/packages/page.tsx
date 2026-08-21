@@ -13,7 +13,7 @@ export default async function TeacherPackagesPage() {
       .from("packages")
       .select("id, name, description, hearts, price")
       .eq("teacher_id", user.id)
-      .order("price", { ascending: true }),
+      .order("name", { ascending: true }),
     supabase
       .from("students")
       .select("id, name, hearts_balance")
@@ -62,7 +62,7 @@ export default async function TeacherPackagesPage() {
                     </p>
                   </div>
                   <span className="flex-shrink-0 rounded-full bg-indigo-100 px-3 py-1 text-sm font-extrabold text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400">
-                    ${Number(pkg.price ?? 0).toFixed(2)}
+                    {pkg.price || "—"}
                   </span>
                 </div>
               ))}

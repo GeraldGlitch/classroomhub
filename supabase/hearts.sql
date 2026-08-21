@@ -12,6 +12,8 @@ alter table public.students
 
 -- ------------------------------------------------------------
 -- 2) Tabla packages
+--    price es texto libre (label) para que cada profesor use
+--    C$, $, etc. según convenga.
 -- ------------------------------------------------------------
 create table if not exists public.packages (
   id          uuid primary key default gen_random_uuid(),
@@ -19,10 +21,14 @@ create table if not exists public.packages (
   name        text not null,
   description text not null default '',
   hearts      double precision not null default 0,
-  price       double precision not null default 0,
+  price       text not null default '',
   created_at  timestamptz not null default now(),
   updated_at  timestamptz not null default now()
 );
+
+-- Migración para tablas ya creadas con price numérico
+alter table public.packages alter column price type text using price::text;
+alter table public.packages alter column price set default '';
 
 create index if not exists idx_packages_teacher_id on public.packages(teacher_id);
 
