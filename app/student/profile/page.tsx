@@ -22,6 +22,8 @@ export default async function StudentProfilePage() {
 
   if (!student) redirect("/login")
 
+  const heartsBalance = Math.round(student.hearts_balance ?? 0)
+
   const fields = (student.custom_fields ?? {}) as Record<string, string>
 
   const { data: topFailedWords } = await supabase
@@ -54,19 +56,23 @@ export default async function StudentProfilePage() {
           </div>
           <div>
             <h2 className="text-2xl font-extrabold tracking-tight text-zinc-800 dark:text-zinc-100">{student.name}</h2>
-            <div className="mt-2 flex items-center gap-3">
+            <div className="mt-2 flex flex-wrap items-center gap-3">
               <span className="inline-flex items-center gap-1.5 rounded-full border-2 border-rose-200 bg-rose-50 px-3 py-1 dark:border-rose-900 dark:bg-rose-950">
-                <Heart className="h-4 w-4 fill-rose-500 text-rose-500" />
                 <span className="text-sm font-extrabold text-rose-600 dark:text-rose-400">
-                  x{Math.round(student.hearts_balance ?? 0)}
+                  {heartsBalance}:
+                </span>
+                <span className="flex flex-wrap items-center gap-0.5">
+                  {Array.from({ length: heartsBalance }).map((_, i) => (
+                    <Heart key={i} className="h-4 w-4 fill-rose-500 text-rose-500" />
+                  ))}
                 </span>
               </span>
               <Link
                 href="/student/packages"
                 className="group inline-flex items-center gap-1 text-sm font-bold text-indigo-600 transition-colors hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300"
               >
-                Ver más paquetes
-                <ArrowRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5" />
+                (más paquetes
+                <ArrowRight className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5" />)
               </Link>
             </div>
           </div>
