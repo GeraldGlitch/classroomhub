@@ -2,7 +2,7 @@ import { cookies } from "next/headers"
 import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import Image from "next/image"
-import { Heart } from "lucide-react"
+import { Heart, Info } from "lucide-react"
 
 export default async function StudentPackagesPage() {
   const cookieStore = await cookies()
@@ -49,6 +49,14 @@ export default async function StudentPackagesPage() {
               {Math.round(student?.hearts_balance ?? 0)} hearts
             </p>
           </div>
+        </div>
+        <div className="mt-4 flex items-start gap-2 rounded-xl border border-rose-100 bg-rose-50 p-3 dark:border-rose-950 dark:bg-rose-950/50">
+          <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-rose-500" />
+          <p className="text-xs text-rose-700 dark:text-rose-300">
+            Cada corazón equivale a una clase. Si no puedes asistir por cualquier motivo, tu balance no se verá
+            afectado. El corazón se descuenta únicamente una vez que hayas recibido la clase, sin penalizaciones por
+            inasistencia.
+          </p>
         </div>
       </div>
 
