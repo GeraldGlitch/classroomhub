@@ -24,6 +24,16 @@ export default async function StudentPackagesPage() {
     .eq("teacher_id", teacherId)
     .order("name", { ascending: true })
 
+  const { data: credits } = await supabase
+    .from("heart_credits")
+    .select("id, status, package_name, acquired_at, consumed_at, removed_at")
+    .eq("student_id", studentId)
+    .order("acquired_at", { ascending: false })
+    .limit(50)
+
+  const availableCount = credits?.filter((c) => c.status === "active").length ?? 0
+  const consumedCount = credits?.filter((c) => c.status === "consumed").length ?? 0
+
   return (
     <div className="space-y-6">
       <div className="page-header animate-fade-in-up">
@@ -96,6 +106,77 @@ export default async function StudentPackagesPage() {
           ))}
         </div>
       )}
+
+      <div className="card animate-fade-in-up p-5">
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-bold text-zinc-800 dark:text-zinc-100">Historial</h2>
+          {credits && credits.length > 0 && (
+            <span className="rounded-full bg-rose-100 px-2.5 py-0.5 text-xs font-bold text-rose-600 dark:bg-rose-950 dark:text-rose-400">
+              {credits.length} corazones
+            </span>
+          )}
+        </div>
+
+        <div className="mt-4 grid grid-cols-3 gap-3">
+          <div className="rounded-xl border border-rose-100 bg-rose-50 p-3 text-center dark:border-rose-950 dark:bg-rose-950/50">
+            <p className="text-2xl font-extrabold text-rose-500">{availableCount}</p>
+            <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Disponibles</p>
+          </div>
+          <div className="rounded-xl border border-zinc-100 bg-zinc-50 p-3 text-center dark:border-zinc-800 dark:bg-zinc-900">
+            <p className="text-2xl font-extrabold text-zinc-600 dark:text-zinc-300">{consumedCount}</p>
+            <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Consumidos</p>
+          </div>
+          <div className="rounded-xl border border-zinc-100 bg-zinc-50 p-3 text-center dark:border-zinc-800 dark:bg-zinc-900">
+            <p className="text-2xl font-extrabold text-zinc-600 dark:text-zinc-300">{credits?.length ?? 0}</p>
+            <p className="text-xs font-semibold text-zinc-500 dark:text-zinc-400">Comprados</p>
+          </div>
+        </div>
+
+        {!credits || credits.length === 0 ? (
+          <p className="mt-4 text-sm text-zinc-400 dark:text-zinc-500">
+            Aún no hay movimientos en tu historial.
+          </p>
+        ) : (
+          <ul className="mt-4 divide-y divide-zinc-100 dark:divide-zinc-800">
+            {credits.map((credit) => {
+              const statusMeta =
+                credit.status === "active"
+                  ? {
+                      label: "Activo",
+                      chip: "bg-rose-100 text-rose-600 dark:bg-rose-950 dark:text-rose-400",
+                      icon: "fill-rose-500 text-rose-500",
+                    }
+                  : credit.status === "consumed"
+                    ? {
+                        label: "Consumido",
+                        chip: "bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400",
+                        icon: "fill-zinc-300 text-zinc-400",
+                      }
+                    : {
+                        label: "Removido",
+                        chip: "bg-red-100 text-red-600 dark:bg-red-950 dark:text-red-400",
+                        icon: "fill-red-300 text-red-400",
+                      }
+              return (
+                <li key={credit.id} className="flex items-center gap-3 py-3">
+                  <Heart className={`h-4 w-4 flex-shrink-0 ${statusMeta.icon}`} />
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-semibold text-zinc-700 dark:text-zinc-300">
+                      {credit.package_name || "Corazón"}
+                    </p>
+                    <p className="text-xs text-zinc-400 dark:text-zinc-500">
+                      {new Date(credit.acquired_at).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <span className={`flex-shrink-0 rounded-full px-2.5 py-0.5 text-xs font-bold ${statusMeta.chip}`}>
+                    {statusMeta.label}
+                  </span>
+                </li>
+              )
+            })}
+          </ul>
+        )}
+      </div>
     </div>
   )
 }

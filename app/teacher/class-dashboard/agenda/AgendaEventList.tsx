@@ -3,7 +3,7 @@
 import { useActionState, useState, useEffect, useRef } from "react"
 import { updateEvent, deleteEvent } from "./actions"
 import { Trash2, Pencil, Check, X, Calendar } from "lucide-react"
-import { parseLocalDate } from "@/lib/date"
+import { parseLocalDate, todayLocal } from "@/lib/date"
 import DateBadge from "./DateBadge"
 import { useToast } from "@/components/Toast"
 
@@ -142,8 +142,7 @@ function EditEventForm({
 }
 
 export default function AgendaEventList({ events }: { events: AgendaEvent[] }) {
-  const now = new Date()
-  const today = now.toISOString().split("T")[0]
+  const today = todayLocal()
   const [editingId, setEditingId] = useState<string | null>(null)
 
   const upcoming = events

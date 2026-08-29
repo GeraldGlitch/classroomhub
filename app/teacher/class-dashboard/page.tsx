@@ -2,7 +2,7 @@ import { createClient } from "@/lib/supabase/server"
 import Image from "next/image"
 import Link from "next/link"
 import { Calendar, ArrowRight, LayoutDashboard, Heart } from "lucide-react"
-import { parseLocalDate } from "@/lib/date"
+import { parseLocalDate, todayLocal } from "@/lib/date"
 
 export default async function ClassDashboardPage() {
   const supabase = await createClient()
@@ -37,7 +37,7 @@ export default async function ClassDashboardPage() {
     .from("agenda_events")
     .select("id, title, event_date")
     .eq("teacher_id", user!.id)
-    .gte("event_date", new Date().toISOString().split("T")[0])
+    .gte("event_date", todayLocal())
     .order("event_date")
     .limit(5)
 

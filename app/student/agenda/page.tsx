@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server"
 import { redirect } from "next/navigation"
 import Image from "next/image"
 import { Calendar } from "lucide-react"
-import { parseLocalDate } from "@/lib/date"
+import { parseLocalDate, todayLocal } from "@/lib/date"
 import DateBadge from "@/app/teacher/class-dashboard/agenda/DateBadge"
 
 export default async function StudentAgendaPage() {
@@ -13,8 +13,7 @@ export default async function StudentAgendaPage() {
   if (!teacherId || !studentId) redirect("/login")
 
   const supabase = await createClient()
-  const now = new Date()
-  const today = now.toISOString().split("T")[0]
+  const today = todayLocal()
 
   const { data: upcoming } = await supabase
     .from("agenda_events")
