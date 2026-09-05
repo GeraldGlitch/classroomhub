@@ -65,19 +65,19 @@ export default function StudentSidebar({ studentName }: { studentName: string })
     return (
       <>
         <button
-          className="fixed left-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900 lg:hidden"
+          className="fixed left-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 mid:border-[#4f4635] dark:bg-zinc-900 mid:bg-[#463d2e] lg:hidden"
           aria-label="Abrir menú"
         >
           <Menu className="h-5 w-5 text-zinc-700 dark:text-zinc-300" />
         </button>
-        <aside className="flex w-56 flex-col border-r-2 border-zinc-200 bg-white dark:border-zinc-700 dark:bg-[#131318]" />
+        <aside className="flex w-56 flex-col border-r-2 border-zinc-200 bg-white dark:border-zinc-700 dark:bg-[#131318] mid:border-[#4f4635] mid:bg-[#322b20]" />
       </>
     )
   }
 
   const sidebarContent = (
     <>
-      <div className="flex items-center gap-2.5 border-b border-zinc-100 px-3 py-4 dark:border-zinc-800">
+      <div className="flex items-center gap-2.5 border-b border-zinc-100 px-3 py-4 dark:border-zinc-800 mid:border-[#4f4635]">
         <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl border-2 border-indigo-400 bg-indigo-50 dark:border-indigo-500 dark:bg-indigo-950">
           <Image src="/character.svg" alt="ClassroomHub" width={32} height={32} className="h-8 w-8" />
         </div>
@@ -87,7 +87,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
       </div>
 
       {!collapsed && (
-        <div className="border-b border-zinc-100 px-5 py-3 dark:border-zinc-800">
+        <div className="border-b border-zinc-100 px-5 py-3 dark:border-zinc-800 mid:border-[#4f4635]">
           <p className="text-xs text-zinc-400 dark:text-zinc-500">Estudiante</p>
           <p className="truncate text-sm font-medium text-zinc-700 dark:text-zinc-300">{studentName}</p>
         </div>
@@ -106,7 +106,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
               className={`group relative flex items-center gap-3.5 rounded-xl px-3 py-2.5 text-sm font-semibold transition-all duration-150 hover-lift active:scale-95 ${
                 active
                   ? "bg-indigo-50 text-indigo-700 shadow-sm shadow-indigo-600/10 dark:bg-indigo-950 dark:text-indigo-300"
-                  : "text-zinc-600 hover:-translate-x-0.5 hover:bg-zinc-50 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+                  : "text-zinc-600 hover:-translate-x-0.5 hover:bg-zinc-50 hover:text-zinc-800 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200 mid:hover:bg-[#4f4635]"
               } ${collapsed ? "justify-center px-0" : ""}`}
             >
               {active && (
@@ -123,10 +123,10 @@ export default function StudentSidebar({ studentName }: { studentName: string })
         })}
       </nav>
 
-      <div className="border-t border-zinc-100 p-1 dark:border-zinc-800">
+      <div className="border-t border-zinc-100 p-1 dark:border-zinc-800 mid:border-[#4f4635]">
         <button
           onClick={() => setCollapsed((c) => !c)}
-          className="hidden w-full items-center justify-center rounded-xl p-2.5 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 active:scale-90 dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-300 lg:flex"
+          className="hidden w-full items-center justify-center rounded-xl p-2.5 text-zinc-400 transition-colors hover:bg-zinc-100 hover:text-zinc-600 active:scale-90 dark:text-zinc-500 dark:hover:bg-zinc-800 dark:hover:text-zinc-300 mid:hover:bg-[#4f4635] lg:flex"
           aria-label={collapsed ? "Expandir sidebar" : "Colapsar sidebar"}
         >
           {collapsed ? (
@@ -137,11 +137,11 @@ export default function StudentSidebar({ studentName }: { studentName: string })
         </button>
       </div>
 
-      <div className={`border-t border-zinc-100 px-1.5 py-2 dark:border-zinc-800 ${collapsed ? "flex justify-center" : "px-3"}`}>
+      <div className={`border-t border-zinc-100 px-1.5 py-2 dark:border-zinc-800 mid:border-[#4f4635] ${collapsed ? "flex justify-center" : "px-3"}`}>
         <ThemeToggle />
       </div>
 
-      <div className={`border-t border-zinc-100 p-1.5 dark:border-zinc-800 ${collapsed ? "flex justify-center" : "p-3"}`}>
+      <div className={`border-t border-zinc-100 p-1.5 dark:border-zinc-800 mid:border-[#4f4635] ${collapsed ? "flex justify-center" : "p-3"}`}>
         <form action={studentSignOut}>
           <button
             type="submit"
@@ -163,7 +163,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
     <>
       <button
         onClick={() => setMobileOpen(true)}
-        className="fixed left-4 top-4 z-40 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-200 bg-white shadow-sm transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:hover:bg-zinc-800 lg:hidden"
+        className="fixed left-4 top-4 z-40 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-200 bg-white shadow-sm transition-colors hover:bg-zinc-50 dark:border-zinc-800 mid:border-[#4f4635] dark:bg-zinc-900 mid:bg-[#463d2e] dark:hover:bg-zinc-800 mid:hover:bg-[#4f4635] lg:hidden"
         aria-label="Abrir menú"
       >
         <Menu className="h-5 w-5 text-zinc-700 dark:text-zinc-300" />
@@ -180,7 +180,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
       {mobileOpen && (
         <button
           onClick={() => setMobileOpen(false)}
-          className="fixed right-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900 lg:hidden"
+          className="fixed right-4 top-4 z-50 flex h-10 w-10 items-center justify-center rounded-lg border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 mid:border-[#4f4635] dark:bg-zinc-900 mid:bg-[#463d2e] lg:hidden"
           aria-label="Cerrar menú"
         >
           <X className="h-5 w-5 text-zinc-700 dark:text-zinc-300" />
@@ -188,7 +188,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
       )}
 
       <aside
-        className={`hidden flex-col overflow-hidden border-r-2 border-zinc-200 bg-white transition-all duration-300 ease-out dark:border-zinc-700 dark:bg-[#131318] lg:flex ${
+        className={`hidden flex-col overflow-hidden border-r-2 border-zinc-200 bg-white transition-all duration-300 ease-out dark:border-zinc-700 dark:bg-[#131318] mid:border-[#4f4635] mid:bg-[#322b20] lg:flex ${
           collapsed ? "w-14" : "w-56"
         }`}
       >
@@ -196,7 +196,7 @@ export default function StudentSidebar({ studentName }: { studentName: string })
       </aside>
 
       {mobileOpen && (
-        <aside className="fixed inset-y-0 left-0 z-40 flex w-64 animate-slide-in-left flex-col overflow-hidden border-r-2 border-zinc-200 bg-white dark:border-zinc-700 dark:bg-[#131318] lg:hidden">
+        <aside className="fixed inset-y-0 left-0 z-40 flex w-64 animate-slide-in-left flex-col overflow-hidden border-r-2 border-zinc-200 bg-white dark:border-zinc-700 dark:bg-[#131318] mid:border-[#4f4635] mid:bg-[#322b20] lg:hidden">
           {sidebarContent}
         </aside>
       )}

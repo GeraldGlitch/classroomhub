@@ -25,8 +25,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                if (localStorage.getItem('theme') === 'dark') {
+                var t = localStorage.getItem('theme')
+                if (t === 'dark') {
                   document.documentElement.classList.add('dark')
+                } else if (t === 'mid') {
+                  document.documentElement.classList.add('dark', 'mid')
                 }
               } catch (e) {}
             `,

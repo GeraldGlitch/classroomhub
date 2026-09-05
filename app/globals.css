@@ -2,6 +2,10 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+/* Tema intermedio "mid": cálido, más oscuro que light pero menos que dark.
+   Se activa con .mid sobre <html> (junto con .dark para heredar la estructura). */
+@variant mid (&:where(.mid, .mid *));
+
 @theme inline {
   --color-primary: #6366f1;
   --color-primary-hover: #4f46e5;
@@ -27,7 +31,7 @@
 
 body {
   font-family: var(--font-sans);
-  @apply bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100;
+  @apply bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 mid:bg-[#3a3427] mid:text-[#ede3cd];
 }
 
 @layer base {
@@ -149,7 +153,7 @@ body {
 
 /* Panel HUD: borde marcado estilo interfaz de juego */
 @utility panel-hud {
-  @apply rounded-2xl border-2 border-zinc-200 bg-white shadow-md dark:border-zinc-700 dark:bg-zinc-900;
+  @apply rounded-2xl border-2 border-zinc-200 bg-white shadow-md dark:border-zinc-700 dark:bg-zinc-900 mid:border-[#5c513e] mid:bg-[#463d2e];
 }
 
 /* Spring press feedback: scale down slightly on active, snapping back */
@@ -194,11 +198,11 @@ body {
 /* ===== Component Classes ===== */
 @layer components {
   .card {
-    @apply rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900;
+    @apply rounded-2xl border border-zinc-200 bg-white shadow-sm dark:border-zinc-800 dark:bg-zinc-900 mid:border-[#5c513e] mid:bg-[#463d2e];
   }
 
   .card-hover {
-    @apply hover-lift hover:-translate-y-1 hover:shadow-lg hover:border-indigo-300 dark:hover:border-indigo-700;
+    @apply hover-lift hover:-translate-y-1 hover:shadow-lg hover:border-indigo-300 dark:hover:border-indigo-700 mid:hover:border-[#8b7a55];
   }
 
   .btn-primary {
@@ -206,7 +210,7 @@ body {
   }
 
   .btn-secondary {
-    @apply press-bouncy rounded-xl border border-zinc-200 bg-white px-4 py-2.5 text-sm font-semibold text-zinc-700 hover:bg-zinc-50 hover:border-zinc-300 active:scale-95 disabled:opacity-50 disabled:active:scale-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700;
+    @apply press-bouncy rounded-xl border border-zinc-200 bg-white px-4 py-2.5 text-sm font-semibold text-zinc-700 hover:bg-zinc-50 hover:border-zinc-300 active:scale-95 disabled:opacity-50 disabled:active:scale-100 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700 mid:border-[#5c513e] mid:bg-[#463d2e] mid:text-[#e8dec8] mid:hover:bg-[#4f4635] mid:hover:border-[#6a5d44];
   }
 
   .btn-danger {
@@ -214,23 +218,23 @@ body {
   }
 
   .input-field {
-    @apply block w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-sm shadow-sm transition-all duration-150 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:ring-indigo-800;
+    @apply block w-full rounded-xl border border-zinc-300 bg-white px-3.5 py-2.5 text-sm shadow-sm transition-all duration-150 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:focus:ring-indigo-800 mid:border-[#5c513e] mid:bg-[#3f3729] mid:text-[#ede3cd] mid:focus:ring-[#8b7a55];
   }
 
   .label-field {
-    @apply block text-sm font-medium text-zinc-700 dark:text-zinc-300;
+    @apply block text-sm font-medium text-zinc-700 dark:text-zinc-300 mid:text-[#d8ceb8];
   }
 
   .page-title {
-    @apply text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-800 dark:text-zinc-100;
+    @apply text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-800 dark:text-zinc-100 mid:text-[#f0e6d0];
   }
 
   .empty-state {
-    @apply flex flex-col items-center gap-4 rounded-2xl border border-dashed border-zinc-300 bg-white px-6 py-16 text-center dark:border-zinc-700 dark:bg-zinc-900;
+    @apply flex flex-col items-center gap-4 rounded-2xl border border-dashed border-zinc-300 bg-white px-6 py-16 text-center dark:border-zinc-700 dark:bg-zinc-900 mid:border-[#5c513e] mid:bg-[#463d2e];
   }
 
   .empty-state-icon {
-    @apply flex h-20 w-20 items-center justify-center rounded-full bg-indigo-50 text-indigo-500 dark:bg-indigo-950/60 dark:text-indigo-400;
+    @apply flex h-20 w-20 items-center justify-center rounded-full bg-indigo-50 text-indigo-500 dark:bg-indigo-950/60 dark:text-indigo-400 mid:bg-[#4f4635];
   }
 
   /* Pill-shaped page header with an icon chip — used on most pages */
@@ -238,18 +242,18 @@ body {
     @apply flex items-center gap-3;
   }
   .page-header-icon {
-    @apply flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400;
+    @apply flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-2xl bg-indigo-100 text-indigo-600 dark:bg-indigo-950 dark:text-indigo-400 mid:bg-[#4f4635];
   }
 
   .section-title {
-    @apply flex items-center gap-2 text-lg font-bold text-zinc-700 dark:text-zinc-300;
+    @apply flex items-center gap-2 text-lg font-bold text-zinc-700 dark:text-zinc-300 mid:text-[#e8dec8];
   }
   .section-title-icon {
-    @apply flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400;
+    @apply flex h-9 w-9 items-center justify-center rounded-xl bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400 mid:bg-[#4f4635] mid:text-[#cfc5ae];
   }
 
   /* Compact stat tile */
   .stat-tile {
-    @apply rounded-xl border border-zinc-200 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900;
+    @apply rounded-xl border border-zinc-200 bg-white p-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 mid:border-[#5c513e] mid:bg-[#463d2e];
   }
 }
