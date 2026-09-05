@@ -11,6 +11,8 @@ interface AgendaEvent {
   title: string
   description: string | null
   event_date: string
+  start_time: string | null
+  end_time: string | null
 }
 
 export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
@@ -202,6 +204,25 @@ export default function AgendaCalendar({ events }: { events: AgendaEvent[] }) {
                   rows={3}
                   className="input-field mt-1"
                 />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">Hora inicio</label>
+                  <input
+                    name="start_time"
+                    type="time"
+                    className="input-field mt-1"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-zinc-700 dark:text-zinc-300">Hora fin</label>
+                  <input
+                    name="end_time"
+                    type="time"
+                    className="input-field mt-1"
+                  />
+                </div>
               </div>
 
               {state?.error && <p className="text-sm text-red-500 animate-fade-in">{state.error}</p>}

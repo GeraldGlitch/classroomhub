@@ -8,13 +8,19 @@ const eventSchema = z.object({
   title: z.string().min(1, "El título es obligatorio"),
   description: z.string().optional(),
   event_date: z.string().min(1),
+  start_time: z.string().optional(),
+  end_time: z.string().optional(),
 })
+
+const toTimeOrNull = (v: string | undefined) => (v && v.trim() ? v : null)
 
 export async function createEvent(formData: FormData) {
   const parsed = eventSchema.safeParse({
     title: formData.get("title"),
     description: formData.get("description"),
     event_date: formData.get("event_date"),
+    start_time: formData.get("start_time"),
+    end_time: formData.get("end_time"),
   })
 
   if (!parsed.success) return { error: "Datos inválidos" }
@@ -28,6 +34,8 @@ export async function createEvent(formData: FormData) {
     title: parsed.data.title,
     description: parsed.data.description || null,
     event_date: parsed.data.event_date,
+    start_time: toTimeOrNull(parsed.data.start_time),
+    end_time: toTimeOrNull(parsed.data.end_time),
   })
 
   if (error) return { error: error.message }
@@ -40,6 +48,8 @@ export async function updateEvent(formData: FormData) {
     title: formData.get("title"),
     description: formData.get("description"),
     event_date: formData.get("event_date"),
+    start_time: formData.get("start_time"),
+    end_time: formData.get("end_time"),
   })
 
   if (!parsed.success) return { error: "Datos inválidos" }
@@ -51,6 +61,8 @@ export async function updateEvent(formData: FormData) {
       title: parsed.data.title,
       description: parsed.data.description || null,
       event_date: parsed.data.event_date,
+      start_time: toTimeOrNull(parsed.data.start_time),
+      end_time: toTimeOrNull(parsed.data.end_time),
     })
     .eq("id", id)
 

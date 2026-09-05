@@ -154,8 +154,8 @@ export default async function StudentPackagesPage() {
                       }
                     : {
                         label: "Removido",
-                        chip: "bg-red-100 text-red-600 dark:bg-red-950 dark:text-red-400",
-                        icon: "fill-red-300 text-red-400",
+                        chip: "bg-zinc-100 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-400",
+                        icon: "fill-zinc-300 text-zinc-400",
                       }
               return (
                 <li key={credit.id} className="flex items-center gap-3 py-3">

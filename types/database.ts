@@ -33,6 +33,8 @@ export interface AgendaEvent {
   title: string
   description: string | null
   event_date: string
+  start_time: string | null
+  end_time: string | null
   created_at: string
 }
 

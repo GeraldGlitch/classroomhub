@@ -12,6 +12,17 @@ interface AgendaEvent {
   title: string
   description: string | null
   event_date: string
+  start_time: string | null
+  end_time: string | null
+}
+
+const formatTime = (t: string | null) => (t ? t.slice(0, 5) : null)
+
+function timeRange(event: AgendaEvent) {
+  const start = formatTime(event.start_time)
+  const end = formatTime(event.end_time)
+  if (!start && !end) return null
+  return start && end ? `${start} – ${end}` : start || end
 }
 
 function DeleteEventButton({ id }: { id: string }) {
@@ -82,6 +93,8 @@ function EditEventForm({
   const [title, setTitle] = useState(event.title)
   const [description, setDescription] = useState(event.description ?? "")
   const [eventDate, setEventDate] = useState(event.event_date)
+  const [startTime, setStartTime] = useState(event.start_time?.slice(0, 5) ?? "")
+  const [endTime, setEndTime] = useState(event.end_time?.slice(0, 5) ?? "")
 
   const [state, action, pending] = useActionState(
     async (_prev: unknown, formData: FormData) => updateEvent(formData),
@@ -128,6 +141,22 @@ function EditEventForm({
         required
         className="input-field w-full"
       />
+      <div className="grid grid-cols-2 gap-2">
+        <input
+          name="start_time"
+          type="time"
+          value={startTime}
+          onChange={(e) => setStartTime(e.target.value)}
+          className="input-field w-full"
+        />
+        <input
+          name="end_time"
+          type="time"
+          value={endTime}
+          onChange={(e) => setEndTime(e.target.value)}
+          className="input-field w-full"
+        />
+      </div>
       {state?.error && <p className="text-sm text-red-500">{state.error}</p>}
       <div className="flex gap-2">
         <button type="submit" disabled={pending} className="press-bouncy rounded-lg bg-indigo-600 px-3 py-1.5 text-white active:scale-90 disabled:opacity-50">
@@ -181,6 +210,11 @@ export default function AgendaEventList({ events }: { events: AgendaEvent[] }) {
                     <DateBadge dateStr={event.event_date} size="sm" />
                     <div className="flex-1">
                       <p className="font-bold text-zinc-800 dark:text-zinc-100">{event.title}</p>
+                      {timeRange(event) && (
+                        <p className="text-xs font-semibold text-indigo-600 dark:text-indigo-400">
+                          {timeRange(event)}
+                        </p>
+                      )}
                       {event.description && (
                         <p className="text-sm text-zinc-500 dark:text-zinc-400">{event.description}</p>
                       )}
