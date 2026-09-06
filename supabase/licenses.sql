@@ -262,6 +262,81 @@ grant execute on function public.validate_license(text, text, text, text) to ano
 grant execute on function public.validate_license(text, text, text, text) to authenticated;
 
 -- ------------------------------------------------------------
+-- 8c) Función validate_license_for_user() — validación por LOGIN
+--     Valida la licencia del teacher autenticado usando auth.uid()
+--     (sin exponer key). Misma semántica fail-closed que
+--     validate_license: cuenta sin licencia → valid=false.
+--     Toma la licencia más reciente del teacher si hay varias.
+-- ------------------------------------------------------------
+create or replace function public.validate_license_for_user()
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  l record;
+  uid uuid := auth.uid();
+begin
+  if uid is null then
+    return jsonb_build_object(
+      'valid', false,
+      'status', 'unauthorized',
+      'message', 'Not authenticated'
+    );
+  end if;
+
+  select * into l
+  from public.licenses
+  where teacher_id = uid
+  order by created_at desc
+  limit 1;
+
+  if l is null then
+    return jsonb_build_object(
+      'valid', false,
+      'status', 'no_license',
+      'message', 'La cuenta no tiene una licencia asignada'
+    );
+  end if;
+
+  if l.status = 'revoked' then
+    return jsonb_build_object('valid', false, 'status', 'revoked', 'message', 'Licencia revocada');
+  end if;
+
+  if l.status = 'suspended' then
+    return jsonb_build_object('valid', false, 'status', 'suspended', 'message', 'Licencia suspendida');
+  end if;
+
+  if l.expires_at is not null and l.expires_at < now() then
+    update public.licenses
+      set status = 'expired'
+      where id = l.id;
+    return jsonb_build_object('valid', false, 'status', 'expired', 'message', 'Licencia expirada');
+  end if;
+
+  if l.status = 'expired' then
+    return jsonb_build_object('valid', false, 'status', 'expired', 'message', 'Licencia expirada');
+  end if;
+
+  update public.licenses
+    set last_validation_at = now(),
+        last_device       = coalesce(l.last_device, last_device)
+    where id = l.id;
+
+  return jsonb_build_object(
+    'valid',        true,
+    'status',       l.status,
+    'license_type', l.license_type,
+    'expires_at',   l.expires_at,
+    'max_devices',  l.max_devices,
+    'message',      'Licencia válida'
+  );
+end $$;
+
+grant execute on function public.validate_license_for_user() to authenticated;
+
+-- ------------------------------------------------------------
 -- 9) Bootstrap: AÑADE A TU USUARIO COMO PRIMER ADMIN
 --    Reemplaza '<UID_DE_SUPABASE_AUTH>' por tu user id de Supabase Auth.
 --    Hasta que exista un admin, NADIE puede entrar al panel.

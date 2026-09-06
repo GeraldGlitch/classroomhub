@@ -1,5 +1,5 @@
 {
     "version": "0",
-    "title": "This is a new update",
-    "message": "message title that comes with the update"
+    "title": "This is a new update - 0.0.1",
+    "message": "UPDATE - Minor bug fixes and Resources added\n\n-Sync bar visible at bottom\n-Words vault update also updates students words\n-Resource section, now you can add/view resource from here to portal"
 }
