@@ -316,15 +316,18 @@ export default function PricingPage() {
                   </div>
                 </div>
 
-                <button
-                  className={`mt-6 w-full rounded-xl py-2.5 text-sm font-semibold transition-all active:scale-95 ${
+                <a
+                  href={`https://wa.me/50578364365?text=${encodeURIComponent(`Hola, quiero elegir el plan ${plan.name} de ClassroomHUB`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`mt-6 block w-full rounded-xl py-2.5 text-center text-sm font-semibold transition-all active:scale-95 ${
                     plan.highlight
                       ? "bg-indigo-600 text-white shadow-md shadow-indigo-600/20 hover:bg-indigo-700"
                       : "border border-zinc-200 bg-white text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700"
                   }`}
                 >
                   Elegir {plan.name}
-                </button>
+                </a>
               </div>
             ))}
           </div>
